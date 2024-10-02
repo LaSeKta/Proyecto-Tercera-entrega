@@ -76,23 +76,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->bind_param("ssss", $nombre, $apellido, $email, $ci);
 
                 if ($stmt->execute()) {
-                    // Verificar si realmente se actualizaron filas en la tabla
+                    // Verificar si realmente se actualizaron filas en la tabla personas
                     if ($stmt->affected_rows > 0) {
-                        ob_end_clean();
-                        echo json_encode(['status' => 'success', 'message' => 'Información actualizada correctamente']);
+                        // Ahora actualiza el id_rol a 1 en la tabla usuarios
+                        $updateRoleStmt = $conn->prepare("UPDATE usuarios SET id_rol = 1 WHERE CI = ?");
+                        if ($updateRoleStmt) {
+                            $updateRoleStmt->bind_param("s", $ci);
+                            if ($updateRoleStmt->execute()) {
+                                ob_end_clean();
+                                echo json_encode(['status' => 'success', 'message' => 'Información actualizada correctamente y rol modificado a 1']);
+                            } else {
+                                ob_end_clean();
+                                echo json_encode(['status' => 'error', 'message' => 'Error al actualizar el rol: ' . $updateRoleStmt->error]);
+                            }
+                            $updateRoleStmt->close();
+                        } else {
+                            ob_end_clean();
+                            echo json_encode(['status' => 'error', 'message' => 'Error al preparar la consulta para actualizar el rol: ' . $conn->error]);
+                        }
                     } else {
                         ob_end_clean();
-                        echo json_encode(['status' => 'error', 'message' => 'No se actualizó ninguna fila. Verifica que los datos sean diferentes.']);
+                        echo json_encode(['status' => 'error', 'message' => 'No se actualizó ninguna fila en personas. Verifica que los datos sean diferentes.']);
                     }
                 } else {
                     ob_end_clean();
-                    echo json_encode(['status' => 'error', 'message' => 'Error al ejecutar la actualización: ' . $stmt->error]);
+                    echo json_encode(['status' => 'error', 'message' => 'Error al ejecutar la actualización en personas: ' . $stmt->error]);
                 }
 
                 $stmt->close();
             } else {
                 ob_end_clean();
-                echo json_encode(['status' => 'error', 'message' => 'Error al preparar la consulta: ' . $conn->error]);
+                echo json_encode(['status' => 'error', 'message' => 'Error al preparar la consulta en personas: ' . $conn->error]);
             }
         } else {
             ob_end_clean();

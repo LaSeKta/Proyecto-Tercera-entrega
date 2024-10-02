@@ -9,8 +9,280 @@
         --color2: #FFFCF1;
         --color3: #2A9C8A;
         --color4: #ffffff;
-        --color5: #8D95A8;
-        --color6: #7d9c9e;
+        --color5: #848588;
+        --color6: #919797;
+
+    }
+
+    body {
+        background-color: #fffcf4!important;
+    }
+
+
+    #home {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    }
+
+    #horarios {
+        height: 350vh!important;
+    }
+
+    #gimnasios {
+        height: 350vh!important;
+    }
+
+    #sobre/nosotros {
+        height: 350vh!important;
+    }
+
+    #deportes-container {
+        display: flex;
+        flex-direction: column; /* Apilar elementos verticalmente */
+        align-items: center; /* Centrar los elementos hijos */
+        padding: 10px;
+        gap: 20px;
+    }
+
+    /* Estilo del formulario de deportes */
+    #formulario-deporte {
+        order: 1; /* Mostrar primero */
+        width: 90%; /* Ajustar ancho para dispositivos móviles */
+        max-width: 500px; /* Limitar ancho máximo */
+        padding: 15px;
+        background-color: var(--color2);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px; /* Espacio inferior para separación */
+    }
+
+    #formulario-deporte h3 {
+        text-align: center; /* Centrar el título */
+        font-size: 1.5em; /* Ajustar tamaño de fuente */
+        margin-bottom: 10px; /* Espacio inferior */
+    }
+
+    #formulario-deporte label {
+        font-size: 1em; /* Ajustar tamaño de las etiquetas */
+        margin-bottom: 5px;
+    }
+
+    #formulario-deporte input,
+    #formulario-deporte textarea,
+    #formulario-deporte button {
+        width: 100%; /* Asegurar ancho completo */
+        padding: 10px;
+        margin-top: 5px;
+        font-family: Head;
+        font-size: 1em;
+        border: 1px solid var(--color1);
+        border-radius: 5px;
+    }
+
+    #formulario-deporte button {
+        background-color: var(--color3);
+        color: var(--color4);
+        cursor: pointer;
+        font-weight: bold;
+        border: none;
+        margin-top: 10px; /* Espacio superior para separación */
+        transition: background-color 0.3s ease;
+    }
+
+    #formulario-deporte button:hover {
+        background-color: var(--color5); /* Cambiar color al pasar el cursor */
+    }
+
+    /* Estilo de la lista de deportes */
+    #lista-deportes {
+        order: 2; /* Mostrar después del formulario */
+        width: 90%!important; /* Ajustar ancho para dispositivos móviles */
+        max-width: 500px; /* Limitar ancho máximo */
+        background-color: var(--color2);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        display: flex;
+        flex-direction: column; /* Mostrar elementos verticalmente */
+        align-items: center; /* Centrar los elementos */
+    }
+
+    #lista-deportes h3 {
+        text-align: center; /* Centrar el título */
+        font-size: 1.5em; /* Ajustar tamaño de fuente */
+        margin-bottom: 10px; /* Espacio inferior */
+    }
+
+    #deportes-list {
+        width: 100%; /* Asegurar ancho completo */
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column; /* Mostrar un elemento por fila */
+        gap: 10px; /* Espacio entre los elementos */
+        grid-template-columns: repeat(2, 1fr)!important;
+    }
+
+    #deportes-list li {
+        padding: 10px;
+        background-color: var(--color4);
+        color: var(--color3);
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-align: center; /* Centrar el contenido */
+    }
+
+    #deportes-list li:hover {
+        background-color: var(--color3);
+        color: var(--color4);
+    }
+
+    #ejercicios-container {
+        display: flex;
+        flex-direction: column; /* Apilar elementos verticalmente */
+        align-items: center; /* Centrar los elementos hijos */
+        padding: 10px;
+        gap: 20px;
+    }
+
+    /* Estilo del formulario de ejercicios */
+    #formulario-ejercicio {
+        order: 1; /* Mostrar primero */
+        width: 90%; /* Ajustar ancho para dispositivos móviles */
+        max-width: 500px; /* Limitar ancho máximo */
+        padding: 15px;
+        background-color: var(--color2);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px; /* Espacio inferior para separación */
+    }
+
+    #formulario-ejercicio h3 {
+        text-align: center; /* Centrar el título */
+        font-size: 1.5em; /* Ajustar tamaño de fuente */
+        margin-bottom: 10px; /* Espacio inferior */
+    }
+
+    #formulario-ejercicio label {
+        font-size: 1em; /* Ajustar tamaño de las etiquetas */
+        margin-bottom: 5px;
+    }
+
+    #formulario-ejercicio input,
+    #formulario-ejercicio textarea,
+    #formulario-ejercicio button {
+        width: 100%; /* Asegurar ancho completo */
+        padding: 10px;
+        margin-top: 5px;
+        font-family: Head;
+        font-size: 1em;
+        border: 1px solid var(--color1);
+        border-radius: 5px;
+    }
+
+    #formulario-ejercicio button {
+        background-color: var(--color3);
+        color: var(--color4);
+        cursor: pointer;
+        font-weight: bold;
+        border: none;
+        margin-top: 10px; /* Espacio superior para separación */
+        transition: background-color 0.3s ease;
+    }
+
+    #formulario-ejercicio button:hover {
+        background-color: var(--color5); /* Cambiar color al pasar el cursor */
+    }
+
+    /* Estilo de la lista de ejercicios */
+    #lista-ejercicios {
+        order: 2; /* Mostrar después del formulario */
+        width: 90% !important; /* Ajustar ancho para dispositivos móviles */
+        max-width: 500px; /* Limitar ancho máximo */
+        background-color: var(--color2);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        display: flex;
+        flex-direction: column; /* Mostrar elementos verticalmente */
+        align-items: center; /* Centrar los elementos */
+    }
+
+    #lista-ejercicios h3 {
+        text-align: center; /* Centrar el título */
+        font-size: 1.5em; /* Ajustar tamaño de fuente */
+        margin-bottom: 10px; /* Espacio inferior */
+    }
+
+    #ejercicios-list {
+        width: 100%; /* Asegurar ancho completo */
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column; /* Mostrar un elemento por fila */
+        gap: 10px; /* Espacio entre los elementos */
+    }
+
+    #ejercicios-list li {
+        padding: 10px;
+        background-color: var(--color4);
+        color: var(--color3);
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-align: center; /* Centrar el contenido */
+    }
+
+    #ejercicios-list li:hover {
+        background-color: var(--color3);
+        color: var(--color4);
+    }
+    
+    .horarios-container {
+        display: flex;
+        flex-direction: column; /* Cambiar a columna para apilar los contenedores */
+        align-items: stretch;
+        padding: 10px;
+        gap: 20px;
+    }
+
+    .user-form-container {
+        order: 1; /* Asignar primer orden para mostrar primero */
+        margin-bottom: 20px; /* Añadir margen inferior para separación */
+        width: 80%; /* Asegurar que ocupe todo el ancho */
+    }
+
+    .user-list-container {
+        order: 2; /* Mostrar después del formulario */
+        width: 100%;
+        max-width: 500px; /* Opcional: Limitar ancho máximo para mejor visualización */
+        display: flex;
+        justify-content: center; 
+        
+    }
+
+    .horarios-table {
+        width: 100%; /* Asegurar que la tabla ocupe todo el ancho del contenedor */
+        max-width: 480px; /* Ajustar ancho máximo para centrado */
+        margin: 0 auto; /* Centrando la tabla dentro del contenedor */
+        border-collapse: collapse;
+        background-color: var(--color2);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        overflow: hidden;
+        
+    }
+
+    .textoini {
+        background-color: rgba(241, 241, 241, 0.644) !important;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.753);
+    }
+
+    
+    .inititulo {
+        color: var(--color1)!important;
     }
 
     .contA {
@@ -18,11 +290,7 @@
     }
 
     .izq-header {
-        width: 50vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: none !important;
     }
 
     .der-header {
@@ -52,6 +320,7 @@
     }
 
     header {
+        background-size: 165vw 100vh !important;
         width: 100vw;
         height: 200vh;
         display: flex;
@@ -60,8 +329,9 @@
         justify-content: center;
     }
 
+
     h2 {
-        padding-top: 120%;
+
         font-size: -30px;
         display: block;
         font-size: 1px;
@@ -76,6 +346,8 @@
     h1 {
         text-align: center;
     }
+
+
 
     .menu-icon {
         display: block !important;
@@ -133,7 +405,7 @@
     }
 
     .carousel-indicators {
-        display: none !important; 
+        display: none !important;
     }
 
     .carousel-control-prev,
@@ -155,10 +427,16 @@
     h3 {
         font-size: 4em;
         color: var(--color3);
-        margin-top: 40% !important;
         text-align: center;
         font-family: Titulo;
         max-height: 30px;
+    }
+
+    .parrafo1 {
+        text-align: center;
+        color: var(--color1)!important;
+        padding: 0%;
+        padding-top: 0;
     }
 
     .parrafo2 {
@@ -264,6 +542,7 @@
         height: 50px;
         margin-bottom: 1vh;
     }
+
 
     .textoB {
         text-align: center !important;

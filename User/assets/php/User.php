@@ -1,18 +1,18 @@
 <?php
-require_once '../../../assets/database.php'; // Asegúrate de que la ruta sea correcta
+require_once '../../../assets/database.php'; 
 
 class User {
     private $id;
     private $ci;
     private $password;
-    private $conn; // Conexión a la base de datos
+    private $conn; 
 
     public function __construct($id = null, $ci = null, $password = null) {
         $this->id = $id;
         $this->ci = $ci;
         $this->password = $password;
         
-        // Establece la conexión a la base de datos usando la clase Database
+        
         $database = new Database();
         $this->conn = $database->connect();
     }

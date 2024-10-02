@@ -2,18 +2,18 @@ $(document).ready(function () {
     $("#userForm").submit(function (e) {
         e.preventDefault();
 
-        // Serializar los datos del formulario
         let formData = $(this).serialize();
 
-        // Enviar los datos al backend usando AJAX
+        // Enviar los datos 
         $.ajax({
-            url: 'assets/php/update_persona.php', // Asegúrate de que esta ruta sea correcta
+            url: 'assets/php/update_persona.php', 
             type: 'POST',
             data: formData,
             success: function (response) {
-                // Maneja la respuesta del servidor
+                //respuesta del servidor
                 if (response.status === 'success') {
                     alert(response.message);
+                    window.location.href = 'index.html'; 
                 } else {
                     alert(response.message);
                 }

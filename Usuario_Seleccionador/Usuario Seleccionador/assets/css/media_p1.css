@@ -13,11 +13,320 @@
         --color6: #7d9c9e;
     }
 
+    body {
+        background-color: #fffcf4!important;
+    }
+
+    #Sobre\ nosotros {
+        display: flex;
+        flex-direction: column; /* Apilar elementos verticalmente */
+        align-items: center; /* Centrar los elementos horizontalmente */
+        padding: 20px; /* Añadir padding */
+        width: 100%; /* Asegurar ancho completo */
+        text-align: center; /* Centrar el texto */
+        background-color: var(--color2); /* Fondo consistente */
+    }
+
+    #evolucion-container {
+        display: flex;
+        flex-direction: column; /* Apilar los contenedores verticalmente */
+        align-items: center; /* Centrar los contenedores */
+        width: 90%; /* Ancho ajustado para dispositivos móviles */
+        max-width: 500px; /* Limitar ancho máximo */
+        padding: 15px;
+        background-color: var(--color2);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px; /* Espacio inferior para separación */
+    }
+
+    #evolucion-container h2 {
+        font-size: 1.8em; /* Ajustar el tamaño del título */
+        margin-bottom: 15px; /* Espacio inferior */
+        color: var(--color3); /* Color del título */
+    }
+
+    #evolucion-container p {
+        font-size: 1em; /* Ajustar tamaño de fuente */
+        margin-bottom: 15px; /* Espacio inferior */
+        color: var(--color3); /* Color del texto */
+    }
+
+    #tabla-evolucion {
+        width: 100%; /* Ancho completo de la tabla */
+        border-collapse: collapse; /* Colapsar bordes */
+        margin-top: 10px; /* Espacio superior */
+    }
+
+    #tabla-evolucion th, #tabla-evolucion td {
+        padding: 10px; /* Espacio interior */
+        border: 1px solid var(--color1); /* Borde */
+        text-align: left; /* Alinear texto a la izquierda */
+        font-family: Head; /* Fuente consistente */
+        color: var(--color3); /* Color del texto */
+    }
+
+    #tabla-evolucion th {
+        background-color: var(--color3); /* Fondo de los encabezados */
+        color: var(--color4); /* Color del texto de los encabezados */
+    }
+
+    #tabla-evolucion tr:hover {
+        background-color: var(--color5); /* Color de fondo al pasar el cursor */
+    }
+
+    #tabla-evolucion button {
+        padding: 10px; /* Espacio interior */
+        background-color: var(--color3); /* Fondo del botón */
+        color: var(--color4); /* Color del texto */
+        border: none; /* Sin borde adicional */
+        border-radius: 5px; /* Bordes redondeados */
+        cursor: pointer; /* Cambiar cursor al pasar por encima */
+        transition: background-color 0.3s ease; /* Transición al pasar el cursor */
+    }
+
+    #tabla-evolucion button:hover {
+        background-color: var(--color5); /* Cambio de color al pasar el cursor */
+    }
+
+    #Gimnasios {
+        height: 160vh;
+        display: flex;
+        flex-direction: column; /* Apilar elementos verticalmente */
+        align-items: center; /* Centrar los elementos horizontalmente */
+        padding: 20px; /* Añadir padding */
+        width: 100%; /* Asegurar ancho completo */
+    }
+
+    #equipos-container {
+        display: flex;
+        flex-direction: column; /* Apilar los contenedores verticalmente */
+        align-items: center; /* Centrar los contenedores */
+        width: 100%; /* Ancho completo */
+        gap: 20px; /* Espacio entre los elementos */
+        padding: 10px; /* Añadir padding */
+    }
+
+    #formulario-equipo {
+        width: 90%; /* Ancho ajustado para dispositivos móviles */
+        max-width: 500px; /* Limitar ancho máximo */
+        padding: 15px!important;
+        background-color: var(--color2);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px; /* Espacio inferior para separación */
+    }
+
+    #equipo-form {
+        display: flex;
+        flex-direction: column; /* Alinear los elementos del formulario verticalmente */
+        align-items: center; /* Centrar los elementos del formulario */
+        width: 100%; /* Asegurar ancho completo */
+    }
+
+    #lista-equipos {
+        width: 90%!important; /* Ancho ajustado para dispositivos móviles */
+        max-width: 500px; /* Limitar ancho máximo */
+        padding: 15px!important;
+        background-color: var(--color2);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #tabla-equipos {
+        width: 100%; /* Ancho completo de la tabla */
+        border-collapse: collapse; /* Colapsar bordes */
+        margin-top: 10px; /* Espacio superior */
+    }
+
+    #tabla-equipos th, #tabla-equipos td {
+        padding: 1px!important; /* Espacio interior */
+        border: 1px solid var(--color1); /* Borde */
+        text-align: left; /* Alinear texto a la izquierda */
+        font-size: 0.8em; /* Tamaño de fuente ajustado */
+        font-family: Head; /* Fuente consistente */
+        color: var(--color3); /* Color del texto */
+    }
+
+    #tabla-equipos th {
+        background-color: var(--color3); /* Fondo de los encabezados */
+        color: var(--color4); /* Color del texto de los encabezados */
+    }
+
+    #tabla-equipos tr:hover {
+        background-color: var(--color5); /* Color de fondo al pasar el cursor */
+    }
+
+    #equipo-form h3 {
+        font-size: 1.5em; /* Tamaño de fuente ajustado */
+        margin-bottom: 10px; /* Espacio inferior */
+        text-align: center; /* Centrar el texto */
+        color: var(--color3);
+    }
+
+    #equipo-form label, #equipo-form input, #equipo-form select, #equipo-form button {
+        width: 100%; /* Ancho completo */
+        padding: 10px; /* Espacio interior */
+        margin-top: 5px; /* Espacio superior */
+        border-radius: 5px; /* Bordes redondeados */
+        font-family: Head; /* Fuente consistente */
+        font-size: 1em; /* Tamaño de fuente adecuado */
+    }
+
+    #equipo-form button {
+        background-color: var(--color3); /* Fondo del botón */
+        color: var(--color4); /* Color del texto */
+        cursor: pointer; /* Cambiar cursor al pasar por encima */
+        font-weight: bold; /* Negrita */
+        border: none; /* Sin borde adicional */
+        margin-top: 10px; /* Espacio superior */
+        transition: background-color 0.3s ease; /* Transición al pasar el cursor */
+    }
+
+    #equipo-form button:hover {
+        background-color: var(--color5); /* Cambio de color al pasar el cursor */
+    }
+ 
+    #Horarios {
+        display: flex;
+        flex-direction: column; /* Apilar elementos verticalmente */
+        align-items: center; /* Centrar los elementos horizontalmente */
+        padding: 20px; /* Añadir padding para mejorar la disposición */
+        width: 100%!important; /* Asegurar ancho completo */
+        height: 150vh;
+    }
+
+    .gestion-container {
+        display: flex;
+        flex-direction: column; /* Apilar los contenedores verticalmente */
+        align-items: center; /* Centrar los contenedores */
+        width: 100%; /* Ancho completo */
+        gap: 20px; /* Espacio entre los elementos */
+        padding: 10px; /* Añadir padding */
+    }
+
+    .gestion-form-container {
+        width: 90%; /* Ancho ajustado para dispositivos móviles */
+        max-width: 500px; /* Limitar ancho máximo */
+        padding: 15px;
+        background-color: var(--color2);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px; /* Espacio inferior para separación */
+    }
+
+    .gestion-form {
+        display: flex;
+        flex-direction: column; /* Alinear los elementos del formulario verticalmente */
+        align-items: center; /* Centrar los elementos del formulario */
+        width: 100%; /* Asegurar ancho completo */
+    }
+
+    .gestion-table-container {
+        width: 90%; /* Ancho ajustado para dispositivos móviles */
+        max-width: 500px; /* Limitar ancho máximo */
+        padding: 15px!important;
+        background-color: var(--color2);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .gestion-table {
+        width: 100%; /* Ancho completo de la tabla */
+        border-collapse: collapse; /* Colapsar bordes */
+        margin-top: 10px; /* Espacio superior */
+    }
+
+    .gestion-table th, .gestion-table td {
+        padding: 3px!important; /* Espacio interior */
+        border: 1px solid var(--color1); /* Borde */
+        font-size: 0.8em; /* Tamaño de fuente ajustado */
+        text-align: left; /* Alinear texto a la izquierda */
+        font-family: Head; /* Fuente consistente */
+        color: var(--color3); /* Color del texto */
+    }
+
+    .gestion-table th {
+        background-color: var(--color3); /* Fondo de los encabezados */
+        color: var(--color4); /* Color del texto de los encabezados */
+    }
+
+    .gestion-table tr:hover {
+        background-color: var(--color5); /* Color de fondo al pasar el cursor */
+    }
+
+    .gestion-form h3 {
+        font-size: 1.5em; /* Tamaño de fuente ajustado */
+        margin-bottom: 10px; /* Espacio inferior */
+        text-align: center; /* Centrar el texto */
+        color: var(--color3);
+    }
+
+    .gestion-form .form-group {
+        margin-bottom: 15px; /* Espacio entre los grupos de formulario */
+        width: 100%; /* Ancho completo */
+    }
+
+    .gestion-form input, .gestion-form select, .gestion-form button {
+        width: 100%; /* Ancho completo */
+        padding: 10px; /* Espacio interior */
+        margin-top: 5px; /* Espacio superior */
+        border: 1px solid var(--color1); /* Borde consistente */
+        border-radius: 5px; /* Bordes redondeados */
+        font-family: Head; /* Fuente consistente */
+        font-size: 1em; /* Tamaño de fuente adecuado */
+    }
+
+    .gestion-form button {
+        background-color: var(--color3); /* Fondo del botón */
+        color: var(--color4); /* Color del texto */
+        cursor: pointer; /* Cambiar cursor al pasar por encima */
+        font-weight: bold; /* Negrita */
+        border: none; /* Sin borde adicional */
+        margin-top: 10px; /* Espacio superior */
+        transition: background-color 0.3s ease; /* Transición al pasar el cursor */
+    }
+
+    .gestion-form button:hover {
+        background-color: var(--color5); /* Cambio de color al pasar el cursor */
+    }
+
+    h2 {
+        padding-top: 0%!important;
+        font-size: -30px;
+        display: block;
+        font-size: 1px;
+    }
+
+    p {
+        padding: 0px!important;
+        padding-top: 0px!important;
+    }
+
+    .textoini {
+        background-color: rgba(241, 241, 241, 0.644) !important;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.753);
+    }
+
+    
+    .inititulo {
+        color: var(--color1)!important;
+    }
+
+    .contA {
+        display: block;
+    }
+
+    .parrafo1 {
+        color: var(--color1)!important;
+    }
+
     .contA {
         display: block;
     }
 
     .izq-header {
+        display: none!important;
         width: 50vw;
         height: 100vh;
         display: flex;
@@ -60,18 +369,7 @@
         justify-content: center;
     }
 
-    h2 {
-        padding-top: 120%;
-        font-size: -30px;
-        display: block;
-        font-size: 1px;
-    }
 
-    p {
-        padding: 50px;
-        padding-top: 50px;
-        display: flex;
-    }
 
     h1 {
         text-align: center;
@@ -153,9 +451,9 @@
     }
 
     h3 {
-        font-size: 4em;
+        font-size: 1.75rem!important;
         color: var(--color3);
-        margin-top: 40% !important;
+        margin-bottom: 15% !important;
         text-align: center;
         font-family: Titulo;
         max-height: 30px;

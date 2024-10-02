@@ -1,0 +1,342 @@
+@media screen and (max-width: 800px) {
+    @font-face {
+        font-family: Head;
+        src: url('../fonts/Louis-George.ttf');
+    }
+
+    :root {
+        --color1: #000000;
+        --color2: #FFFCF1;
+        --color3: #2A9C8A;
+        --color4: #ffffff;
+        --color5: #8D95A8;
+        --color6: #7d9c9e;
+    }
+
+    body {
+        background-color: #fffcf4!important;
+    }
+
+    #Sobre\ nosotros {
+        display: flex;
+        flex-direction: column; /* Apilar elementos verticalmente */
+        align-items: center; /* Centrar los elementos horizontalmente */
+        padding: 20px; /* Añadir padding */
+        background-color: var(--color2); /* Fondo consistente */
+        width: 100%; /* Asegurar que ocupe todo el ancho */
+        text-align: center; /* Centrar el texto */
+    }
+
+    h2 {
+        font-size: 1.8em; /* Ajustar el tamaño del título */
+        margin-bottom: 15px; /* Espacio inferior */
+        color: var(--color3); /* Color del título */
+    }
+
+    #alertas-container {
+        display: flex;
+        flex-direction: column; /* Apilar elementos verticalmente */
+        align-items: center; /* Centrar los elementos horizontalmente */
+        width: 100%; /* Ancho completo */
+        gap: 20px; /* Espacio entre los elementos */
+        padding: 10px; /* Añadir padding */
+    }
+
+    #configuracion-alertas, #lista-alertas {
+        width: 90%; /* Ajustar ancho para dispositivos móviles */
+        max-width: 500px; /* Limitar ancho máximo */
+        padding: 15px;
+        background-color: var(--color2);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px; /* Espacio inferior */
+    }
+
+    #configuracion-alertas h3, #lista-alertas h3 {
+        font-size: 1.4em; /* Ajustar tamaño de fuente */
+        margin-bottom: 10px; /* Espacio inferior */
+        color: var(--color3); /* Color de los subtítulos */
+    }
+
+    #alertas-form label, #alertas-form input, #alertas-form select, #alertas-form textarea, #alertas-form button {
+        width: 100%; /* Asegurar ancho completo */
+        margin-top: 5px; /* Espacio superior */
+        padding: 10px; /* Ajustar padding */
+        font-family: Head; /* Consistente con el estilo */
+        font-size: 1em; /* Tamaño de fuente adecuado */
+    
+        border-radius: 5px; /* Bordes redondeados */
+    }
+
+    #alertas-form button {
+        background-color: var(--color3);
+        color: var(--color4);
+        cursor: pointer;
+        font-weight: bold;
+        border: none;
+        margin-top: 10px; /* Espacio superior */
+        transition: background-color 0.3s ease;
+    }
+
+    #alertas-form button:hover {
+        background-color: var(--color5); /* Cambiar color al pasar el cursor */
+    }
+
+    #alertas-table {
+        width: 100%; /* Ancho completo */
+        border-collapse: collapse; /* Colapsar bordes */
+        margin-top: 10px; /* Espacio superior */
+    }
+
+    #alertas-table th, #alertas-table td {
+        padding: 0.625rem!important;
+        border: 1px solid var(--color1);
+        text-align: left; /* Alinear a la izquierda */
+        font-family: Head; /* Consistente con el estilo */
+        color: var(--color3); /* Color del texto */
+    }
+
+    #alertas-table th {
+        background-color: var(--color3);
+    
+    }
+
+    #alertas-table td {
+        background-color: var(--color4);
+        color: var(--color3); /* Color de las celdas */
+    }
+
+    #alertas-table tbody tr:hover {
+        background-color: var(--color5); /* Cambiar color al pasar el cursor */
+    }
+
+
+
+    #Gimnasios {
+        display: flex;
+        height: 230vh;
+        flex-direction: column; /* Apilar elementos verticalmente */
+        align-items: center; /* Centrar los elementos horizontalmente */
+        padding: 20px;
+        background-color: var(--color2); /* Fondo consistente */
+    }
+
+    .section-title {
+        text-align: center; /* Centrar el título */
+        margin-bottom: 20px; /* Espacio inferior */
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column!important; /* Apilar items verticalmente */
+        align-items: center; /* Centrar los elementos horizontalmente */
+        width: 100%; /* Ancho completo */
+        max-width: 600px; /* Limitar el ancho máximo para una mejor visualización */
+        padding: 0 20px; /* Añadir padding horizontal */
+        gap: 20px; /* Espacio entre los elementos */
+    }
+
+    .item-container {
+        width: 100%; /* Ancho completo para cada item */
+        padding: 15px;
+        background-color: var(--color3);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center; /* Centrar el contenido */
+        transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+    .item-container h4 {
+        margin-top: 0;
+        margin-bottom: 10px; /* Espacio inferior para separación */
+        font-size: 1.2em; /* Ajustar tamaño de fuente */
+        color: var(--color4);
+    }
+
+    .item-container p {
+        margin: 0;
+        margin-bottom: 10px; /* Espacio inferior para separación */
+        font-size: 0.9em; /* Ajustar tamaño de fuente */
+        color: var(--color4);
+    }
+
+    .boton2, .boton23{ 
+        width: 80%!important; /* Ajustar ancho del botón */
+        font-size: 1em; /* Ajustar tamaño de fuente */
+        margin: 10px auto; /* Centrar y añadir espacio */
+        padding: 10px; /* Ajustar padding */
+        background-color: var(--color2);
+        color: var(--color1);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .boton2:hover, .boton23:hover {
+        background-color: var(--color5); /* Cambiar color al pasar el cursor */
+        color: var(--color4); /* Asegurar contraste */
+    }
+
+
+    .textoini {
+        background-color: rgba(241, 241, 241, 0.644) !important;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.753);
+    }
+
+    
+    .inititulo {
+        color: var(--color1)!important;
+    }
+
+    .contA {
+        display: block;
+    }
+
+    .izq-header {
+        display: none !important;
+    }
+
+
+
+    .contA {
+        display: block;
+    }
+
+    .izq-header {
+        width: 50vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .der-header {
+        width: 50vw;
+        height: 50vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .div-nav-1 {
+        width: 50vw;
+        height: 10vh;
+        display: flex;
+        padding-bottom: 8px;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .div-nav-2 ul {
+        display: none;
+    }
+
+    nav {
+        height: 10vh;
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    header {
+        background-size: 165vw 100vh !important;
+        width: 100vw;
+        height: 200vh;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    h2 {
+        font-size: -30px;
+        display: block;
+        font-size: 1px;
+    }
+
+    .parrafo1 {
+        text-align: center;
+        color: var(--color1) !important;
+        padding: 0%;
+        padding-top: 0;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .menu-icon {
+        display: block !important;
+        text-align: center;
+        padding: 10px 20px;
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+
+    .menu-hidden {
+        display: block;
+        position: fixed;
+        top: calc(10vh + 1px);
+        left: 0;
+        width: 100%;
+        background-color: var(--color2);
+        padding: 40px;
+        height: 50%;
+    }
+
+    .oc-menu {
+        list-style-type: none;
+        display: block;
+        flex-direction: row;
+        margin: 10px;
+        justify-content: flex-end;
+        align-items: center;
+        color: var(--color1);
+    }
+
+    #EfectoCarrusel {
+        width: 100vw;
+        height: 50vh;
+        align-items: flex-start;
+        justify-content: center;
+        overflow: hidden;
+        margin-bottom: 50%;
+        padding-bottom: 50%;
+        display: none;
+    }
+
+    .carousel-inner {
+        text-align: center;
+        max-width: 150%;
+        max-height: 150%;
+        display: none;
+    }
+
+    .carousel-inner img {
+        max-width: 150%;
+        max-height: 150%;
+        margin: auto;
+        border-radius: 20%;
+        display: none;
+    }
+
+    .carousel-indicators {
+        display: none !important; 
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        transform: translateY(-20%);
+        display: none;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        display: none !important;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+} 

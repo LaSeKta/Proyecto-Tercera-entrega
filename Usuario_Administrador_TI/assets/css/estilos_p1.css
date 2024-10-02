@@ -30,8 +30,6 @@ body {
     --color6: #7d9c9e;
 }
 
-
-
 .menu-hidden {
     display: none;
 }
@@ -582,122 +580,7 @@ a:hover {
     z-index: 1;
 }
 
-.gestion-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    padding: 20px;
-    gap: 20px;
-}
-
-.gestion-form-container {
-    flex: 0 0 30%;
-    background-color: var(--color2);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.gestion-form {
-    display: flex;
-    flex-direction: column;
-}
-
-.gestion-form h3 {
-    font-family: Titulo;
-    color: var(--color3);
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.gestion-form .form-group {
-    margin-bottom: 15px;
-}
-
-.gestion-form label {
-    font-family: Titulo;
-    color: var(--color3);
-    margin-bottom: 5px;
-}
-
-.gestion-form input,
-.gestion-form select,
-.gestion-form button {
-    width: 100%;
-    padding: 10px;
-    font-family: Head;
-    font-size: 1em;
-    margin-top: 5px;
-    border: 1px solid var(--color1);
-    border-radius: 5px;
-}
-
-.gestion-form button {
-    background-color: var(--color3);
-    color: var(--color4);
-    cursor: pointer;
-    font-weight: bold;
-    border: none;
-    margin-top: 10px;
-}
-
-.gestion-form button:hover {
-    background-color: var(--color4);
-    color: var(--color3);
-    border: 1px solid var(--color3);
-}
-
-.gestion-form select {
-    appearance: none;
-    background-color: var(--color4);
-    color: var(--color3);
-    cursor: pointer;
-    transition: border 0.3s ease;
-    font-weight: bold;
-}
-
-.gestion-form select:hover,
-.gestion-form select:focus {
-    border-color: var(--color3);
-}
-
-.gestion-table-container {
-    flex: 1;
-    padding: 20px;
-}
-
-.gestion-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: var(--color2);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.gestion-table th,
-.gestion-table td {
-    padding: 15px;
-    text-align: left;
-    border: 1px solid var(--color1);
-    font-family: Head;
-    color: var(--color3);
-    font-weight: bold;
-}
-
-.gestion-table th {
-    background-color: var(--color3);
-    color: var(--color4);
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-.gestion-table tr:hover {
-    background-color: var(--color5);
-}
-
-#equipos-container {
+.horarios-container {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -706,29 +589,33 @@ a:hover {
     gap: 20px;
 }
 
-#formulario-equipo {
+.user-form-container {
     flex: 0 0 30%;
     background-color: var(--color2);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    margin-right: 5%;
+    margin-left: 10%;
 }
 
-#equipo-form {
+.user-form {
     display: flex;
     flex-direction: column;
 }
 
-#equipo-form label {
+.user-form .form-group {
+    margin-bottom: 15px;
+}
+
+.user-form label {
     font-family: Titulo;
     color: var(--color3);
     margin-bottom: 5px;
 }
 
-#equipo-form input,
-#equipo-form select,
-#equipo-form button {
+.user-form input,
+.user-form select,
+.user-form button {
     width: 100%;
     padding: 10px;
     font-family: Head;
@@ -738,7 +625,7 @@ a:hover {
     border-radius: 5px;
 }
 
-#equipo-form button {
+.user-form button {
     background-color: var(--color3);
     color: var(--color4);
     cursor: pointer;
@@ -747,11 +634,332 @@ a:hover {
     margin-top: 10px;
 }
 
-#equipo-form button:hover {
+.user-form button:hover {
     background-color: var(--color5);
 }
 
-#lista-equipos {
+.user-list-container {
+    flex: 1;
+}
+
+.horarios-table {
+    width: 80%;
+    border-collapse: collapse;
+    background-color: var(--color2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tablajeje {
+    color: var(--color3);
+}
+
+.tituloo {
+    font-size: 3em;
+    color: var(--color3);
+    text-align: center;
+    font-family: Head;
+    font-weight: bold;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button {
+    padding: 5px 10px;
+    font-family: Head;
+    font-size: 0.9em;
+    margin: 2px;
+    border-radius: 5px;
+    border: 1px solid var(--color1);
+    cursor: pointer;
+}
+
+button.edit-button {
+    background-color: var(--color3);
+    color: var(--color4);
+    font-weight: bold;
+}
+
+button.delete-button {
+    background-color: var(--color4);
+    color: var(--color3);
+    font-weight: bold;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+#editForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#editForm .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+#editForm label {
+    font-family: Titulo;
+    color: var(--color3);
+    margin-bottom: 5px;
+    font-size: 1em;
+}
+
+#editForm input,
+#editForm select {
+    padding: 10px;
+    font-family: Head;
+    font-size: 1em;
+    border: 1px solid var(--color1);
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#editForm button {
+    padding: 10px;
+    font-family: Head;
+    font-size: 1em;
+    background-color: var(--color3);
+    color: var(--color4);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+#editForm button:hover {
+    background-color: var(--color5);
+}
+
+.modal-content h3 {
+    font-family: Head;
+    color: var(--color3);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: var(--color2);
+    padding: 20px;
+    position: relative;
+}
+
+.item-container {
+    text-align: center;
+    background-color: var(--color3);
+    width: 300px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    border-radius: 40px;
+    transition: box-shadow 0.3s, transform 0.3s;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.item-container:hover {
+    transform: translateY(-7px);
+}
+
+.item-container h4 {
+    color: var(--color2);
+    margin-top: 15%;
+    max-height: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: Head;
+    font-size: 30px;
+}
+
+.parrafo3 {
+    margin-top: 25px;
+    text-align: center;
+    color: var(--color2);
+    line-height: 1.1;
+    font-family: Head;
+}
+
+.item-container .parrafo3 {
+    font-size: 110%;
+}
+
+.parrafo33 {
+    text-align: center;
+    color: var(--color2);
+    line-height: 1.1;
+    font-family: Head;
+}
+
+.item-container .parrafo33 {
+    font-size: 110%;
+}
+
+a {
+    color: var(--color1);
+    text-decoration: none;
+}
+
+.a1 {
+    color: var(--color2);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--color3);
+    text-decoration: none;
+}
+
+.boton2 {
+    margin: 10px auto;
+    margin-top: 10%;
+    padding: 4px;
+    background: var(--color2);
+    border-radius: 40px;
+    font-family: Nunito;
+    font-size: 100%;
+    width: 15vw;
+    height: 7vh;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 1s;
+    color: var(--color1);
+}
+
+.boton2:hover {
+    text-decoration: underline;
+}
+
+.boton23 {
+    margin: 10px auto;
+    margin-top: 20%;
+    padding: 4px;
+    background: var(--color2);
+    border-radius: 40px;
+    font-family: Nunito;
+    font-size: 100%;
+    width: 15vw;
+    height: 7vh;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 1s;
+    color: var(--color1);
+}
+
+.boton23:hover {
+    text-decoration: underline;
+}
+
+#deportes-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    padding: 20px;
+    gap: 20px;
+}
+
+#formulario-deporte {
+    flex: 0 0 30%;
+    background-color: var(--color2);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    margin-left: 5%;
+    margin-right: 10%;
+}
+
+#deporte-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#deporte-form label {
+    font-family: Titulo;
+    color: var(--color3);
+    margin-bottom: 5px;
+}
+
+#deporte-form input,
+#deporte-form textarea,
+#deporte-form button {
+    width: 100%;
+    padding: 10px;
+    font-family: Head;
+    font-size: 1em;
+    margin-top: 5px;
+    border: 1px solid var(--color1);
+    border-radius: 5px;
+}
+
+#deporte-form button {
+    background-color: var(--color3);
+    color: var(--color4);
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    margin-top: 10px;
+}
+
+#deporte-form button:hover {
+    background-color: var(--color5);
+}
+
+#lista-deportes {
     flex: 1;
     background-color: var(--color2);
     padding: 20px;
@@ -764,123 +972,182 @@ a:hover {
     margin-left: 5%;
 }
 
-#lista-equipos h3 {
+#lista-deportes h3 {
     margin: 0 0 15px 0;
     font-family: Titulo;
     color: var(--color3);
 }
 
-#tabla-equipos {
+#deportes-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
     width: 100%;
-    border-collapse: collapse;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
 }
 
-#tabla-equipos th,
-#tabla-equipos td {
-    border: 1px solid var(--color1);
+#deportes-list li {
     padding: 10px;
-    text-align: left;
-}
-
-#tabla-equipos th {
-    background-color: var(--color3);
-    color: var(--color4);
-}
-
-#tabla-equipos tr:nth-child(even) {
-    background-color: var(--color4);
-}
-
-#tabla-equipos tr:hover {
-    background-color: var(--color5);
-    color: var(--color2);
-}
-
-#deportistas-select {
     background-color: var(--color4);
     color: var(--color3);
-    font-weight: bold;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#deportes-list li:hover {
+    background-color: var(--color3);
+    color: var(--color4);
+}
+
+#alertas-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    padding: 20px;
+    gap: 20px;
+}
+
+#configuracion-alertas {
+    flex: 0 0 40%;
+    background-color: var(--color2);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    margin-left: 5%;
+}
+
+#alertas-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#alertas-form label {
+    font-family: Titulo;
+    color: var(--color3);
+    margin-bottom: 5px;
+}
+
+#alertas-form input,
+#alertas-form select,
+#alertas-form textarea,
+#alertas-form button {
+    width: 100%;
+    padding: 10px;
+    font-family: Head;
+    font-size: 1em;
+    margin-top: 5px;
     border: 1px solid var(--color1);
     border-radius: 5px;
-    padding: 10px;
-    height: 100px;
 }
 
-#evolucion-container {
+#alertas-form button {
+    background-color: var(--color3);
+    color: var(--color4);
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    margin-top: 10px;
+}
+
+#alertas-form button:hover {
+    background-color: var(--color5);
+}
+
+#lista-alertas {
+    flex: 1;
+    background-color: var(--color2);
     padding: 20px;
-    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    max-height: 600px;
+    margin-right: 5%;
+    overflow-y: auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-#tabla-evolucion {
+#alertas-table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 10px;
 }
 
-#tabla-evolucion th,
-#tabla-evolucion td {
-    border: 1px solid var(--color1);
+#alertas-table th,
+#alertas-table td {
     padding: 10px;
+    border: 1px solid var(--color1);
     text-align: left;
+    font-family: Head;
+    color: var(--color3);
 }
 
-#tabla-evolucion th {
+#alertas-table th {
     background-color: var(--color3);
     color: var(--color4);
 }
 
-#tabla-evolucion tr:nth-child(even) {
+#alertas-table td {
     background-color: var(--color4);
+    color: var(--color3);
 }
 
-#tabla-evolucion tr:hover {
-    background-color: var(--color5);
-    color: var(--color2);
-}
-
-#tabla-evolucion button {
-    padding: 5px 10px;
-    background-color: var(--color3);
-    color: var(--color4);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#tabla-evolucion button:hover {
+#alertas-table tbody tr:hover {
     background-color: var(--color5);
 }
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+.user-list-container {
+    display: flex;
+    justify-content: center; /* Centra la tabla horizontalmente */
+    align-items: center; /* Centra la tabla verticalmente, si hay suficiente espacio */
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+    padding: 20px; /* Añade algo de espacio alrededor */
+    box-sizing: border-box; /* Incluye padding en el tamaño total */
 }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+.horarios-table {
+    margin: 0 auto; /* Centra la tabla dentro del contenedor */
+    border-collapse: collapse;
+    background-color: var(--color2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    width: 80%; /* Ajusta el ancho de la tabla según sea necesario */
 }
 
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+
+.search-container {
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    background-color: var(--color2); /* Mismo fondo que las tablas */
+    padding: 15px; /* Espacio interior */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra similar a las tablas */
+    margin-bottom: 20px; /* Espacio inferior */
+    width: 70%; /* Ancho consistente con las tablas */
+    margin: 0 auto; /* Centra el contenedor */
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+.search-input {
+    width: 100%; /* Ancho completo del input */
+    padding: 10px; /* Espacio interior */ /* Borde consistente con las tablas */
+    border-radius: 5px; /* Bordes redondeados */
+    font-family: Head; /* Fuente igual que en las tablas */
+    font-size: 1em; /* Tamaño de fuente acorde */
+    color: var(--color3); /* Color de texto */
+    background-color: var(--color4); /* Fondo claro similar a las celdas de las tablas */
+    box-sizing: border-box; /* Incluye padding en el tamaño total */
+    transition: border-color 0.3s ease; /* Transición para el borde */
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2); 
+}
+
+.search-input:focus {
+    border-color: var(--color3); /* Cambia el color del borde al enfocar */
+    outline: none; /* Quita el borde predeterminado al enfocar */
 }
