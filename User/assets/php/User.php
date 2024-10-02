@@ -1,24 +1,14 @@
 <?php
-require_once '../../../assets/database.php'; 
+require_once '../../../assets/database.php'; // Asegúrate de que este archivo defina correctamente la conexión $mysqli
 
 class User {
-    private $id;
     private $ci;
     private $password;
-    private $conn; 
+    private $id_rol; // Añadir la propiedad id_rol
 
-    public function __construct($id = null, $ci = null, $password = null) {
-        $this->id = $id;
+    public function __construct($ci, $password) {
         $this->ci = $ci;
         $this->password = $password;
-        
-        
-        $database = new Database();
-        $this->conn = $database->connect();
-    }
-
-    public function getId() {
-        return $this->id;
     }
 
     public function getCi() {
@@ -29,8 +19,8 @@ class User {
         return $this->password;
     }
 
-    public function setId($id) {
-        $this->id = $id;
+    public function getIdRol() {
+        return $this->id_rol; // Getter para obtener el rol del usuario
     }
 
     public function setCi($ci) {
@@ -41,5 +31,29 @@ class User {
         $this->password = $password;
     }
 
- 
+    // Método para autenticar el usuario
+    public function authenticate() {
+        global $mysqli;
 
+        // Consulta para verificar el usuario por CI y obtener también el id_rol
+        $query = $mysqli->prepare("SELECT contrasena, id_rol FROM usuarios WHERE CI = ?");
+        $query->bind_param('s', $this->ci);
+        $query->execute();
+        $query->store_result();
+
+        if ($query->num_rows > 0) {
+            $query->bind_result($hashedPassword, $this->id_rol);
+            $query->fetch();
+
+            // Verificar la contraseña usando password_verify
+            if (password_verify($this->password, $hashedPassword)) {
+                return true; // Autenticación exitosa
+            } else {
+                return false; // Contraseña incorrecta
+            }
+        } else {
+            return false; // Usuario no encontrado
+        }
+    }
+}
+?>

@@ -1,80 +1,77 @@
 <?php
-include '../../../assets/database.php'; 
 session_start();
+require_once '/User.php'; // Asegúrate de que este archivo defina correctamente la clase User
 
 header('Content-Type: application/json');
-ob_start();
+
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (isset($_POST['accion']) && $_POST['accion'] == 'login') {
-            if (isset($_POST['ci'], $_POST['password'])) {
-                $ci = $_POST['ci'];
-                $password = $_POST['password'];
+        if (isset($_POST['ci'], $_POST['password'])) {
+            $ci = $_POST['ci'];
+            $password = $_POST['password'];
 
-                if (isset($conn) && $conn !== null) {
+            // Crear un objeto de la clase User
+            $user = new User($ci, $password);
 
-                    $stmt = $conn->prepare("SELECT contrasena, id_rol FROM usuarios WHERE CI = ?");
-                    
-                    if ($stmt) {
-                        $stmt->bind_param("s", $ci);
-                        $stmt->execute();
-                        $stmt->store_result();
+            // Autenticar el usuario
+            if ($user->authenticate()) {
+                // Guardar la CI y el rol en la sesión si la autenticación es exitosa
+                $_SESSION['ci'] = $ci;
+                $_SESSION['id_rol'] = $user->getIdRol(); // Guardar el id_rol en la sesión
 
-                        if ($stmt->num_rows > 0) {
-                            $stmt->bind_result($hashed_password, $id_rol);
-                            $stmt->fetch();
-
-                            if (password_verify($password, $hashed_password)) {
-                                
-                                $_SESSION['ci'] = $ci;
-
-                                $homePages = [
-                                    0 => '../usuario_cliente/formulario.html',
-                                    1 => '../usuario_cliente/index.html',
-                                    2 => 'home3.html',
-                                    3 => 'home4.html',
-                                    4 => 'home5.html',
-                                    5 => 'home5.html',
-                                    6 => 'home5.html',
-                                    7 => 'home5.html',
-                                    8 => 'home5.html',
-                                    9 => 'home5.html',
-                                    10 => '../usuario_administrador_ti/index.html'
-                                ];
-
-                                $redirectUrl = isset($homePages[$id_rol]) ? $homePages[$id_rol] : 'default.html';
-
-                                ob_end_clean();
-                                echo json_encode(['status' => 'success', 'message' => 'Inicio de sesión exitoso', 'redirect' => $redirectUrl]);
-                            } else {
-                                ob_end_clean();
-                                echo json_encode(['status' => 'error', 'message' => 'Contraseña incorrecta']);
-                            }
-                        } else {
-                            ob_end_clean();
-                            echo json_encode(['status' => 'error', 'message' => 'Usuario no encontrado']);
-                        }
-
-                        $stmt->close();
-                    } else {
-                        ob_end_clean();
-                        echo json_encode(['status' => 'error', 'message' => 'Error al preparar la consulta: ' . $conn->error]);
-                    }
-                } else {
-                    ob_end_clean();
-                    echo json_encode(['status' => 'error', 'message' => 'Error en la conexión a la base de datos']);
+                // Redirigir según el rol
+                $redirectUrl = '';
+                switch ($user->getIdRol()) {
+                    case 0:
+                        $redirectUrl = '../usuario_cliente/formulario.html';
+                        break;
+                    case 1:
+                        $redirectUrl = '../usuario_cliente/index.html';
+                        break;
+                    case 2:
+                        $redirectUrl = 'moderador.html';
+                        break;
+                    case 3:
+                        $redirectUrl = 'entrenador.html';
+                        break;
+                    case 4:
+                        $redirectUrl = 'cliente.html';
+                        break;
+                    case 5:
+                        $redirectUrl = 'supervisor.html';
+                        break;
+                    case 6: 
+                        $redirectUrl = 'index.html';
+                        break;
+                    case 7: 
+                        $redirectUrl = 'index.html';
+                        break;
+                    case 8: 
+                        $redirectUrl = 'index.html';
+                        break;
+                    case 9: 
+                        $redirectUrl = 'index.html';
+                        break;
+                    case 10: 
+                        $redirectUrl = '../usuario_administrador_ti/index.html';
+                        break;
+                    default:
+                        $redirectUrl = 'default.html'; // Página por defecto si no se encuentra un rol
                 }
+
+                // Devolver una respuesta JSON
+                echo json_encode(['status' => 'success', 'message' => 'Inicio de sesión exitoso', 'redirect' => $redirectUrl]);
             } else {
-                ob_end_clean();
-                echo json_encode(['status' => 'error', 'message' => 'Faltan datos para iniciar sesión']);
+                echo json_encode(['status' => 'error', 'message' => 'CI o contraseña incorrectos']);
             }
         } else {
-            ob_end_clean();
-            echo json_encode(['status' => 'error', 'message' => 'Acción no válida']);
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos para iniciar sesión']);
         }
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
     }
 } catch (Exception $e) {
-    ob_end_clean();
+    // Capturar cualquier error o excepción y devolverlo como JSON
     echo json_encode(['status' => 'error', 'message' => 'Error del servidor: ' . $e->getMessage()]);
 }
 ?>

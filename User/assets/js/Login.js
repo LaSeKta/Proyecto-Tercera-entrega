@@ -1,39 +1,26 @@
 $(document).ready(function () {
-  const messageContainer = $("#message-container");
-
-  
   $("#loginForm").submit(function (e) {
-    e.preventDefault();
+    e.preventDefault(); // Prevenir que el formulario se envíe por defecto
 
-    let formData = new URLSearchParams($(this).serialize());
-    formData.append('accion', 'login'); 
+    let data = $(this).serialize(); // Serializa los datos del formulario
 
-    fetch("assets/php/login.php", {
-      method: "POST",
-      body: formData,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+    $.ajax({
+      url: "assets/php/Login.php", // Ruta al script PHP
+      type: "POST", // Método de envío
+      data: data, // Datos serializados del formulario
+      success: function (response) {
+        let data = JSON.parse(response); // Asegúrate de que la respuesta sea JSON
+
+        if (data.status === "success") {
+          alert("Inicio de sesión exitoso. Redirigiendo...");
+          window.location.href = data.redirect; // Redirigir según el rol del usuario
+        } else {
+          alert(data.message); // Mostrar mensaje de error
+        }
       },
-    })
-    .then(function (response) {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(function (data) {
-     
-      messageContainer.text(data.message).css("color", data.status === 'success' ? "green" : "red");
-      if (data.status === 'success') {
-
-        setTimeout(() => {
-          window.location.href = data.redirect; 
-        }, 1000);
-      }
-    })
-    .catch(function (error) {
-      console.error("Ocurrió un error: ", error);
-      messageContainer.text("Ocurrió un error inesperado. Revise la consola para más detalles.").css("color", "red");
+      error: function (xhr, status, error) {
+        alert("Ocurrió un error al iniciar sesión. Inténtalo de nuevo.");
+      },
     });
   });
 });
