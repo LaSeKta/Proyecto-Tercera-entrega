@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Usuario - S.I.G.EN</title>
+    <link rel="stylesheet" href="assets/css/style.css"> <!-- Enlace al archivo CSS externo -->
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-card">
+            <img src="assets/img/Logos/Logo_home.png" alt="S.I.G.EN" class="logo" width="80"> <!-- Logo de S.I.G.EN -->
+            <h3>Completa tus datos</h3> <!-- Texto añadido arriba del formulario -->
+            <form id="userForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido" placeholder="Ingrese su apellido" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Ingrese su email" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono" placeholder="Ingrese su teléfono" required>
+                </div>
+                <button type="submit" class="btn-submit">Añadir Informacion</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/jquery-3.7.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/update_persona.js"></script>
+</body>
+</html>

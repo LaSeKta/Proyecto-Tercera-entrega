@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/estilos_p1.css">
+    <link rel="stylesheet" href="assets/css/media_p1.css">
+    <link rel="icon" href="assets/img/Logos/Logo_home.png">
+    <title>S.I.G.EN</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/estilos_p1.css">
+</head>
+
+<body>
+    <div class="contA">
+        <nav>
+            <div class="imagen_logo"> 
+                <img src="assets/img/Logos/Logo_home.png" width="120em" height="120em" alt="imagen" class="container-logo">
+            </div>
+        
+            <div class="div-nav-1">
+                <h1>S.I.G.EN</h1>
+            </div>
+            <div class="div-nav-2">
+                <ul>
+                    <li class="op-menu"><a id="clic1" href="#home" class="activo">Sesiones</a></li>
+                    <li class="op-menu"><a href="#Horarios">Mi Plan</a></li>
+                    <li class="op-menu"><a href="#Gimnasios">Mi Evolución</a></li>
+                    <li class="op-menu"><a href="#Sobre nosotros">Mis Reportes</a></li>
+                </ul>
+
+                <div class="menu-icon" id="menuIcon">☰
+                    <div class="menu-hidden" id="menuHidden">
+                        <li class="oc-menu"><a href="#home">Cumplimiento de Sesiones</a></li>
+                        <li class="oc-menu"><a href="#Gimnasios">Mi Evolución</a></li>
+                        <li class="oc-menu"><a href="#Sobre nosotros">Mis Reportes</a></li>
+                        <li class="oc-menu"><a href="#Horarios">Mi Plan</a></li>
+                    </div>
+        </nav>
+        <header id="home">
+
+            <article class="izq-header" id="subir">
+                <div class="">
+                    <div id="EfectoCarrusel" class="carousel slide">
+
+                        <ul class="carousel-indicators">
+                            <li class="item1 active"></li>
+                            <li class="item2"></li>
+                            <li class="item3"></li>
+                        </ul>
+
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <a href="#Horarios">
+                                <img src="assets/img/img1.png" alt="Interior design 1">
+                                </a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="#Gimnasios">
+                                <img src="assets/img/img2.png" alt="Interior design 2">
+                                </a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="#Sobre nosotros">
+                                <img src="assets/img/img3.png" alt="Interior design 3">
+                                </a>
+                            </div>
+                        </div>
+
+                        <a class="carousel-control-prev" href="#EfectoCarrusel">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#EfectoCarrusel">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+                    </div>
+
+            </article>
+            <article class="der-header">
+                <div class="texto">
+                    <h2><br>S.I.G.EN</h2>
+                    <p class="parrafo1">Puede registrar su cumplimiento de las sesiones de entrenamiento,<br> ingresando su Cédula de Identidad (CI) o identificación</p>
+                    
+                </div>
+                
+                <div class="formulario">
+                    <form action="/registrar_asistencia" method="POST">
+                        <label for="identificacion">Ingrese su Identificación:</label><br>
+                        <input type="text" id="identificacion" name="identificacion" required><br><br>
+                        <input type="submit" value="Registrar Asistencia" >
+                    </form>
+                </div>
+            </article>
+        </header>
+
+
+        <section id="Horarios">
+            <div class="section-title">
+                <h3>mi plan</h3>
+            </div>
+            <div class="horarios-container">
+                <div class="tabs">
+                    <button class="tablink active" onclick="openTab(event, 'Diario')">Diario</button>
+                    <button class="tablink" onclick="openTab(event, 'Semanal')">Semanal</button>
+                    <button class="tablink" onclick="openTab(event, 'Mensual')">Mensual</button>
+                </div>
+                <div id="Diario" class="tabcontent" style="display: block;">
+                    <table class="horarios-table">
+                        <thead>
+                            <tr>
+                                <th>Día</th>
+                                <th>Tipo de Ejercicio</th>
+                                <th>Ejercicios</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Lunes</td>
+                                <td>Musculación</td>
+                                <td>Pectoral, Hombro y Tríceps</td>
+                            </tr>
+                            <tr>
+                                <td>Martes</td>
+                                <td>Pilates (Sesión 1)</td>
+                                <td>Respiración, Estiramiento de Columna, La Sierra, Knee Folds, Leg Circle</td>
+                            </tr>
+                            <tr>
+                                <td>Miércoles</td>
+                                <td>Musculación</td>
+                                <td>Espalda, Hombro (pres) y Bíceps</td>
+                            </tr>
+                            <tr>
+                                <td>Jueves</td>
+                                <td>Pilates (Sesión 2)</td>
+                                <td>Respiración, The Seal (La Foca), Swan o Resistencia, El Puente</td>
+                            </tr>
+                            <tr>
+                                <td>Viernes</td>
+                                <td>Musculación</td>
+                                <td>Piernas</td>
+                            </tr>
+                            <tr>
+                                <td>Sábado</td>
+                                <td>Pilates (Sesión 1) o descanso</td>
+                                <td>Respiración, Estiramiento de Columna, La Sierra, Knee Folds, Leg Circle</td>
+                            </tr>
+                            <tr>
+                                <td>Domingo</td>
+                                <td>Descanso</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="Semanal" class="tabcontent">
+
+                    <table class="horarios-table">
+                        <thead>
+                            <tr>
+                                <th>Semana</th>
+                                <th>Tipo de ejercicio</th>
+                                <th>Total de Ejercicios</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Semana 1</td>
+                                <td>Musculación</td>
+                                <td>15 Ejercicios</td>
+                            </tr>
+                            <tr>
+                                <td>Semana 1</td>
+                                <td>Pilates</td>
+                                <td>20 Ejercicios</td>
+                            </tr>
+                            <tr>
+                                <td>Semana 2</td>
+                                <td>Musculación</td>
+                                <td>15 Ejercicios</td>
+                            </tr><tr>
+                                <td>Semana 2</td>
+                                <td>Pilates</td>
+                                <td>20 Ejercicios</td>
+                            </tr><tr>
+                                <td>Semana 3</td>
+                                <td>Musculación</td>
+                                <td>15 Ejercicios</td>
+                            </tr><tr>
+                                <td>Semana 3</td>
+                                <td>Pilates</td>
+                                <td>20 Ejercicios</td>
+                            </tr>
+                            <tr>
+
+
+                            </tbody>
+                    </table>
+                </div>
+                <div id="Mensual" class="tabcontent">
+
+                    <table class="horarios-table">
+                        <thead>
+                            <tr>
+                                <th>Mes</th>
+                                <th>Total de Ejercicios</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Julio</td>
+                                <td>105 Ejercicios</td>
+                            </tr>
+                            <tr>
+                                <td>Agosto</td>
+                                <td>105 Ejercicios</td>
+                            </tr>
+                            <tr>
+                                <td>Septiembre</td>
+                                <td>105 Ejercicios</td>
+                            </tr>
+                            <tr>
+                                <td>Octubre</td>
+                                <td>105 Ejercicios</td>
+                            </tr>
+                            <tr>
+                                <td>Noviembre</td>
+                                <td>105 Ejercicios</td>
+                            </tr>
+                            <tr>
+                                <td>Diciembre</td>
+                                <td>105 Ejercicios</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>        
+
+
+        <section id="Gimnasios">
+            <h2 class="section-title">Consultar Progreso</h2>
+            <div id="gimnasios-container">
+                <table id="tabla-gimnasios">
+                    <thead>
+                        <tr>
+                            <th>CI del Usuario</th>
+                            <th>Progreso</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12345678</td> <!-- Ajusta con la CI del usuario real -->
+                            <td>75%</td> <!-- Ajusta con el progreso real -->
+                            <td><button class="acciones-btn" onclick="abrirModal()">Ver Dashboard</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <div id="modal-dashboard" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="cerrarModal()">&times;</span>
+                <h2 style="color: var(--color3);">Dashboard de Desempeño</h2>
+                <div id="dashboard-content">
+                    <div class="chart-container">
+                        <h3 style="color: var(--color3);">Progreso General</h3>
+                        <canvas id="general-progress-chart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3 style="color: var(--color3);">Resistencia</h3>
+                        <canvas id="resistance-chart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3 style="color: var(--color3);">Fuerza Muscular</h3>
+                        <canvas id="muscle-strength-chart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3 style="color: var(--color3);">Cumplimiento de Ejercicios</h3>
+                        <canvas id="exercise-compliance-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+        
+        
+
+
+<section id="Sobre nosotros">
+
+    <div class="container-wrapper">
+        <div class="container-custom">
+            <div class="arriba-izquierda">
+                <img src="../usuario cliente/assets/img/download.png" class="animacion" width="70%" height="70%" alt="Imagen" >
+            </div>
+            <div class="abajo-izquierda">
+                <button class="boton-custom">Descargar</button>
+            </div>
+            <div class="derecha">
+                <p class="parrafo-custom">
+                    Descargar tu reporte de evaluación mensual: <br>Este archivo contiene un análisis detallado de tu progreso, incluyendo estadísticas sobre tu resistencia, fuerza muscular, y cumplimiento de los ejercicios. Es una herramienta útil para monitorear tu evolución y ajustar tu plan de entrenamiento según tus objetivos.
+                </p>
+                
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <div class="overlaybottom-container2">
+
+    </div>
+</section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/script.js"></script>
+        <script src="assets/js/script2.js"></script>
+        <script src="assets/js/script3.js"></script>
+        <script src="assets/js/script4.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+
+</html>

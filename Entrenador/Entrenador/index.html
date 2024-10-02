@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/estilos_p1.css">
+    <link rel="stylesheet" href="assets/css/media_p1.css">
+    <link rel="icon" href="assets/img/Logos/Logo_home.png">
+    <title>S.I.G.EN</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/estilos_p1.css">
+</head>
+
+<body>
+    <div class="contA">
+        <nav>
+            <div class="imagen_logo"> 
+                <img src="assets/img/Logos/Logo_home.png" width="120em" height="120em" alt="imagen" class="container-logo">
+            </div>
+        
+            <div class="div-nav-1">
+                <h1>S.I.G.EN</h1>
+            </div>
+            <div class="div-nav-2">
+                <ul>
+                    <li class="op-menu"><a id="clic1" href="#home" class="activo">Home</a></li>
+                    <li class="op-menu"><a href="#Horarios">Calificación y Evolución</a></li>
+                    <li class="op-menu"><a href="#Gimnasios">Gestión de Planes</a></li>
+                    <li class="op-menu"><a href="#Sobre nosotros">Consultar Evolución</a></li>
+                </ul>
+
+                <div class="menu-icon" id="menuIcon">☰
+                    <div class="menu-hidden" id="menuHidden">
+                        <li class="oc-menu"><a href="#home">Home</a></li>
+                        <li class="oc-menu"><a href="#Gimnasios">Gestión de Planes</a></li>
+                        <li class="oc-menu"><a href="#Sobre nosotros">Consultar Evolución</a></li>
+                        <li class="oc-menu"><a href="#Horarios">Calificación y Evolución</a></li>
+                    </div>
+        </nav>
+        <header id="home">
+
+            <article class="izq-header" id="subir">
+                <div class="">
+                    <div id="EfectoCarrusel" class="carousel slide">
+
+                        <ul class="carousel-indicators">
+                            <li class="item1 active"></li>
+                            <li class="item2"></li>
+                            <li class="item3"></li>
+                        </ul>
+
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <a href="#Horarios">
+                                <img src="assets/img/img1.png" alt="Interior design 1">
+                                </a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="#Gimnasios">
+                                <img src="assets/img/img2.png" alt="Interior design 2">
+                                </a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="#Sobre nosotros">
+                                <img src="assets/img/img3.png" alt="Interior design 3">
+                                </a>
+                            </div>
+                        </div>
+
+                        <a class="carousel-control-prev" href="#EfectoCarrusel">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#EfectoCarrusel">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+                    </div>
+
+            </article>
+            <article class="der-header">
+
+                <div class="texto">
+                    <h2><br>S.I.G.EN</h2>
+                    <p class="parrafo1"> <br> El entrenador crea y modifica planes de entrenamiento personalizados, 
+                        registra y califica la evolución de los clientes, y consulta su progreso. Utiliza un módulo 
+                        para gestionar planes, una sección para calificación y evolución, y un dashboard con estadísticas 
+                        de desempeño de sus clientes.</p>
+                    
+                </div>
+                
+            </article>
+        </header>
+
+
+        <section id="Horarios">
+            <h2 class="tituloo" style="color: var(--color3);">Calificación y Evolución</h2>
+            <div class="evolucion-container">
+        
+                <div class="evolucion-form-container">
+                    <form id="evolucionForm" class="evolucion-form">
+                        <div class="form-group">
+                            <label for="clientName">Nombre del Cliente:</label>
+                            <input type="text" id="clientName" name="clientName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientProgress">Progreso (%):</label>
+                            <input type="number" id="clientProgress" name="clientProgress" min="0" max="100" required>
+                        </div>
+        
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="agendaCompliance">Cumplimiento con la agenda:</label>
+                                <select id="agendaCompliance" name="agendaCompliance">
+                                    <option value="Excelente">Excelente</option>
+                                    <option value="Bueno">Bueno</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Deficiente">Deficiente</option>
+                                </select>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="anaerobicResistance">Resistencia anaeróbica:</label>
+                                <select id="anaerobicResistance" name="anaerobicResistance">
+                                    <option value="Excelente">Excelente</option>
+                                    <option value="Bueno">Bueno</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Deficiente">Deficiente</option>
+                                </select>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="muscleStrength">Fuerza muscular:</label>
+                                <select id="muscleStrength" name="muscleStrength">
+                                    <option value="Excelente">Excelente</option>
+                                    <option value="Bueno">Bueno</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Deficiente">Deficiente</option>
+                                </select>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="muscleResistance">Resistencia muscular:</label>
+                                <select id="muscleResistance" name="muscleResistance">
+                                    <option value="Excelente">Excelente</option>
+                                    <option value="Bueno">Bueno</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Deficiente">Deficiente</option>
+                                </select>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="flexibility">Flexibilidad:</label>
+                                <select id="flexibility" name="flexibility">
+                                    <option value="Excelente">Excelente</option>
+                                    <option value="Bueno">Bueno</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Deficiente">Deficiente</option>
+                                </select>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="monotonyResistance">Resistencia a la monotonía:</label>
+                                <select id="monotonyResistance" name="monotonyResistance">
+                                    <option value="Excelente">Excelente</option>
+                                    <option value="Bueno">Bueno</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Deficiente">Deficiente</option>
+                                </select>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="resilience">Resiliencia:</label>
+                                <select id="resilience" name="resilience">
+                                    <option value="Excelente">Excelente</option>
+                                    <option value="Bueno">Bueno</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Deficiente">Deficiente</option>
+                                </select>
+                            </div>
+                        </fieldset>
+        
+                        <div class="form-group">
+                            <button type="submit">Registrar Evolución</button>
+                        </div>
+                    </form>
+                </div>
+        
+                <div class="evolucion-list-container">
+                    <table class="evolucion-table">
+                        <thead>
+                            <tr>
+                                <th class="tablajeje" colspan="4">Evolución de Clientes</th>
+                            </tr>
+                            <tr class="tablajeje">
+                                <th>Nombre del Cliente</th>
+                                <th>Progreso (%)</th>
+                                <th>Calificaciones</th>
+                                <th>Alertas</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clientEvolutions">
+                            <!-- Aquí se mostrarán las entradas registradas -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        
+
+        <section id="Gimnasios">
+            <h2 class="tituloo" style="color: var(--color3);">Gestión de Planes de Entrenamiento</h2>
+            <div class="gestion-container">
+                <div class="gestion-form-container">
+                    <form id="planForm" class="gestion-form">
+                        <h3>Añadir / Modificar Plan</h3>
+                        <div class="form-group">
+                            <label for="nombre-plan">Nombre del Plan:</label>
+                            <input type="text" id="nombre-plan" name="nombre-plan" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="objetivo-plan">Objetivo del Plan:</label>
+                            <input type="text" id="objetivo-plan" name="objetivo-plan" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="agregar-plan-btn">Guardar Plan</button>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" id="eliminar-plan-btn">Eliminar Plan</button>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" id="abrir-modal-asignar-btn">Asignar Plan</button>
+                        </div>
+                    </form>
+                </div>
+        
+                <div class="gestion-table-container">
+                    <table class="gestion-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre del Plan</th>
+                                <th>Objetivo</th>
+                                <th>Ejercicios</th>
+                            </tr>
+                        </thead>
+                        <tbody id="planList">
+                        </tbody>
+                    </table>
+                </div>
+        
+                <div class="gestion-form-container">
+                    <form id="ejercicioForm" class="gestion-form">
+                        <h3>Añadir / Modificar Ejercicio</h3>
+                        <div class="form-group">
+                            <label for="ejercicio-nombre">Nombre del Ejercicio:</label>
+                            <input type="text" id="ejercicio-nombre" name="ejercicio-nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ejercicio-detalle">Detalle del Ejercicio:</label>
+                            <input type="text" id="ejercicio-detalle" name="ejercicio-detalle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="plan-ejercicio-select">Asignar al Plan:</label>
+                            <select id="plan-ejercicio-select" name="plan-ejercicio-select" required>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" id="agregar-ejercicio-btn">Agregar Ejercicio</button>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" id="eliminar-ejercicio-btn">Eliminar Ejercicio</button>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" id="ver-tabla-compatibilidad-btn">Ver Tabla de Compatibilidad</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        
+            <div id="modal-asignar-plan" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal" id="cerrar-modal-asignar-btn">&times;</span>
+                    <div class="asignar-plan-container">
+                        <div class="asignar-plan-form">
+                            <h3 style="margin-top: 0%;">Asignar Plan a Cliente</h3>
+                            <form id="asignar-plan-form">
+                                <label for="cliente-select">Seleccionar Cliente:</label>
+                                <select id="cliente-select" name="cliente-select" required>
+                                </select>
+            
+                                <label for="plan-select">Seleccionar Plan:</label>
+                                <select id="plan-select" name="plan-select" required>
+                                </select>
+            
+                                <button type="submit" id="asignar-plan-btn">Asignar Plan</button>
+                            </form>
+                        </div>
+            
+                        <div class="asignaciones-list">
+                            <h3 style="color: var(--color3); margin-top: 0%;">Asignaciones de Planes a Clientes</h3>
+                            <div class="tabla-asignaciones-container">
+                                <table id="tabla-asignaciones">
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>
+                                            <th>Plan Asignado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        
+            <div id="modal-tabla-compatibilidad" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal" id="cerrar-modal-compatibilidad-btn">&times;</span>
+                    <h3 style="margin-top: 2px;">Tabla de Compatibilidad de Deportes</h3>
+                    <img src="../Entrenador/assets/img/tabla_de_compatibilidad.png" alt="Tabla de Compatibilidad de Deportes" style="width: 100%; height: auto;">
+                </div>
+            </div>
+        </section>
+        
+        
+        
+        
+        
+    
+        <section id="Sobre nosotros">
+            <h2 style="color: var(--color3);">Consultar Evolución de Deportistas</h2>
+            <div id="evolucion-container">
+                <table id="tabla-evolucion">
+                    <thead>
+                        <tr>
+                            <th>Deportista</th>
+                            <th>Progreso</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    
+        <div id="modal-dashboard" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 style="color: var(--color3);">Dashboard de Desempeño</h2>
+                <div id="dashboard-content">
+                    <div class="chart-container">
+                        <h3 style="color: var(--color3);">Progreso General</h3>
+                        <canvas id="progresoGeneralChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3 style="color: var(--color3);">Resistencia</h3>
+                        <canvas id="resistenciaChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3 style="color: var(--color3);">Fuerza Muscular</h3>
+                        <canvas id="fuerzaMuscularChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3 style="color: var(--color3);">Cumplimiento de Ejercicios</h3>
+                        <canvas id="cumplimientoEjerciciosChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/script.js"></script>
+        <script src="assets/js/script2.js"></script>
+        <script src="assets/js/script3.js"></script>
+        <script src="assets/js/script4.js"></script>
+
+    </div>
+
+
+</html>
