@@ -76,7 +76,7 @@ CREATE TABLE deporte (
     tipo VARCHAR(50) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     PRIMARY KEY (id_deporte)
-)
+);
 
 CREATE TABLE planes_ejercicios (
     id_plan INT NOT NULL,
@@ -108,6 +108,16 @@ CREATE TABLE estado (
 );
 
 -- Relaciones
+
+
+CREATE TABLE contiene (
+    id_plan INT NOT NULL,
+    id_ejercicio INT NOT NULL,
+    PRIMARY KEY (id_plan, id_ejercicio),
+    FOREIGN KEY (id_plan) REFERENCES planes (id_plan),
+    FOREIGN KEY (id_ejercicio) REFERENCES ejercicios (id_ejercicio)
+);
+
 CREATE TABLE cliente_estado (
     id_cliente VARCHAR(10) NOT NULL,
     id_estado INT NOT NULL,
@@ -176,13 +186,7 @@ CREATE TABLE sucursal_horario (
 );
 
 
-CREATE TABLE contiene (
-    id_plan INT NOT NULL,
-    id_ejercicio INT NOT NULL,
-    PRIMARY KEY (id_plan, id_ejercicio),
-    FOREIGN KEY (id_plan) REFERENCES planes (id_plan),
-    FOREIGN KEY (id_ejercicio) REFERENCES ejercicios (id_ejercicio)
-);
+
 
 CREATE TABLE cliente_pago (
     id_pago INT NOT NULL,
