@@ -1,6 +1,5 @@
 <?php
-session_start();
-require_once '/User.php'; // Asegúrate de que este archivo defina correctamente la clase User
+require_once 'User.php'; // Asegúrate de que este archivo defina correctamente la clase User
 
 header('Content-Type: application/json');
 
@@ -15,10 +14,10 @@ try {
 
             // Autenticar el usuario
             if ($user->authenticate()) {
-                // Guardar la CI y el rol en la sesión si la autenticación es exitosa
+                session_start();
                 $_SESSION['ci'] = $ci;
-                $_SESSION['id_rol'] = $user->getIdRol(); // Guardar el id_rol en la sesión
-
+                $_SESSION['id_rol'] = $user->getIdRol();
+            
                 // Redirigir según el rol
                 $redirectUrl = '';
                 switch ($user->getIdRol()) {
@@ -40,38 +39,41 @@ try {
                     case 5:
                         $redirectUrl = 'supervisor.html';
                         break;
-                    case 6: 
-                        $redirectUrl = 'index.html';
+                    case 6:
+                        $redirectUrl = 'moderador.html';
                         break;
-                    case 7: 
-                        $redirectUrl = 'index.html';
+                    case 7:
+                        $redirectUrl = 'entrenador.html';
                         break;
-                    case 8: 
-                        $redirectUrl = 'index.html';
+                    case 8:
+                        $redirectUrl = 'cliente.html';
                         break;
-                    case 9: 
-                        $redirectUrl = 'index.html';
+                    case 9:
+                        $redirectUrl = 'supervisor.html';
                         break;
-                    case 10: 
-                        $redirectUrl = '../usuario_administrador_ti/index.html';
+                    case 10:
+                        $redirectUrl = '../Usuario_Administrador_TI/index.html';
                         break;
                     default:
-                        $redirectUrl = 'default.html'; // Página por defecto si no se encuentra un rol
+                        $redirectUrl = 'default.html'; // Redirige a una página por defecto si no se encuentra un rol
                 }
-
-                // Devolver una respuesta JSON
-                echo json_encode(['status' => 'success', 'message' => 'Inicio de sesión exitoso', 'redirect' => $redirectUrl]);
+            
+                // Devolver la respuesta JSON con la URL de redirección
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Inicio de sesión exitoso',
+                    'redirect' => $redirectUrl // Incluir la URL en la respuesta
+                ]);
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'CI o contraseña incorrectos']);
             }
+            
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Faltan datos para iniciar sesión']);
         }
-    } else {
-        echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
     }
 } catch (Exception $e) {
-    // Capturar cualquier error o excepción y devolverlo como JSON
+    // Capturar cualquier excepción y devolverla como JSON
     echo json_encode(['status' => 'error', 'message' => 'Error del servidor: ' . $e->getMessage()]);
 }
 ?>

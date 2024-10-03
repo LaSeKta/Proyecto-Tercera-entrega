@@ -1,43 +1,32 @@
 $(document).ready(function () {
+  $("#registerForm").submit(function (e) {
+    e.preventDefault(); // Evitar que el formulario se envíe de manera tradicional
 
-    $("#registerForm").submit(function (e) {
-      e.preventDefault();
-  
-     
-      let formData = new URLSearchParams($(this).serialize());
-      formData.append('accion', 'registrar'); 
-  
-    
-      fetch("assets/php/register.php", {
-        method: "POST",
-        body: formData,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      })
-      .then(function (response) {
-       
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+    let data = $(this).serialize(); // Serializar los datos del formulario
+
+    $.ajax({
+      url:"assets/php/Register.php", // Ruta a la lógica del registro
+      type: "POST",
+      data: data,
+      success: function (response) {
+        console.log("Respuesta del servidor:", response); // Mostrar la respuesta completa en la consola
+        try {
+          let res = JSON.parse(response); // Intentar convertir la respuesta a JSON
+          if (res.status === 'success') {
+            alert(res.message); // Mostrar mensaje de éxito
+            window.location.href = 'login.html'; // Redirigir al login
+          } else {
+            alert(res.message); // Mostrar mensaje de error
+          }
+        } catch (error) {
+          console.error("Error al procesar la respuesta:", error);
+          alert("Error al procesar la respuesta del servidor.");
         }
-        return response.json();
-      })
-      .then(function (data) {
-      
-        if (data.status === 'success') {
-          alert(data.message); 
-          $(".modal").modal("hide");
-          window.location.href = 'login.html'; 
-        } else {
-          alert(data.message); 
-        }
-      })
-      
-    });
-  
- 
-    $(".modal").on("show.bs.modal", function (e) {
-      $("#registerForm").trigger("reset");
+      },
+      error: function (xhr, status, error) {
+        console.error("Error en la solicitud:", error);
+        alert("Error al registrar el usuario.");
+      },
     });
   });
-  
+});

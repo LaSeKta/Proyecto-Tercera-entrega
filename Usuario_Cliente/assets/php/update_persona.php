@@ -1,124 +1,69 @@
 <?php
-include '../../../assets/database.php'; // Asegúrate de que este archivo define correctamente $conn
-session_start();
+require_once '../../../assets/database.php'; // Asegúrate de que este archivo defina correctamente $mysqli
 
-header('Content-Type: application/json');
-ob_start(); // Inicia el buffer de salida para capturar cualquier salida inesperada
+class Persona {
+    private $ci;
+    private $nombre;
+    private $apellido;
+    private $email;
+    private $telefono;
 
-// Verifica que el usuario esté logueado y que su CI esté disponible en la sesión
-if (!isset($_SESSION['ci'])) {
-    ob_end_clean(); // Limpiar buffer antes de enviar respuesta JSON
-    echo json_encode(['status' => 'error', 'message' => 'Usuario no autenticado']);
-    exit;
+    public function __construct($ci, $nombre, $apellido, $email, $telefono) {
+        $this->ci = $ci;
+        $this->nombre = $nombre;
+        $this->apellido = $apellido;
+        $this->email = $email;
+        $this->telefono = $telefono;
+    }
+
+    // Método para actualizar o insertar los datos de la persona
+    public function save() {
+        global $mysqli;
+
+        // Consulta para verificar si la persona ya existe
+        $checkQuery = $mysqli->prepare("SELECT id_persona FROM personas WHERE id_persona = ?");
+        $checkQuery->bind_param("s", $this->ci);
+        $checkQuery->execute();
+        $checkQuery->store_result();
+
+        if ($checkQuery->num_rows > 0) {
+            // Si la persona ya existe, actualizamos sus datos
+            $stmt = $mysqli->prepare("UPDATE personas SET nombre = ?, apellido = ?, email = ?, telefono = ? WHERE id_persona = ?");
+            $stmt->bind_param("sssss", $this->nombre, $this->apellido, $this->email, $this->telefono, $this->ci);
+        } else {
+            // Si no existe, insertamos una nueva persona
+            $stmt = $mysqli->prepare("INSERT INTO personas (id_persona, nombre, apellido, email, telefono) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssss", $this->ci, $this->nombre, $this->apellido, $this->email, $this->telefono);
+        }
+
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            return ['status' => 'success', 'message' => 'Datos guardados correctamente'];
+        } else {
+            return ['status' => 'error', 'message' => 'Error al guardar los datos'];
+        }
+    }
 }
 
-$ci = $_SESSION['ci']; // CI del usuario logueado
+try {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Obtener los datos del formulario
+        $ci = $_SESSION['ci']; // Suponiendo que el CI está guardado en la sesión
+        $nombre = $_POST['nombre'];
+        $apellido = $_POST['apellido'];
+        $email = $_POST['email'];
+        $telefono = $_POST['telefono'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Recibir los datos del formulario
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $email = $_POST['email'];
-    $telefono = $_POST['telefono']; // Asegúrate de que todos los datos están siendo enviados correctamente
+        // Crear un objeto de la clase Persona
+        $persona = new Persona($ci, $nombre, $apellido, $email, $telefono);
 
-    // Validar los datos recibidos
-    if (empty($nombre) || empty($apellido) || empty($email) || empty($telefono)) {
-        ob_end_clean();
-        echo json_encode(['status' => 'error', 'message' => 'Todos los campos son obligatorios']);
-        exit;
+        // Guardar la persona
+        $result = $persona->save();
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode($result);
     }
-
-    // Verificar si el CI existe en la tabla usuarios
-    $userCheckStmt = $conn->prepare("SELECT CI FROM usuarios WHERE CI = ?");
-    if ($userCheckStmt) {
-        $userCheckStmt->bind_param("s", $ci);
-        $userCheckStmt->execute();
-        $userCheckStmt->store_result();
-
-        if ($userCheckStmt->num_rows === 0) {
-            ob_end_clean();
-            echo json_encode(['status' => 'error', 'message' => 'El CI no está registrado en la tabla de usuarios']);
-            $userCheckStmt->close();
-            exit;
-        }
-        $userCheckStmt->close();
-    } else {
-        ob_end_clean();
-        echo json_encode(['status' => 'error', 'message' => 'Error al verificar el CI en la tabla de usuarios: ' . $conn->error]);
-        exit;
-    }
-
-    // Verificar si el CI existe en la tabla personas
-    $checkStmt = $conn->prepare("SELECT nombre, apellido, email FROM personas WHERE id_persona = ?");
-    if ($checkStmt) {
-        $checkStmt->bind_param("s", $ci);
-        $checkStmt->execute();
-        $checkStmt->store_result();
-
-        if ($checkStmt->num_rows > 0) {
-            $checkStmt->bind_result($currentNombre, $currentApellido, $currentEmail);
-            $checkStmt->fetch();
-
-            // Compara los datos actuales con los nuevos para ver si hay cambios
-            if ($currentNombre === $nombre && $currentApellido === $apellido && $currentEmail === $email) {
-                ob_end_clean();
-                echo json_encode(['status' => 'error', 'message' => 'Los datos ingresados son iguales a los actuales. No se realizaron cambios.']);
-                $checkStmt->close();
-                exit;
-            }
-
-            $checkStmt->close();
-
-            // Preparar la consulta para actualizar los datos en la tabla personas
-            $stmt = $conn->prepare("UPDATE personas SET nombre = ?, apellido = ?, email = ? WHERE id_persona = ?");
-            
-            if ($stmt) {
-                $stmt->bind_param("ssss", $nombre, $apellido, $email, $ci);
-
-                if ($stmt->execute()) {
-                    // Verificar si realmente se actualizaron filas en la tabla personas
-                    if ($stmt->affected_rows > 0) {
-                        // Ahora actualiza el id_rol a 1 en la tabla usuarios
-                        $updateRoleStmt = $conn->prepare("UPDATE usuarios SET id_rol = 1 WHERE CI = ?");
-                        if ($updateRoleStmt) {
-                            $updateRoleStmt->bind_param("s", $ci);
-                            if ($updateRoleStmt->execute()) {
-                                ob_end_clean();
-                                echo json_encode(['status' => 'success', 'message' => 'Información actualizada correctamente y rol modificado a 1']);
-                            } else {
-                                ob_end_clean();
-                                echo json_encode(['status' => 'error', 'message' => 'Error al actualizar el rol: ' . $updateRoleStmt->error]);
-                            }
-                            $updateRoleStmt->close();
-                        } else {
-                            ob_end_clean();
-                            echo json_encode(['status' => 'error', 'message' => 'Error al preparar la consulta para actualizar el rol: ' . $conn->error]);
-                        }
-                    } else {
-                        ob_end_clean();
-                        echo json_encode(['status' => 'error', 'message' => 'No se actualizó ninguna fila en personas. Verifica que los datos sean diferentes.']);
-                    }
-                } else {
-                    ob_end_clean();
-                    echo json_encode(['status' => 'error', 'message' => 'Error al ejecutar la actualización en personas: ' . $stmt->error]);
-                }
-
-                $stmt->close();
-            } else {
-                ob_end_clean();
-                echo json_encode(['status' => 'error', 'message' => 'Error al preparar la consulta en personas: ' . $conn->error]);
-            }
-        } else {
-            ob_end_clean();
-            echo json_encode(['status' => 'error', 'message' => 'El CI no existe en la tabla personas']);
-            $checkStmt->close();
-        }
-    } else {
-        ob_end_clean();
-        echo json_encode(['status' => 'error', 'message' => 'Error al preparar la consulta de verificación en personas: ' . $conn->error]);
-    }
-} else {
-    ob_end_clean();
-    echo json_encode(['status' => 'error', 'message' => 'Método de solicitud no permitido']);
+} catch (Exception $e) {
+    echo json_encode(['status' => 'error', 'message' => 'Error del servidor: ' . $e->getMessage()]);
 }
 ?>

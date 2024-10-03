@@ -9,8 +9,8 @@ $(document).ready(function () {
             url: 'assets/php/update_persona.php', 
             type: 'POST',
             data: formData,
+            dataType: 'json', // Asegura que la respuesta sea tratada como JSON
             success: function (response) {
-                //respuesta del servidor
                 if (response.status === 'success') {
                     alert(response.message);
                     window.location.href = 'index.html'; 

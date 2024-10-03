@@ -1,26 +1,28 @@
 $(document).ready(function () {
   $("#loginForm").submit(function (e) {
-    e.preventDefault(); // Prevenir que el formulario se envíe por defecto
+    e.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
 
-    let data = $(this).serialize(); // Serializa los datos del formulario
+    let data = $(this).serialize(); // Serializar los datos del formulario
 
     $.ajax({
-      url: "assets/php/Login.php", // Ruta al script PHP
+      url: "assets/php/Login.php", // Archivo que maneja el login en el servidor
       type: "POST", // Método de envío
-      data: data, // Datos serializados del formulario
+      data: data, // Datos enviados al servidor
+      dataType: "json", // Especifica que esperas una respuesta JSON
       success: function (response) {
-        let data = JSON.parse(response); // Asegúrate de que la respuesta sea JSON
-
-        if (data.status === "success") {
-          alert("Inicio de sesión exitoso. Redirigiendo...");
-          window.location.href = data.redirect; // Redirigir según el rol del usuario
+        console.log("Respuesta del servidor:", response); // Verifica la respuesta en la consola
+        if (response.status === 'success') {
+          alert(response.message); // Muestra el mensaje de éxito (opcional)
+          window.location.href = response.redirect; // Redirige a la URL correspondiente
         } else {
-          alert(data.message); // Mostrar mensaje de error
+          alert(response.message); // Mostrar mensaje de error si el login falló
         }
       },
       error: function (xhr, status, error) {
-        alert("Ocurrió un error al iniciar sesión. Inténtalo de nuevo.");
-      },
+        console.error("Error en la solicitud:", error);
+        alert("Error en la solicitud de inicio de sesión.");
+      }
     });
   });
 });
+

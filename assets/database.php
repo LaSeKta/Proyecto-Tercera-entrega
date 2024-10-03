@@ -1,17 +1,13 @@
 
 <?php
-//datos de conexión
-$servername = "localhost"; 
-$username = "root";        
-$password = "";            
-$dbname = "sekta";
 
-// Crear la conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db = 'sekta';
 
-// Verificar la conexión
-if ($conn->connect_error) {
-    //error de conexión y muestra un mensaje
-    die(json_encode(['status' => 'error', 'message' => 'Error en la conexión a la base de datos: ' . $conn->connect_error]));
+$mysqli = new mysqli($host, $user, $pass, $db);
+
+if ($mysqli->connect_error) {
+    die('Error de conexión (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 }
-?>
