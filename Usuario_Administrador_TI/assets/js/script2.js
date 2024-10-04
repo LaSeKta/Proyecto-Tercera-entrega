@@ -11,44 +11,53 @@ document.addEventListener('DOMContentLoaded', () => {
         0: 'Usuario',
         1: 'Usuario cliente',
         2: 'Entrenador',
-        3: 'usuario avanzado',
+        3: 'Usuario avanzado',
         4: 'Usuario administrativo',
-        5: 'usuario Seleccionador',
+        5: 'Usuario seleccionador',
     };
-
 
     function getRoleName(idRol) {
         return roleMap[idRol] || 'Rol Desconocido';
     }
 
+    // Función para obtener usuarios desde el servidor
     function fetchUsers() {
-        fetch('assets/php/list_users.php')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
+        fetch('assets/php/list_users.php', {
+            method: 'GET',
+        })
+        .then(response => response.text()) // Asumimos que el servidor podría devolver JSON o HTML
+        .then(response => {
+            console.log("Respuesta del servidor:", response); // Mostrar la respuesta en la consola
+    
+            try {
+                const data = JSON.parse(response); // Intentar parsear como JSON
+    
                 if (data.status === 'error') {
                     alert(data.message);
                     return;
                 }
-
+    
+                // Si es un array, renderizar la tabla
                 if (Array.isArray(data)) {
                     usersList = data;
                     renderUsersTable(usersList);
                 } else {
-                    console.error('La respuesta no es un array:', data);
-                    alert('Error: La respuesta del servidor no es un array.');
+                    alert('Error: La respuesta del servidor no es válida.');
                 }
-            })
-            .catch(error => {
-                console.error('Error al obtener usuarios:', error);
-                alert('Error al obtener usuarios: ' + error.message);
-            });
+            } catch (error) {
+                // Si el texto no es JSON válido, asumimos que es HTML
+                console.log('Respuesta HTML del servidor, procesando como HTML...');
+                document.getElementById('errorMessage').innerHTML = response; // Mostrar el HTML en algún contenedor
+            }
+        })
+        .catch(error => {
+            console.error('Error al obtener usuarios:', error);
+            alert('Error al obtener usuarios: ' + error);
+        });
     }
-
+    
+    
+    // Función para renderizar la tabla de usuarios
     function renderUsersTable(list) {
         usersTable.innerHTML = '';
 
@@ -58,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         list.forEach(user => {
-            const nombre = user.nombre ? user.nombre : 'No definido';
+            const nombre = user.nombre || 'No definido';
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${nombre}</td>
@@ -73,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Función para editar permisos
     window.editPermissions = function(userId) {
         currentUserID = userId;
         const user = usersList.find(user => user.ci === userId);
@@ -85,10 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Cerrar el modal de edición al hacer clic en el botón de cierre
     closeButton.addEventListener('click', () => {
         editModal.style.display = 'none';
     });
 
+    // Guardar los cambios de rol al enviar el formulario
     editForm.addEventListener('submit', (event) => {
         event.preventDefault();
 
@@ -126,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         editModal.style.display = 'none';
     });
 
-
+    // Función para eliminar usuario
     window.deleteUser = function(userId) {
         if (confirm('¿Estás seguro de que quieres desactivar este usuario?')) {
             fetch('assets/php/deactivate_user.php', {
@@ -155,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-
+    // Función para filtrar usuarios en base a la búsqueda
     searchInput.addEventListener('input', () => {
         const searchTerm = searchInput.value.toLowerCase();
         const filteredList = usersList.filter(user => 
@@ -165,11 +177,13 @@ document.addEventListener('DOMContentLoaded', () => {
         renderUsersTable(filteredList);
     });
 
+    // Cerrar el modal al hacer clic fuera de él
     window.addEventListener('click', (event) => {
         if (event.target == editModal) {
             editModal.style.display = 'none';
         }
     });
 
+    // Cargar los usuarios al iniciar
     fetchUsers();
 });
