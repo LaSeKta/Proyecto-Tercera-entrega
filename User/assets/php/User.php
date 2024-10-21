@@ -84,7 +84,7 @@ class User {
         try {
             // Registrar el usuario en la tabla de usuarios
             $stmt = $mysqli->prepare("INSERT INTO usuarios (CI, contrasena, id_rol) VALUES (?, ?, ?)");
-            $id_rol = 0; // Suponiendo que el rol por defecto es 0
+            $id_rol = 0;
             $stmt->bind_param("ssi", $this->ci, $hashedPassword, $id_rol);
 
             if (!$stmt->execute()) {

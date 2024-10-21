@@ -22,7 +22,7 @@ try {
                 $redirectUrl = '';
                 switch ($user->getIdRol()) {
                     case 0:
-                        $redirectUrl = '../usuario_cliente/formulario.html';
+                        $redirectUrl = '../usuario_cliente/index.html';
                         break;
                     case 1:
                         $redirectUrl = '../usuario_cliente/index.html';

@@ -126,21 +126,23 @@
                         </tbody>
                     </table>
                 </div>
+
                 
+
                 <!-- Modal de edición -->
                 <div id="editModal" class="modal">
                     <div class="modal-content">
                         <span class="close-button">&times;</span>
-                        <h2>Editar Usuario</h2>
+                        <h3>Editar Usuario</h3>
                         <form id="editForm">
                             <label for="editRole">Rol:</label>
                             <select id="editRole" name="editRole">
-                                <option value="0">Usuario Cliente</option>
-                                <option value="1">Usuario Administrativo</option>
-                                <option value="2">Usuario Avanzado</option>
-                                <option value="3">Entrenador</option>
-                                <option value="4">Usuario Seleccionador</option>
-                                <option value="5">Supervisor</option>
+                                <option value="0">Usuario </option>
+                                <option value="1">Usuario cliente</option>
+                                <option value="2">Entrenador</option>
+                                <option value="3">usuario avanzado</option>
+                                <option value="4">Usuario administrativo</option>
+                                <option value="5">usuario seleccionador</option>
                             </select>
                             <div class="form-group">
                                 <button type="submit">Guardar Cambios</button>
@@ -149,6 +151,32 @@
                     </div>
                 </div>
             </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="toggleDeactivatedUsers" class="boton">Usuarios Desactivados</button>
+            </div>
+            
+<!-- Modal for deactivated users -->
+<div id="deactivatedUsersModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" id="closeDeactivatedModal">&times;</span>
+        <h3 class="tituloo">Usuarios Desactivados</h3>
+        <table class="horarios-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>CI</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="deactivatedUsers">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
         </section>
 
         <section id="Gimnasios">
