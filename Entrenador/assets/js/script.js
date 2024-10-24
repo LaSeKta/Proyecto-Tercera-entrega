@@ -1,3 +1,5 @@
+
+
 $(document).ready(function () {
     // Activar carrusel
     $("#EfectoCarrusel").carousel();
@@ -99,3 +101,4 @@ function actualizarBotonActivo() {
         }
     });
 }
+
