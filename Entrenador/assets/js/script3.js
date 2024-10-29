@@ -111,7 +111,7 @@ $(document).ready(function () {
                     tipo: tipoEjercicio
                 },
                 success: function (response) {
-                    alert(response); // Mostrar la respuesta del servidor
+                     // Mostrar la respuesta del servidor
                     $('#ejercicioForm')[0].reset(); // Limpiar el formulario después de editar
                     cargarPlanesYAsignaciones(); // Refrescar la lista de planes y ejercicios
                 },
@@ -120,29 +120,30 @@ $(document).ready(function () {
                 }
             });
         } else {
-            alert("Por favor, complete todos los campos.");
+
         }
     });
 });
 
 function cargarEjercicioParaEditar(idEjercicio) {
     $.ajax({
-        url: "assets/php/obtener_ejercicio.php", // Archivo PHP que obtendrá los datos del ejercicio por su ID
+        url: "assets/php/obtener_ejercicio.php",
         type: "GET",
         data: { id: idEjercicio },
         success: function (response) {
-            console.log(response); // Mostrar la respuesta en la consola
             try {
-                const ejercicio = JSON.parse(response); // Intentamos parsear solo si la respuesta es válida
-                $('#ejercicio-nombre').val(ejercicio.nombre);
-                $('#tipo-ejercicio').val(ejercicio.tipo);
-                $('#ejercicio-detalle').val(ejercicio.descripcion);
-                $('#id-ejercicio').val(ejercicio.id_ejercicio); // Guardar la ID del ejercicio en un campo oculto
-
-                // Cargar el plan asignado en el select de planes
-                $('#plan-ejercicio-select').val(ejercicio.id_plan); // Seleccionar el plan asignado al ejercicio
-            } catch (e) {
-                console.error("Error al parsear la respuesta JSON: ", e);
+                const ejercicio = JSON.parse(response);
+                if (ejercicio.error) {
+                    alert(ejercicio.error); // Mostrar el error al usuario si existe
+                } else {
+                    $('#ejercicio-nombre').val(ejercicio.nombre);
+                    $('#tipo-ejercicio').val(ejercicio.tipo);
+                    $('#ejercicio-detalle').val(ejercicio.descripcion);
+                    $('#id-ejercicio').val(ejercicio.id_ejercicio);
+                    $('#plan-ejercicio-select').val(ejercicio.id_plan);
+                }
+            } catch (error) {
+                console.error("Error al parsear JSON:", error);
             }
         },
         error: function (xhr, status, error) {
@@ -150,6 +151,7 @@ function cargarEjercicioParaEditar(idEjercicio) {
         }
     });
 }
+
 
 
 $(document).ready(function () {
@@ -235,7 +237,7 @@ $(document).ready(function () {
                     id_plan: idPlan
                 },
                 success: function (response) {
-                    alert(response); // Mostrar la respuesta del servidor
+                    // Mostrar la respuesta del servidor
                     // Limpiar el formulario si se edita el ejercicio con éxito
                     $('#ejercicioForm')[0].reset();
                     cargarPlanesYAsignaciones(); // Refrescar la lista de planes y ejercicios
@@ -245,7 +247,7 @@ $(document).ready(function () {
                 }
             });
         } else {
-            alert("Por favor, complete todos los campos.");
+           
         }
     });
 });
@@ -285,14 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //planForm.reset();
     });
 
-    // Manejo del botón de eliminar plan
-    document.getElementById('eliminar-plan-btn').addEventListener('click', () => {
-        const nombrePlan = document.getElementById('nombre-plan').value;
-        planes = planes.filter(plan => plan.nombre !== nombrePlan);
-        renderPlanes();
-        updateSelectOptions();
-        //planForm.reset();
-    });
+
 
     // Manejo del botón de agregar ejercicio
     document.getElementById('agregar-ejercicio-btn').addEventListener('click', () => {
@@ -313,18 +308,6 @@ document.addEventListener('DOMContentLoaded', () => {
        // ejercicioForm.reset();
     });
 
-    // Manejo del botón de eliminar ejercicio
-    document.getElementById('eliminar-ejercicio-btn').addEventListener('click', () => {
-        const nombreEjercicio = document.getElementById('ejercicio-nombre').value;
-        const planAsignado = document.getElementById('plan-ejercicio-select').value;
-
-        const plan = planes.find(plan => plan.nombre === planAsignado);
-        if (plan) {
-            plan.ejercicios = plan.ejercicios.filter(ej => ej.nombre !== nombreEjercicio);
-            renderPlanes();
-        }
-        ejercicioForm.reset();
-    });
 
     // Renderizar la lista de planes en la tabla
     function renderPlanes() {
@@ -432,26 +415,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 $(document).ready(function () {
-    // Función para cargar los planes personalizados en el select de "Asignar al Plan"
+    // Cargar los planes en el select para asignar al ejercicio
     function cargarPlanesParaAsignar() {
         $.ajax({
-            url: "assets/php/obtener_planes_para_asignar.php", // Archivo PHP que obtendrá los planes personalizados
+            url: "assets/php/obtener_planes_para_asignar.php",
             type: "GET",
             success: function (response) {
-                console.log(response); // Mostrar la respuesta del servidor para depuración
-                const planes = response; // Asumimos que la respuesta es un objeto JSON, no utilizamos JSON.parse()
-
-                const planSelect = $('#plan-ejercicio-select'); // Referencia al select de planes
-                planSelect.empty(); // Limpiar el select antes de llenarlo
-
-                // Si hay planes, los agregamos al select
-                if (planes.length > 0) {
-                    planes.forEach(function (plan) {
-                        const option = $('<option></option>').val(plan.id_plan).text(plan.nombre);
-                        planSelect.append(option); // Añadir cada plan como opción
-                    });
-                } else {
-                    planSelect.append('<option value="">No hay planes personalizados disponibles</option>');
+                try {
+                    const planes = typeof response === 'string' ? JSON.parse(response) : response;
+                    const planSelect = $('#plan-ejercicio-select');
+                    planSelect.empty();
+    
+                    if (planes.length > 0) {
+                        planes.forEach(function (plan) {
+                            const option = $('<option></option>').val(plan.id_plan).text(plan.nombre);
+                            planSelect.append(option);
+                        });
+                    } else {
+                        planSelect.append('<option value="">No hay planes disponibles</option>');
+                    }
+                } catch (error) {
+                    console.error("Error al parsear los datos de planes:", error);
                 }
             },
             error: function (xhr, status, error) {
@@ -459,41 +443,170 @@ $(document).ready(function () {
             }
         });
     }
+    
+    
 
-    // Llamar a la función para cargar los planes al cargar la página
-    cargarPlanesParaAsignar();
+    cargarPlanesParaAsignar(); // Llamada inicial para llenar el select de planes al cargar la página
 
-    // Ejemplo de cómo utilizar este select al agregar o modificar un ejercicio
+    // Manejo del formulario de agregar ejercicio
     $('#agregar-ejercicio-btn').on('click', function (e) {
         e.preventDefault();
-
+    
         const nombreEjercicio = $('#ejercicio-nombre').val();
         const detalleEjercicio = $('#ejercicio-detalle').val();
         const tipoEjercicio = $('#tipo-ejercicio').val();
-        const idPlanAsignado = $('#plan-ejercicio-select').val(); // Obtener el plan seleccionado
-
-        if (nombreEjercicio !== "" && detalleEjercicio !== "" && idPlanAsignado !== "") {
-            // Enviar los datos mediante AJAX para guardar el ejercicio
+        const idPlanAsignado = $('#plan-ejercicio-select').val();
+    
+        // Al crear un nuevo ejercicio, asegúrate de que no se envíe el campo `id_ejercicio`
+        const idEjercicio = $('#id-ejercicio').val(); // Puede estar vacío si se está creando
+    
+        const data = {
+            nombre: nombreEjercicio,
+            detalle: detalleEjercicio,
+            tipo: tipoEjercicio,
+            id_plan: idPlanAsignado
+        };
+    
+        if (idEjercicio) {
+            data.id_ejercicio = idEjercicio; // Solo agregar el ID si estamos editando
+        }
+    
+        if (nombreEjercicio && detalleEjercicio && tipoEjercicio && idPlanAsignado) {
             $.ajax({
-                url: "assets/php/guardar_ejercicio.php", // Archivo PHP que manejará el guardado del ejercicio
+                url: "assets/php/agregar_ejercicio.php",
                 type: "POST",
-                data: {
-                    nombre: nombreEjercicio,
-                    detalle: detalleEjercicio,
-                    tipo: tipoEjercicio,
-                    id_plan: idPlanAsignado // Asignar al plan seleccionado
-                },
+                data: data,
                 success: function (response) {
-                    alert(response); // Mostrar la respuesta del servidor
-                    $('#ejercicioForm')[0].reset(); // Limpiar el formulario después de guardar
+                    alert(response);
+                    $('#ejercicioForm')[0].reset();
+                    $('#id-ejercicio').val(''); // Limpiar el ID al crear un nuevo ejercicio
+                    cargarPlanesParaAsignar();
                 },
                 error: function (xhr, status, error) {
-                    console.error("Error al guardar el ejercicio:", error);
+                    console.error("Error al agregar el ejercicio:", error);
+                    alert("Ocurrió un error al intentar agregar el ejercicio.");
                 }
             });
         } else {
             alert("Por favor, complete todos los campos.");
         }
     });
+    
+});   
 
+
+
+$(document).ready(function () {
+    // Cargar clientes en el selector de asignación
+    function cargarClientes() {
+        $.ajax({
+            url: "assets/php/obtener_clientes.php",
+            type: "GET",
+            success: function (response) {
+                console.log("Respuesta de clientes recibida:", response); // Depuración
+    
+                try {
+                    const clientes = typeof response === "string" ? JSON.parse(response) : response;
+    
+                    // Maneja el caso en el que haya un error en el JSON
+                    if (clientes.error) {
+                        console.error("Error en la respuesta de clientes:", clientes.error);
+                        alert("Error al cargar los clientes: " + clientes.error);
+                        return;
+                    }
+    
+                    const clienteSelect = $('#cliente-select');
+                    clienteSelect.empty();
+                    
+                    if (clientes.length > 0) {
+                        clientes.forEach(function (cliente) {
+                            clienteSelect.append(
+                                $('<option></option>').val(cliente.id_cliente).text(cliente.nombre)
+                            );
+                        });
+                    } else {
+                        clienteSelect.append('<option value="">No hay clientes disponibles</option>');
+                    }
+                } catch (error) {
+                    console.error("Error al analizar la respuesta JSON:", error);
+                    alert("Ocurrió un error al cargar los clientes. Por favor, intenta nuevamente.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error al cargar los clientes:", error);
+            }
+        });
+    }
+    
+
+    // Cargar planes en el selector de asignación
+    function cargarPlanes() {
+        $.ajax({
+            url: "assets/php/obtener_planes_para_asignar.php",
+            type: "GET",
+            success: function (response) {
+                console.log("Respuesta recibida:", response);
+                try {
+                    // Verifica si la respuesta es un objeto (ya parseado)
+                    const planes = typeof response === "string" ? JSON.parse(response) : response;
+    
+                    const planSelect = $('#plan-select');
+                    planSelect.empty();
+                    
+                    if (planes.length > 0) {
+                        planes.forEach(function (plan) {
+                            planSelect.append(
+                                $('<option></option>').val(plan.id_plan).text(plan.nombre)
+                            );
+                        });
+                    } else {
+                        planSelect.append('<option value="">No hay planes disponibles</option>');
+                    }
+                } catch (error) {
+                    console.error("Error al analizar la respuesta JSON:", error);
+                    alert("Ocurrió un error al cargar los planes. Por favor, intenta nuevamente.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error al cargar los planes:", error);
+            }
+        });
+    }
+    
+
+    // Llamar a las funciones al cargar el modal de asignación
+    $('#abrir-modal-asignar-btn').on('click', function () {
+        cargarClientes();
+        cargarPlanes();
+        $('#modal-asignar-plan').show();
+    });
+
+    // Manejo de la asignación de un plan a un cliente
+    $('#asignar-plan-form').on('submit', function (e) {
+        e.preventDefault();
+        
+        const idCliente = $('#cliente-select').val();
+        const idPlan = $('#plan-select').val();
+
+        $.ajax({
+            url: "assets/php/asignar_plan_cliente.php",
+            type: "POST",
+            data: {
+                id_cliente: idCliente,
+                id_plan: idPlan
+            },
+            success: function (response) {
+                alert(response);
+                $('#modal-asignar-plan').hide();
+            },
+            error: function (xhr, status, error) {
+                console.error("Error al asignar el plan:", error);
+                alert("Ocurrió un error al asignar el plan.");
+            }
+        });
+    });
+
+    $('#cerrar-modal-asignar-btn').on('click', function () {
+        $('#modal-asignar-plan').hide();
+    });
 });

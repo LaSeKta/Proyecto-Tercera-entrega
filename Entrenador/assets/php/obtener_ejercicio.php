@@ -7,10 +7,11 @@ error_reporting(E_ALL);
 // Incluir la conexión a la base de datos
 include('../../../assets/database.php');
 
-if (isset($_GET['id'])) {
+// Verificar que se proporcione la ID de ejercicio
+if (isset($_GET['id']) && !empty($_GET['id'])) {
     $idEjercicio = $_GET['id'];
 
-    // Consulta para obtener los datos del ejercicio junto con el plan asignado
+    // Preparar la consulta para obtener los datos del ejercicio y el plan asignado, si existe
     $sql = "
         SELECT e.id_ejercicio, e.nombre, e.descripcion, e.tipo, p.id_plan, p.nombre AS plan_nombre
         FROM ejercicios e
@@ -25,19 +26,19 @@ if (isset($_GET['id'])) {
 
         if ($stmt->execute()) {
             $result = $stmt->get_result();
-            if ($result->num_rows > 0) {
+            if ($result && $result->num_rows > 0) {
                 $ejercicio = $result->fetch_assoc();
                 echo json_encode($ejercicio); // Devolver los datos del ejercicio y del plan en formato JSON
             } else {
                 echo json_encode(["error" => "Ejercicio no encontrado"]);
             }
         } else {
-            echo json_encode(["error" => "Error en la ejecución de la consulta"]);
+            echo json_encode(["error" => "Error en la ejecución de la consulta: " . $stmt->error]);
         }
 
         $stmt->close();
     } else {
-        echo json_encode(["error" => "Error en la preparación de la consulta"]);
+        echo json_encode(["error" => "Error en la preparación de la consulta: " . $conn->error]);
     }
 } else {
     echo json_encode(["error" => "ID del ejercicio no proporcionada"]);

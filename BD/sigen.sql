@@ -78,13 +78,7 @@ CREATE TABLE deporte (
     PRIMARY KEY (id_deporte)
 );
 
-CREATE TABLE planes_ejercicios (
-    id_plan INT NOT NULL,
-    id_ejercicio INT NOT NULL,
-    PRIMARY KEY (id_plan, id_ejercicio),
-    FOREIGN KEY (id_plan) REFERENCES planes (id_plan),
-    FOREIGN KEY (id_ejercicio) REFERENCES ejercicios (id_ejercicio)
-);
+
 
 CREATE TABLE sesiones (
     id_sesion INT NOT NULL AUTO_INCREMENT,
@@ -110,7 +104,7 @@ CREATE TABLE estado (
 -- Relaciones
 
 
-CREATE TABLE contiene (
+CREATE TABLE planes_ejercicios (
     id_plan INT NOT NULL,
     id_ejercicio INT NOT NULL,
     PRIMARY KEY (id_plan, id_ejercicio),
@@ -173,8 +167,8 @@ CREATE TABLE entrenador_crea (
     id_ejercicio INT NOT NULL,
     PRIMARY KEY (id_entrenador, id_plan, id_ejercicio),
     FOREIGN KEY (id_entrenador) REFERENCES entrenador (id_entrenador),
-    FOREIGN KEY (id_plan) REFERENCES contiene (id_plan),
-    FOREIGN KEY (id_ejercicio) REFERENCES contiene (id_ejercicio)
+    FOREIGN KEY (id_plan) REFERENCES planes_ejercicios (id_plan),
+    FOREIGN KEY (id_ejercicio) REFERENCES planes_ejercicios (id_ejercicio)
 );
 
 CREATE TABLE sucursal_horario (

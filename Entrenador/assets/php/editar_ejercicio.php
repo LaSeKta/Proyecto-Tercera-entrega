@@ -7,30 +7,27 @@ error_reporting(E_ALL);
 // Incluir la conexión a la base de datos
 include('../../../assets/database.php');
 
-if (isset($_GET['id'])) {
-    $idEjercicio = $_GET['id'];
+// Verificar que el método de solicitud sea POST y que se proporcione la ID del ejercicio
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['id_ejercicio'])) {
+    $idEjercicio = $_POST['id_ejercicio'];
+    $nombre = $_POST['nombre'] ?? null;
+    $descripcion = $_POST['descripcion'] ?? null;
+    $tipo = $_POST['tipo'] ?? null;
 
-    // Consulta para obtener los datos del ejercicio por su ID
-    $sql = "SELECT id_ejercicio, nombre, descripcion, tipo FROM ejercicios WHERE id_ejercicio = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $idEjercicio);
+    // Validar que todos los datos necesarios estén presentes
+    if ($nombre && $descripcion && $tipo) {
+        // Preparar la consulta de actualización
+        $sql = "UPDATE ejercicios SET nombre = ?, descripcion = ?, tipo = ? WHERE id_ejercicio = ?";
+        $stmt = $conn->prepare($sql);
 
-    if ($stmt->execute()) {
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $ejercicio = $result->fetch_assoc();
-            echo json_encode($ejercicio); // Devolver los datos del ejercicio en formato JSON
-        } else {
-            echo json_encode(["error" => "Ejercicio no encontrado"]); // Manejo de error si no se encuentra el ejercicio
-        }
-    } else {
-        echo json_encode(["error" => "Error en la consulta"]); // Manejo de error en la consulta
+        if ($stmt) {
+            $stmt->bind_param('sssi', $nombre, $descripcion, $tipo, $idEjercicio);
+
+           
+        } 
     }
-
-    $stmt->close();
-} else {
-    echo json_encode(["error" => "ID de ejercicio no proporcionado"]); // Manejo de error si no se proporciona la ID
 }
 
+// Cerrar la conexión
 $conn->close();
 ?>
