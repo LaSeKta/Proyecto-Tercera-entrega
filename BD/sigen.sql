@@ -2,193 +2,183 @@ CREATE DATABASE sekta;
 
 USE sekta;
 
-CREATE TABLE usuarios (
-    CI VARCHAR(10) NOT NULL,
-    contrasena VARCHAR(255) NOT NULL,
-    id_rol INT NOT NULL,
-    PRIMARY KEY (CI)
+CREATE TABLE IF NOT EXISTS usuarios (
+  `CI` varchar(50) NOT NULL PRIMARY KEY,
+  `contrasena` varchar(50) NOT NULL,
+  `id_rol` int NOT NULL
 );
 
-CREATE TABLE personas (
-    id_persona VARCHAR(10) NOT NULL,
-    nombre VARCHAR(20) NOT NULL,
-    apellido VARCHAR(20) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    PRIMARY KEY (id_persona),
-    FOREIGN KEY (id_persona) REFERENCES usuarios (CI)
+CREATE TABLE IF NOT EXISTS personas (
+  `id_persona` varchar(50) NOT NULL PRIMARY KEY,
+  `nombre` varchar(50) NOT NULL,
+  `apellido` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  FOREIGN KEY (`id_persona`) REFERENCES usuarios(`CI`)
 );
 
-CREATE TABLE entrenador (
-    id_entrenador VARCHAR(10) NOT NULL,
-    PRIMARY KEY (id_entrenador),
-    FOREIGN KEY (id_entrenador) REFERENCES personas (id_persona)
+CREATE TABLE IF NOT EXISTS entrenador (
+  `id_entrenador` varchar(50) NOT NULL PRIMARY KEY,
+  FOREIGN KEY (`id_entrenador`) REFERENCES personas(`id_persona`)
 );
 
-CREATE TABLE clientes (
-    id_cliente VARCHAR(10) NOT NULL,
-    alertas INT NOT NULL,
-    user_estado INT NOT NULL,
-    motivo_inscripcion VARCHAR( 255) NOT NULL,
-    PRIMARY KEY (id_cliente),
-    FOREIGN KEY (id_cliente) REFERENCES usuarios (CI)
+CREATE TABLE IF NOT EXISTS clientes (
+  `id_cliente` varchar(50) NOT NULL PRIMARY KEY,
+  `user_estado` int NOT NULL,
+  `alertas` varchar(50) NOT NULL,
+  FOREIGN KEY (`id_cliente`) REFERENCES personas(`id_persona`)
 );
 
-CREATE TABLE pagos (
-    id_pago INT NOT NULL AUTO_INCREMENT,
-    id_cliente VARCHAR(10) NOT NULL,
-    PRIMARY KEY (id_pago),
-    FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente)
+CREATE TABLE IF NOT EXISTS pagos (
+  `id_pago` int NOT NULL AUTO_INCREMENT PRIMARY KEY
 );
 
-CREATE TABLE evaluaciones (
-    id_evaluacion INT NOT NULL AUTO_INCREMENT,
-    item_evaluacion VARCHAR(255) NOT NULL,
-    nota_max INT NOT NULL,
-    id_cliente VARCHAR(10) NOT NULL,
-    PRIMARY KEY (id_evaluacion),
-    FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente)
+CREATE TABLE IF NOT EXISTS evaluaciones (
+  `id_evaluacion` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `cumplimiento_agenda` int NOT NULL,
+  `resistencia_anaerobica` int NOT NULL,
+  `resistencia_muscular` int NOT NULL,
+  `flexibilidad` int NOT NULL,
+  `resistencia_monotonia` int NOT NULL,
+  `resiliencia` int NOT NULL,
+  `nota` int NOT NULL
 );
 
-CREATE TABLE sucursales (
-    id_sucursal INT NOT NULL AUTO_INCREMENT,
-    capacidad INT NOT NULL,
-    PRIMARY KEY (id_sucursal)
+CREATE TABLE IF NOT EXISTS sucursales (
+  `id_sucursal` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `capacidad` int
 );
 
-CREATE TABLE planes (
-    id_plan INT NOT NULL AUTO_INCREMENT,
-    tipo VARCHAR(255) NOT NULL,
-    nombre VARCHAR(255) NOT NULL,
-    descripcion VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id_plan)
+CREATE TABLE IF NOT EXISTS planes (
+  `id_plan` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `tipo` varchar(50) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `descripcion` varchar(255) NOT NULL
 );
 
-CREATE TABLE ejercicios (
-    id_ejercicio INT NOT NULL AUTO_INCREMENT,
-    tipo VARCHAR(50) NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id_ejercicio)
+CREATE TABLE IF NOT EXISTS ejercicios (
+  `id_ejercicio` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `tipo` varchar(50) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `descripcion` varchar(255) NOT NULL
 );
 
-CREATE TABLE deporte (
-    id_deporte INT NOT NULL AUTO_INCREMENT,
-    tipo VARCHAR(50) NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    PRIMARY KEY (id_deporte)
+CREATE TABLE IF NOT EXISTS deportes (
+  `id_deporte` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `tipo` varchar(50),
+  `nombre` varchar(50),
+  `descripcion` varchar(255)
 );
 
-
-
-CREATE TABLE sesiones (
-    id_sesion INT NOT NULL AUTO_INCREMENT,
-    fecha DATE NOT NULL,
-    asistencia BOOLEAN NOT NULL,
-    notas VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id_sesion)
+CREATE TABLE IF NOT EXISTS sesiones (
+  `id_sesion` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `fecha` date,
+  `asistencia` TINYINT(1)
 );
 
-CREATE TABLE horarios (
-    id_horario INT NOT NULL AUTO_INCREMENT,
-    dia VARCHAR(10) NOT NULL,
-    hora_inicio TIME NOT NULL,
-    hora_fin TIME NOT NULL,
-    PRIMARY KEY (id_horario)
+CREATE TABLE IF NOT EXISTS horarios (
+  `id_horario` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `dia` varchar(50),
+  `hora_inicio` time,
+  `hora_fin` time
 );
 
-CREATE TABLE estado (
-    id_estado INT NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY (id_estado)
+CREATE TABLE IF NOT EXISTS estados (
+  `id_estado` int NOT NULL AUTO_INCREMENT PRIMARY KEY
 );
 
 -- Relaciones
 
-
-CREATE TABLE planes_ejercicios (
-    id_plan INT NOT NULL,
-    id_ejercicio INT NOT NULL,
-    PRIMARY KEY (id_plan, id_ejercicio),
-    FOREIGN KEY (id_plan) REFERENCES planes (id_plan),
-    FOREIGN KEY (id_ejercicio) REFERENCES ejercicios (id_ejercicio)
+CREATE TABLE IF NOT EXISTS planes_ejercicios (
+  `id_plan` int NOT NULL,
+  `id_ejercicio` int NOT NULL,
+  PRIMARY KEY (`id_plan`, `id_ejercicio`),
+  FOREIGN KEY (`id_plan`) REFERENCES planes(`id_plan`),
+  FOREIGN KEY (`id_ejercicio`) REFERENCES ejercicios(`id_ejercicio`)
 );
 
-CREATE TABLE cliente_estado (
-    id_cliente VARCHAR(10) NOT NULL,
-    id_estado INT NOT NULL,
-    PRIMARY KEY (id_cliente, id_estado),
-    FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente),
-    FOREIGN KEY (id_estado) REFERENCES estado (id_estado)
+CREATE TABLE IF NOT EXISTS clientes_estados (
+  `id_cliente` varchar(50) NOT NULL,
+  `id_estado` int NOT NULL,
+  PRIMARY KEY (`id_cliente`, `id_estado`),
+  FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
+  FOREIGN KEY (`id_estado`) REFERENCES estados(`id_estado`)
 );
 
-CREATE TABLE cliente_evaluaciones (
-    id_evaluacion INT NOT NULL,
-    id_cliente VARCHAR(10) NOT NULL,
-    fecha_evaluacion DATE NOT NULL,
-    PRIMARY KEY (id_evaluacion, id_cliente),
-    FOREIGN KEY (id_evaluacion) REFERENCES evaluaciones (id_evaluacion),
-    FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente)
+CREATE TABLE IF NOT EXISTS clientes_evaluaciones (
+  `id_cliente` varchar(50) NOT NULL,
+  `id_evaluacion` int NOT NULL,
+  PRIMARY KEY (`id_cliente`, `id_evaluacion`),
+  FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
+  FOREIGN KEY (`id_evaluacion`) REFERENCES evaluaciones(`id_evaluacion`)
 );
 
-CREATE TABLE cliente_deporte (
-    id_deporte INT NOT NULL,
-    id_cliente VARCHAR(10) NOT NULL,
-    PRIMARY KEY (id_deporte, id_cliente),
-    FOREIGN KEY (id_deporte) REFERENCES deporte (id_deporte),
-    FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente)
+CREATE TABLE IF NOT EXISTS clientes_deportes (
+  `id_cliente` varchar(50) NOT NULL,
+  `id_deporte` int NOT NULL,
+  PRIMARY KEY (`id_cliente`, `id_deporte`),
+  FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
+  FOREIGN KEY (`id_deporte`) REFERENCES deportes(`id_deporte`)
 );
 
-CREATE TABLE cliente_sesion (
-    id_sesion INT NOT NULL,
-    id_cliente VARCHAR(10) NOT NULL,
-    PRIMARY KEY (id_sesion, id_cliente),
-    FOREIGN KEY (id_sesion) REFERENCES sesiones (id_sesion),
-    FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente)
+CREATE TABLE IF NOT EXISTS clientes_sesiones (
+  `id_cliente` varchar(50) NOT NULL,
+  `id_sesion` int NOT NULL,
+  PRIMARY KEY (`id_cliente`, `id_sesion`),
+  FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
+  FOREIGN KEY (`id_sesion`) REFERENCES sesiones(`id_sesion`)
 );
 
-CREATE TABLE entrenador_sesion (
-    id_entrenador VARCHAR(10) NOT NULL,
-    id_sesion INT NOT NULL,
-    PRIMARY KEY (id_entrenador, id_sesion),
-    FOREIGN KEY (id_entrenador) REFERENCES entrenador (id_entrenador),
-    FOREIGN KEY (id_sesion) REFERENCES sesiones (id_sesion)
+CREATE TABLE IF NOT EXISTS entrenador_sesiones (
+  `id_entrenador` varchar(50) NOT NULL,
+  `id_sesion` int NOT NULL,
+  PRIMARY KEY (`id_entrenador`, `id_sesion`),
+  FOREIGN KEY (`id_entrenador`) REFERENCES entrenador(`id_entrenador`),
+  FOREIGN KEY (`id_sesion`) REFERENCES sesiones(`id_sesion`)
 );
 
-CREATE TABLE entrenador_horario (
-    id_entrenador VARCHAR(10) NOT NULL,
-    id_horario INT NOT NULL,
-    PRIMARY KEY (id_entrenador, id_horario),
-    FOREIGN KEY (id_entrenador) REFERENCES entrenador (id_entrenador),
-    FOREIGN KEY (id_horario) REFERENCES horarios (id_horario)
+CREATE TABLE IF NOT EXISTS entrenador_horario (
+  `id_entrenador` varchar(50) NOT NULL,
+  `id_horario` int NOT NULL,
+  PRIMARY KEY (`id_entrenador`, `id_horario`),
+  FOREIGN KEY (`id_entrenador`) REFERENCES entrenador(`id_entrenador`),
+  FOREIGN KEY (`id_horario`) REFERENCES horarios(`id_horario`)
 );
 
-CREATE TABLE entrenador_crea (
-    id_entrenador VARCHAR(10) NOT NULL,
-    id_plan INT NOT NULL,
-    id_ejercicio INT NOT NULL,
-    PRIMARY KEY (id_entrenador, id_plan, id_ejercicio),
-    FOREIGN KEY (id_entrenador) REFERENCES entrenador (id_entrenador),
-    FOREIGN KEY (id_plan) REFERENCES planes_ejercicios (id_plan),
-    FOREIGN KEY (id_ejercicio) REFERENCES planes_ejercicios (id_ejercicio)
+CREATE TABLE IF NOT EXISTS entrenador_crea (
+  `id_entrenador` varchar(50) NOT NULL,
+  `id_ejercicio` int NOT NULL,
+  `id_plan` int NOT NULL,
+  PRIMARY KEY (`id_entrenador`, `id_ejercicio`, `id_plan`),
+  FOREIGN KEY (`id_entrenador`) REFERENCES entrenador(`id_entrenador`),
+  FOREIGN KEY (`id_ejercicio`) REFERENCES ejercicios(`id_ejercicio`),
+  FOREIGN KEY (`id_plan`) REFERENCES planes(`id_plan`)
 );
 
-CREATE TABLE sucursal_horario (
-    id_sucursal INT NOT NULL,
-    id_horario INT NOT NULL,
-    PRIMARY KEY (id_sucursal, id_horario),
-    FOREIGN KEY (id_sucursal) REFERENCES sucursales (id_sucursal),
-    FOREIGN KEY (id_horario) REFERENCES horarios (id_horario)
+CREATE TABLE IF NOT EXISTS sucursal_horario (
+  `id_sucursal` int NOT NULL,
+  `id_horario` int NOT NULL,
+  PRIMARY KEY (`id_sucursal`, `id_horario`),
+  FOREIGN KEY (`id_sucursal`) REFERENCES sucursales(`id_sucursal`),
+  FOREIGN KEY (`id_horario`) REFERENCES horarios(`id_horario`)
 );
 
+CREATE TABLE IF NOT EXISTS clientes_pagos (
+  `id_cliente` varchar(50) NOT NULL,
+  `id_pago` int NOT NULL,
+  `fecha_pago` int,
+  PRIMARY KEY (`id_cliente`, `id_pago`),
+  FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
+  FOREIGN KEY (`id_pago`) REFERENCES pagos(`id_pago`)
+);
 
-
-
-CREATE TABLE cliente_pago (
-    id_pago INT NOT NULL,
-    id_cliente VARCHAR(10) NOT NULL,
-    fecha_pago DATE NOT NULL,
-    PRIMARY KEY (id_pago, id_cliente),
-    FOREIGN KEY (id_pago) REFERENCES pagos (id_pago),
-    FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente)
+CREATE TABLE IF NOT EXISTS Clientes_planes (
+  `id_cliente` varchar(50) NOT NULL,
+  `id_plan` int NOT NULL,
+  `id_ejercicio` int NOT NULL,
+  PRIMARY KEY (`id_cliente`, `id_plan`, `id_ejercicio`),
+  FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
+  FOREIGN KEY (`id_plan`) REFERENCES planes(`id_plan`),
+  FOREIGN KEY (`id_ejercicio`) REFERENCES ejercicios(`id_ejercicio`)
 );
 
 insert into usuarios (CI, contrasena, id_rol) values    
