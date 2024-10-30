@@ -4,7 +4,7 @@ USE sekta;
 
 CREATE TABLE IF NOT EXISTS usuarios (
   `CI` varchar(50) NOT NULL PRIMARY KEY,
-  `contrasena` varchar(50) NOT NULL,
+  `contrasena` varchar(255) NOT NULL,
   `id_rol` int NOT NULL
 );
 
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS clientes_pagos (
   FOREIGN KEY (`id_pago`) REFERENCES pagos(`id_pago`)
 );
 
-CREATE TABLE IF NOT EXISTS Clientes_planes (
+CREATE TABLE IF NOT EXISTS clientes_planes (
   `id_cliente` varchar(50) NOT NULL,
   `id_plan` int NOT NULL,
   `id_ejercicio` int NOT NULL,

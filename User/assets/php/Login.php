@@ -1,4 +1,9 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once 'User.php'; // Asegúrate de que este archivo defina correctamente la clase User
 
 header('Content-Type: application/json');
@@ -20,7 +25,9 @@ try {
             
                 // Redirigir según el rol
                 $redirectUrl = '';
-                switch ($user->getIdRol()) {
+                $idRol = $user->getIdRol();
+
+                switch ($idRol) {
                     case 0:
                         $redirectUrl = '../usuario_cliente/index.html';
                         break;
@@ -57,12 +64,12 @@ try {
                     default:
                         $redirectUrl = 'default.html'; // Redirige a una página por defecto si no se encuentra un rol
                 }
-            
-                // Devolver la respuesta JSON con la URL de redirección
+
+                // Devolver solo la respuesta JSON sin mensajes adicionales
                 echo json_encode([
                     'status' => 'success',
                     'message' => 'Inicio de sesión exitoso',
-                    'redirect' => $redirectUrl // Incluir la URL en la respuesta
+                    'redirect' => $redirectUrl
                 ]);
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'CI o contraseña incorrectos']);

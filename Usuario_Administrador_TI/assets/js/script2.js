@@ -6,14 +6,14 @@ function activateUser(userId) {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
-            ci: userId  // Send the user's CI (id_persona)
+            ci: userId  
         })
     })
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
             alert(data.message);
-            window.location.reload();  // Reload the page after successfully activating the user
+            window.location.reload();  
         } else {
             alert(data.message);
             console.error('Error al activar el usuario:', data.message);

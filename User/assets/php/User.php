@@ -9,9 +9,10 @@ class User {
     private $apellido;
     private $email;
 
-    public function __construct($ci, $password, $nombre, $apellido, $email) {
+    // Hacer que nombre, apellido y email sean opcionales
+    public function __construct($ci, $password, $nombre = null, $apellido = null, $email = null) {
         $this->ci = $ci;
-        $this->password = $password; // Almacenar la contraseña sin hashear para la autenticación
+        $this->password = $password; 
         $this->nombre = $nombre;
         $this->apellido = $apellido;
         $this->email = $email;
@@ -64,6 +65,11 @@ class User {
     // Método para registrar un usuario
     public function register() {
         global $mysqli;
+
+        // Verificar que los datos de registro necesarios estén disponibles
+        if (!$this->nombre || !$this->apellido || !$this->email) {
+            return ['status' => 'error', 'message' => 'Faltan datos para registrar el usuario'];
+        }
 
         // Verificar si el usuario ya está registrado
         $query = $mysqli->prepare("SELECT CI FROM usuarios WHERE CI = ?");
