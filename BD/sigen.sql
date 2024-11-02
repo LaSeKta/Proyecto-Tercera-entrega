@@ -175,6 +175,7 @@ CREATE TABLE IF NOT EXISTS clientes_pagos (
 CREATE TABLE IF NOT EXISTS clientes_planes (
   `id_cliente` varchar(50) NOT NULL,
   `id_plan` int NOT NULL,
+  fecha_asignacion date default current_date,
   PRIMARY KEY (`id_cliente`, `id_plan`),
   FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
   FOREIGN KEY (`id_plan`) REFERENCES planes(`id_plan`)

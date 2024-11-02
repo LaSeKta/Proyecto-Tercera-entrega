@@ -1,3 +1,5 @@
+
+
 $(document).ready(function () {
     // Función para cargar clientes en el selector de evolución
     function cargarClientesEnSelect() {
@@ -819,4 +821,105 @@ function actualizarGraficoEvolucion(evaluacion) {
     });
 
     cargarCalificacionesClientes();
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Selecciona el modal y el botón de cierre
+    const modal = document.getElementById("modal-dashboard");
+    const openModalButton = document.getElementById("btn-ver-evolucion");
+    const closeModalButton = modal ? modal.querySelector(".close") : null;
+
+    // Verifica si el botón para abrir el modal existe
+    if (openModalButton) {
+        openModalButton.addEventListener("click", function () {
+            if (modal) modal.style.display = "block";
+        });
+    } else {
+        console.error('El botón para abrir el modal no se encontró en el DOM.');
+    }
+
+    // Cierra el modal cuando se hace clic en el botón de cierre
+    if (closeModalButton) {
+        closeModalButton.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+    } else {
+        console.error('El botón de cierre del modal no se encontró en el DOM.');
+    }
+
+    // Cierra el modal si se hace clic fuera de la ventana del modal
+    window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Función para asignar un plan
+    $("#asignar-plan-form").on("submit", function (e) {
+        e.preventDefault();
+
+        const idCliente = $("#cliente-select").val();
+        const idPlan = $("#plan-select").val();
+
+        $.ajax({
+            url: "assets/php/asignar_plan_cliente.php", // Cambia esta ruta al archivo PHP
+            type: "POST",
+            data: { id_cliente: idCliente, id_plan: idPlan },
+            dataType: "json", // Asegúrate de especificar que esperas un JSON
+            success: function (response) {
+                // Muestra en la consola la respuesta para depuración
+                console.log("Respuesta de asignación:", response);
+
+                if (response.success) {
+                    alert(response.message); // Muestra el mensaje de éxito
+                    cargarAsignaciones(); // Vuelve a cargar la tabla de asignaciones
+                } else {
+                    alert("Error al asignar el plan: " + (response.error || "Desconocido"));
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error en la solicitud de asignación:", error);
+                alert("Hubo un problema al asignar el plan.");
+            }
+        });
+    });
+
+    // Función para cargar las asignaciones
+    function cargarAsignaciones() {
+        $.ajax({
+            url: "assets/php/obtener_asignaciones.php", // Cambia esta ruta al archivo PHP
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+                console.log("Asignaciones obtenidas:", response);
+
+                const asignacionesTableBody = document.querySelector("#tabla-asignaciones tbody");
+                asignacionesTableBody.innerHTML = "";
+
+                if (response.error) {
+                    console.error("Error al obtener asignaciones:", response.error);
+                    return;
+                }
+
+                response.forEach(asignacion => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${asignacion.cliente}</td>
+                        <td>${asignacion.plan}</td>
+                        <td>${asignacion.fecha_asignacion}</td>
+                    `;
+                    asignacionesTableBody.appendChild(row);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error("Error en la solicitud de asignaciones:", error);
+            }
+        });
+    }
+
+    // Llama a cargarAsignaciones al cargar la página
+    cargarAsignaciones();
 });

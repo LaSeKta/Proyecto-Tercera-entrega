@@ -28,14 +28,12 @@
                     <li class="op-menu"><a id="clic1" href="#home" class="activo">Home</a></li>
                     <li class="op-menu"><a href="#Horarios">Calificación y Evolución</a></li>
                     <li class="op-menu"><a href="#Gimnasios">Gestión de Planes</a></li>
-                    <li class="op-menu"><a href="#Sobre nosotros">Consultar Evolución</a></li>
                 </ul>
 
                 <div class="menu-icon" id="menuIcon">☰
                     <div class="menu-hidden" id="menuHidden">
                         <li class="oc-menu"><a href="#home">Home</a></li>
                         <li class="oc-menu"><a href="#Gimnasios">Gestión de Planes</a></li>
-                        <li class="oc-menu"><a href="#Sobre nosotros">Consultar Evolución</a></li>
                         <li class="oc-menu"><a href="#Horarios">Calificación y Evolución</a></li>
                     </div>
         </nav>
@@ -146,7 +144,7 @@
                         </fieldset>
 
                         <div class="form-group">
-                            <button type="submit">Registrar Evolución</button>
+                            <button type="submit" >Registrar Evolución</button>
                         </div>
                     </form>
                 </div>
@@ -165,7 +163,7 @@
                             </tr>
                         </thead>
                         <tbody id="clientEvolutions">
-                            <!-- Aquí se mostrarán las entradas registradas -->
+                            <button id="btn-ver-evolucion"  style="display: none;">Ver Evolución</button>
                         </tbody>
                     </table>
                 </div>
@@ -281,6 +279,7 @@
                                         <tr>
                                             <th>Cliente</th>
                                             <th>Plan Asignado</th>
+                                            <th>Fecha de Asignación</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -304,27 +303,8 @@
         
         
         
-        
-        
     
-        <section id="Sobre nosotros">
-            <h2 style="color: var(--color3);">Consultar Evolución de Deportistas</h2>
-            <div id="evolucion-container">
-                <table id="tabla-evolucion">
-                    <thead>
-                        <tr>
-                            <th>Deportista</th>
-                            <th>Progreso</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    
-        <div id="modal-dashboard" class="modal">
+        <div id="modal-dashboard" class="modal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2 style="color: var(--color3);">Dashboard de Desempeño</h2>
@@ -376,7 +356,7 @@
         <script src="assets/js/script.js"></script>
         <script src="assets/js/script2.js"></script>
         <script src="assets/js/script3.js"></script>
-        <script src="assets/js/script4.js"></script>
+
 
     </div>
 

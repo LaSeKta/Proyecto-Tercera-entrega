@@ -139,6 +139,10 @@ article {
     overflow: hidden;
 }
 
+div#modal-dashboard {
+    display: none;
+}
+
 .carousel-inner {
     text-align: center;
 }
@@ -677,9 +681,13 @@ a:hover {
     color: var(--color2);
     cursor: pointer;
 }
+#modal-dashboard {
+    display: none!important;
+}
+
 
 .modal {
-    display: none;
+    display: none!important;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -690,6 +698,7 @@ a:hover {
 }
 
 .modal-content {
+    display: none!important;
     background-color: var(--color2);
     margin: 10% auto;
     padding: 20px;
@@ -701,6 +710,7 @@ a:hover {
 }
 
 #modal-asignar-plan .modal-content {
+    display: none!important;
     background-color: #f9f9f9;
     margin: 10% auto;
     padding: 20px 30px;

@@ -13,6 +13,11 @@
         --color6: #7d9c9e;
     }
 
+.modal {
+    display: none;
+}
+
+
     .contA {
         display: block;
     }
