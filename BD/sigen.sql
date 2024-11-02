@@ -107,6 +107,7 @@ CREATE TABLE IF NOT EXISTS clientes_estados (
 CREATE TABLE IF NOT EXISTS clientes_evaluaciones (
   `id_cliente` varchar(50) NOT NULL,
   `id_evaluacion` int NOT NULL,
+  `fecha_evaluacion` date,
   PRIMARY KEY (`id_cliente`, `id_evaluacion`),
   FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
   FOREIGN KEY (`id_evaluacion`) REFERENCES evaluaciones(`id_evaluacion`)
@@ -165,7 +166,7 @@ CREATE TABLE IF NOT EXISTS sucursal_horario (
 CREATE TABLE IF NOT EXISTS clientes_pagos (
   `id_cliente` varchar(50) NOT NULL,
   `id_pago` int NOT NULL,
-  `fecha_pago` int,
+  `fecha_pago` date,
   PRIMARY KEY (`id_cliente`, `id_pago`),
   FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
   FOREIGN KEY (`id_pago`) REFERENCES pagos(`id_pago`)
@@ -174,11 +175,10 @@ CREATE TABLE IF NOT EXISTS clientes_pagos (
 CREATE TABLE IF NOT EXISTS clientes_planes (
   `id_cliente` varchar(50) NOT NULL,
   `id_plan` int NOT NULL,
-  `id_ejercicio` int NOT NULL,
-  PRIMARY KEY (`id_cliente`, `id_plan`, `id_ejercicio`),
+  PRIMARY KEY (`id_cliente`, `id_plan`),
   FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
-  FOREIGN KEY (`id_plan`) REFERENCES planes(`id_plan`),
-  FOREIGN KEY (`id_ejercicio`) REFERENCES ejercicios(`id_ejercicio`)
+  FOREIGN KEY (`id_plan`) REFERENCES planes(`id_plan`)
+
 );
 
 insert into usuarios (CI, contrasena, id_rol) values    
