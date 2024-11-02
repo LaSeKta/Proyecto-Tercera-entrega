@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once 'User.php'; // Asegúrate de que este archivo defina correctamente la clase User
+require_once 'User.php';
 
 header('Content-Type: application/json');
 
@@ -23,49 +23,25 @@ try {
                 $_SESSION['ci'] = $ci;
                 $_SESSION['id_rol'] = $user->getIdRol();
             
-                // Redirigir según el rol
-                $redirectUrl = '';
-                $idRol = $user->getIdRol();
+                // Definir redirecciones según el rol
+                $redirectUrls = [
+                    0 => '../usuario_cliente/index.html',
+                    1 => '../usuario_cliente/index.html',
+                    2 => 'moderador.html',
+                    3 => 'entrenador.html',
+                    4 => 'cliente.html',
+                    5 => 'supervisor.html',
+                    6 => 'moderador.html',
+                    7 => 'entrenador.html',
+                    8 => 'cliente.html',
+                    9 => 'supervisor.html',
+                    10 => '../Usuario_Administrador_TI/index.html',
+                ];
 
-                switch ($idRol) {
-                    case 0:
-                        $redirectUrl = '../usuario_cliente/index.html';
-                        break;
-                    case 1:
-                        $redirectUrl = '../usuario_cliente/index.html';
-                        break;
-                    case 2:
-                        $redirectUrl = 'moderador.html';
-                        break;
-                    case 3:
-                        $redirectUrl = 'entrenador.html';
-                        break;
-                    case 4:
-                        $redirectUrl = 'cliente.html';
-                        break;
-                    case 5:
-                        $redirectUrl = 'supervisor.html';
-                        break;
-                    case 6:
-                        $redirectUrl = 'moderador.html';
-                        break;
-                    case 7:
-                        $redirectUrl = 'entrenador.html';
-                        break;
-                    case 8:
-                        $redirectUrl = 'cliente.html';
-                        break;
-                    case 9:
-                        $redirectUrl = 'supervisor.html';
-                        break;
-                    case 10:
-                        $redirectUrl = '../Usuario_Administrador_TI/index.html';
-                        break;
-                    default:
-                        $redirectUrl = 'default.html'; // Redirige a una página por defecto si no se encuentra un rol
-                }
+                // Asignar URL de redirección basada en el rol, con default si no coincide
+                $redirectUrl = $redirectUrls[$user->getIdRol()] ?? 'default.html';
 
-                // Devolver solo la respuesta JSON sin mensajes adicionales
+                // Respuesta JSON para el inicio de sesión exitoso
                 echo json_encode([
                     'status' => 'success',
                     'message' => 'Inicio de sesión exitoso',

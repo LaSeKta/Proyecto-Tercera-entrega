@@ -132,7 +132,7 @@ section {
     margin: 0 auto;
 }
 
-#tabla-gimnasios {
+#tabla-gimnasios  {
     width: 100%;
     border-collapse: collapse;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -994,4 +994,60 @@ a:hover {
     text-align: justify;
     font-family: Head;
     font-weight: bolder;
+}
+
+#tabla-plan  {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#tabla-plan thead {
+    background-color: var(--color3);
+    color: #fff;
+}
+
+#tabla-plan th, #tabla-plan td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#tabla-plan td {
+    background-color: #fafafa;
+    transition: background-color 0.3s ease;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: var(--color2);
+    padding: 20px;
+    border: 1px solid var(--color3);
+    width: 60%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.close {
+    color: var(--color3);
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
 }
