@@ -1051,3 +1051,17 @@ a:hover {
     font-weight: bold;
     cursor: pointer;
 }
+
+/* Cambia el color del título del calendario a negro */
+#calendar h2{
+    margin: 0.5rem;;
+    color: #000!important;
+}
+
+/* Aumenta el tamaño del calendario */
+#calendar {
+    max-width: 1200px; /* Ajusta el ancho según lo necesites */
+    margin: 0 auto;
+    padding: 20px;
+}
+

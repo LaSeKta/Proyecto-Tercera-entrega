@@ -72,6 +72,8 @@ CREATE TABLE IF NOT EXISTS deportes (
 CREATE TABLE IF NOT EXISTS sesiones (
   `id_sesion` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `fecha` date,
+  `hora_inicio` time,
+  `hora_fin` time,
   `asistencia` TINYINT(1)
 );
 
