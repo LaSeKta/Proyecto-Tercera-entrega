@@ -1,3 +1,32 @@
+$(document).ready(function () {
+    // Función para abrir el modal de asignación
+    $('#abrir-modal-asignar-btn').on('click', function () {
+        $('#modal-asignar-plan').css('display', 'block');
+    });
+
+    // Función para abrir el modal de compatibilidad
+    $('#ver-tabla-compatibilidad-btn').on('click', function () {
+        $('#modal-tabla-compatibilidad').css('display', 'block');
+    });
+
+    // Función para abrir el modal del dashboard
+    $('#btn-ver-evolucion').on('click', function () {
+        $('#modal-dashboard').css('display', 'block');
+    });
+
+    // Función para cerrar los modales al hacer clic en el botón de cierre
+    $('.close-modal, .close').on('click', function () {
+        $(this).closest('.modal').css('display', 'none');
+    });
+
+    // Función para cerrar el modal al hacer clic fuera de la ventana del modal
+    $(window).on('click', function (event) {
+        if ($(event.target).hasClass('modal')) {
+            $(event.target).css('display', 'none');
+        }
+    });
+});
+
 
 
 $(document).ready(function () {

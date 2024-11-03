@@ -19,7 +19,7 @@
             <div class="imagen_logo"> 
                 <img src="assets/img/Logos/Logo_home.png" width="120em" height="120em" alt="imagen" class="container-logo">
             </div>
-        
+            
             <div class="div-nav-1">
                 <h1>S.I.G.EN</h1>
             </div>
@@ -28,6 +28,7 @@
                     <li class="op-menu"><a id="clic1" href="#home" class="activo">Home</a></li>
                     <li class="op-menu"><a href="#Horarios">Calificación y Evolución</a></li>
                     <li class="op-menu"><a href="#Gimnasios">Gestión de Planes</a></li>
+                    <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button> <!-- Botón de cierre de sesión -->
                 </ul>
 
                 <div class="menu-icon" id="menuIcon">☰
@@ -35,6 +36,7 @@
                         <li class="oc-menu"><a href="#home">Home</a></li>
                         <li class="oc-menu"><a href="#Gimnasios">Gestión de Planes</a></li>
                         <li class="oc-menu"><a href="#Horarios">Calificación y Evolución</a></li>
+                        <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button> <!-- Botón de cierre de sesión -->
                     </div>
         </nav>
         <header id="home">
@@ -80,13 +82,16 @@
 
                 <div class="texto">
                     <h2><br>S.I.G.EN</h2>
-                    <p class="parrafo1"> <br> El entrenador crea y modifica planes de entrenamiento personalizados, 
-                        registra y califica la evolución de los clientes, y consulta su progreso. Utiliza un módulo 
-                        para gestionar planes, una sección para calificación y evolución, y un dashboard con estadísticas 
-                        de desempeño de sus clientes.</p>
+                    <p class="parrafo1"> Ver sesiones activas <br>  <br>  <button id="verSesionesBtn" class="btn btn-primary">Sesiones</button></p>
                     
                 </div>
-                
+                <div id="modal-sesiones" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <span class="close" id="cerrarModalSesiones">&times;</span>
+                        <h2 style="color: var(--color3);">Sesiones Asignadas</h2>
+                        <ul id="listaSesiones"></ul> <!-- Aquí se mostrarán las sesiones -->
+                    </div>
+                </div>
             </article>
         </header>
 
@@ -109,37 +114,37 @@
                         <fieldset>
                             <div class="form-group">
                                 <label for="agendaCompliance">Cumplimiento con la agenda (%):</label>
-                                <input type="number" id="agendaCompliance" name="agendaCompliance" min="1" max="100" required>
+                                <input type="number" id="agendaCompliance" name="agendaCompliance" min="1" max="150" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="anaerobicResistance">Resistencia anaeróbica (%):</label>
-                                <input type="number" id="anaerobicResistance" name="anaerobicResistance" min="1" max="100" required>
+                                <input type="number" id="anaerobicResistance" name="anaerobicResistance" min="1" max="150" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="muscleStrength">Fuerza muscular (%):</label>
-                                <input type="number" id="muscleStrength" name="muscleStrength" min="1" max="100" required>
+                                <input type="number" id="muscleStrength" name="muscleStrength" min="1" max="150" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="muscleResistance">Resistencia muscular (%):</label>
-                                <input type="number" id="muscleResistance" name="muscleResistance" min="1" max="100" required>
+                                <input type="number" id="muscleResistance" name="muscleResistance" min="1" max="150" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="flexibility">Flexibilidad (%):</label>
-                                <input type="number" id="flexibility" name="flexibility" min="1" max="100" required>
+                                <input type="number" id="flexibility" name="flexibility" min="1" max="150" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="monotonyResistance">Resistencia a la monotonía (%):</label>
-                                <input type="number" id="monotonyResistance" name="monotonyResistance" min="1" max="100" required>
+                                <input type="number" id="monotonyResistance" name="monotonyResistance" min="1" max="150" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="resilience">Resiliencia (%):</label>
-                                <input type="number" id="resilience" name="resilience" min="1" max="100" required>
+                                <input type="number" id="resilience" name="resilience" min="1" max="150" required>
                             </div>
                         </fieldset>
 
@@ -304,7 +309,7 @@
         
         
     
-        <div id="modal-dashboard" class="modal" style="display: none;">
+        <div id="modal-dashboard" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2 style="color: var(--color3);">Dashboard de Desempeño</h2>
@@ -351,11 +356,11 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
         <script src="assets/js/script.js"></script>
         <script src="assets/js/script3.js"></script>
-
+        <script src="../User/assets/js/logout.js"></script>
 
     </div>
 

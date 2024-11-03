@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerrando Sesión</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            text-align: center;
+        }
+        .message-box {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="message-box">
+        <h1>Sesión Cerrada</h1>
+        <p>Has cerrado sesión correctamente. Serás redirigido al inicio de sesión en unos momentos.</p>
+        <p>Si no eres redirigido, haz clic <a href="Login.html">aquí</a>.</p>
+    </div>
+
+    <script>
+        // Redirige a Login.html después de 3 segundos
+        setTimeout(function() {
+            window.location.href = "Login.html";
+        }, 3000);
+    </script>
+</body>
+</html>

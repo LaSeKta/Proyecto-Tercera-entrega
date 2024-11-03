@@ -682,12 +682,12 @@ a:hover {
     cursor: pointer;
 }
 #modal-dashboard {
-    display: none!important;
+    display: none;
 }
 
 
 .modal {
-    display: none!important;
+    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -698,7 +698,6 @@ a:hover {
 }
 
 .modal-content {
-    display: none!important;
     background-color: var(--color2);
     margin: 10% auto;
     padding: 20px;
@@ -710,7 +709,7 @@ a:hover {
 }
 
 #modal-asignar-plan .modal-content {
-    display: none!important;
+    display: none;
     background-color: #f9f9f9;
     margin: 10% auto;
     padding: 20px 30px;
@@ -993,4 +992,45 @@ a:hover {
     #tabla-evolucion th, #tabla-evolucion td {
         padding: 10px 8px;
     }
+}
+
+.gestion-table-container {
+    max-height: 80vh!important; /* Define la altura máxima del contenedor */
+    overflow-y: auto; /* Agrega la barra de desplazamiento vertical */
+}
+
+
+#listaSesiones {
+    justify-content: center!important;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#listaSesiones li {
+
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+#listaSesiones li:last-child {
+    border-bottom: none;
+}
+
+#listaSesiones li h3 {
+    font-size: 16px;
+    color: #2a9d8f;
+    margin: 0;
+}
+
+#listaSesiones li p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+#listaSesiones li strong {
+    color: #333;
 }

@@ -28,7 +28,7 @@ try {
                     0 => '../usuario_cliente/index.html',
                     1 => '../usuario_cliente/index.html',
                     2 => 'moderador.html',
-                    3 => 'entrenador.html',
+                    3 => '../entrenador/index.html',
                     4 => 'cliente.html',
                     5 => 'supervisor.html',
                     6 => 'moderador.html',
