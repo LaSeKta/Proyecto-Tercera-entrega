@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="assets/css/media_p1.css">
     <link rel="icon" href="assets/img/Logos/Logo_home.png">
     <title>S.I.G.EN</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/estilos_p1.css">
 </head>
 
 <body>
@@ -17,25 +19,25 @@
             <div class="imagen_logo"> 
                 <img src="assets/img/Logos/Logo_home.png" width="120em" height="120em" alt="imagen" class="container-logo">
             </div>
-        
+            
             <div class="div-nav-1">
                 <h1>S.I.G.EN</h1>
             </div>
             <div class="div-nav-2">
                 <ul>
                     <li class="op-menu"><a id="clic1" href="#home" class="activo">Home</a></li>
-                    <li class="op-menu"><a href="#Horarios">Gestión de Usuarios</a></li>
-                    <li class="op-menu"><a href="#Gimnasios">Gestión de Ejercicios</a></li>
-                    <li class="op-menu"><a href="#Sobre nosotros">Gestión de Deportes</a></li>
+                    <li class="op-menu"><a href="#Horarios">gestion de usuarios</a></li>
+                    <li class="op-menu"><a href="#Gimnasios">Gestión de ejercicios</a></li>
+                    <li class="op-menu"><a href="#Sobre nosotros">Gestión de deportes</a></li>
                     <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button> <!-- Botón de cierre de sesión -->
                 </ul>
 
                 <div class="menu-icon" id="menuIcon">☰
                     <div class="menu-hidden" id="menuHidden">
                         <li class="oc-menu"><a href="#home">Home</a></li>
-                        <li class="oc-menu"><a href="#Gimnasios">Gestión de Ejercicios</a></li>
-                        <li class="oc-menu"><a href="#Sobre nosotros">Gestión de Deportes</a></li>
-                        <li class="oc-menu"><a href="#Horarios">Gestión de Usuarios</a></li>
+                        <li class="oc-menu"><a href="#Gimnasios">Gestión de Planes</a></li>
+                        <li class="oc-menu"><a href="#Horarios">Calificación y Evolución</a></li>
+                        <li class="op-menu"><a href="#Sobre nosotros">Gestión de Planes</a></li>
                         <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button> <!-- Botón de cierre de sesión -->
                     </div>
         </nav>
@@ -136,9 +138,6 @@
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>CI</th>
-                                <th>Email</th>
-                                <th>Teléfono</th>
-                                <th>Plan</th>
                             </tr>
                         </thead>
                         <tbody id="users">
@@ -150,36 +149,62 @@
         
         
         <section id="Gimnasios">
-    <h2 style="color: var(--color3);">Gestionar Ejercicios</h2>
-    <div id="ejercicios-container">
-        <div id="lista-ejercicios">
-            <h3>Ejercicios Disponibles</h3>
-            <ul id="ejercicios-list">
-            </ul>
-        </div>
+            <section id="Gimnasios">
+                <h2 class="tituloo" style="color: var(--color3);">Gestión de ejercicios</h2>
+                <div class="gestion-container">
+          
+                    <div class="gestion-table-container">
+                        <table class="gestion-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre del ejercicio</th>
+                                    <th>Objetivo</th>
+                                    <th>tipo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="planList">
+                            </tbody>
+                        </table>
+                    </div>
+            
+                    <div class="gestion-form-container">
+                        <form id="ejercicioForm" class="gestion-form">
+                            <h3>Añadir / Modificar Ejercicio</h3>
+                            <div class="form-group">
+                                <label for="ejercicio-nombre">Nombre del Ejercicio:</label>
+                                <input type="text" id="ejercicio-nombre" name="ejercicio-nombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ejercicio-detalle">Detalle del Ejercicio:</label>
+                                <input type="text" id="ejercicio-detalle" name="ejercicio-detalle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tipo-ejercicio">Tipo de Ejercicio:</label>
+                                <select id="tipo-ejercicio" name="tipo-ejercicio" required>
+                                    <option value="Cardio">Cardio</option>
+                                    <option value="Fuerza">Fuerza</option>
+                                    <option value="Resistencia">Resistencia</option>
+                                    <option value="Flexibilidad">Flexibilidad</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="button" id="agregar-ejercicio-btn">Agregar Ejercicio</button>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="eliminar-ejercicio-btn">Eliminar Ejercicio</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            
+                
+          </section>    
         
-        <div id="formulario-ejercicio">
-            <h3>Crear o Modificar Ejercicio</h3>
-            <form id="ejercicio-form">
-                <label for="nombre-ejercicio">Nombre del Ejercicio:</label>
-                <input type="text" id="nombre-ejercicio" name="nombre-ejercicio" required>
 
-                <label for="tipo-ejercicio">Tipo de Ejercicio:</label>
-                <input type="text" id="tipo-ejercicio" name="tipo-ejercicio" required>
-
-                <label for="descripcion-ejercicio">Descripción:</label>
-                <textarea id="descripcion-ejercicio" name="descripcion-ejercicio"></textarea>
-
-                <button type="submit" id="agregar-ejercicio-btn">Guardar Ejercicio</button>
-                <button type="button" id="eliminar-ejercicio-btn">Eliminar Ejercicio</button>
-            </form>
-        </div>
-    </div>
-</section>
-        
-
-        <section id="Sobre nosotros">
-            <h2 style="color: var(--color3);">Gestión de Deportes a Nivel Nacional</h2>
+          <section id="Sobre nosotros">
+            <h2 style="color: var(--color3);">Gestión de Deportes</h2>
             <div id="deportes-container">
                 <div id="lista-deportes">
                     <h3>Deportes Disponibles</h3>
@@ -193,6 +218,9 @@
                         <label for="nombre-deporte">Nombre del Deporte:</label>
                         <input type="text" id="nombre-deporte" name="nombre-deporte" required>
         
+                        <label for="tipo-deporte">Tipo de deporte:</label>
+                        <input type="text" id="tipo-deporte" name="tipo-deporte" required>
+        
                         <label for="descripcion-deporte">Descripción:</label>
                         <textarea id="descripcion-deporte" name="descripcion-deporte"></textarea>
         
@@ -203,16 +231,21 @@
             </div>
         </section>
         
+        
+        
 
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- //entrenador scripts -->
+
+         <!-- //entrenador scripts -->
         <script src="assets/js/script.js"></script>
-        <script src="assets/js/script2.js"></script>
-        <script src="assets/js/script3.js"></script>
-        <script src="assets/js/script4.js"></script>
+         <script src="assets/js/script_deporte.js"></script>
+        <script src="assets/js/script_ejercicios.js"></script>
+        <script src="assets/js/script_usuario.js"></script>
         <script src="../User/assets/js/logout.js"></script>
+
     </div>
-
-
 </html>
