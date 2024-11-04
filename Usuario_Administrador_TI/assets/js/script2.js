@@ -37,10 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const roleMap = {
         0: 'Usuario ',
         1: 'Usuario cliente',
-        2: 'Entrenador',
-        3: 'Usuario avanzado',
-        4: 'Usuario administrativo',
-        5: 'Usuario seleccionador',
+        2: 'Usuario cliente fisioterapia',
+        3: 'Entrenador',
+        4: 'Usuario avanzado',
+        5: 'Usuario administrativo',
+        6: 'Usuario seleccionador',
     };
 
     // Get references to the modal and the close button for deactivated users
@@ -185,43 +186,56 @@ document.addEventListener('DOMContentLoaded', () => {
         editModal.style.display = 'none';
     });
 
-    // Save role changes when the form is submitted
-    editForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        
-        const newRole = document.getElementById('editRole').value;
-        
-        fetch('assets/php/update_role.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                ci: currentUserID,   // Pass the currentUserID (id_persona or CI)
-                id_rol: newRole      // Pass the new role value
-            })
+// Save role changes when the form is submitted
+editForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    
+    const newRole = document.getElementById('editRole').value;
+    
+    fetch('assets/php/update_role.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            ci: currentUserID,   // Pass the currentUserID (id_persona or CI)
+            id_rol: newRole      // Pass the new role value
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                const user = usersList.find(user => user.id_persona === currentUserID);  // Find user by id_persona
-                if (user) {
-                    user.id_rol = newRole;
-                    renderUsersTable(usersList);  // Re-render the table with updated role
-                }
-                alert(data.message);
-            } else {
-                alert(data.message);
-                console.error('Error al actualizar el rol:', data.message);
-            }
-        })
-        .catch(error => {
-            alert('Error al actualizar el rol: ' + error.message);
-            console.error('Error en la solicitud:', error);
-        });
+    })
+    .then(response => response.text())  // Read the response as plain text first
+    .then(text => {
+        console.log("Respuesta completa del servidor:", text); // Log the exact response from the server
 
-        editModal.style.display = 'none';
+        let data;
+        try {
+            data = JSON.parse(text);  // Attempt to parse the text as JSON
+        } catch (error) {
+            console.error('Error al parsear JSON:', error);
+            alert('Error en la respuesta del servidor. Revisa la consola para más detalles.');
+            return;
+        }
+
+        if (data.status === 'success') {
+            const user = usersList.find(user => user.id_persona === currentUserID);  // Find user by id_persona
+            if (user) {
+                user.id_rol = newRole;
+                renderUsersTable(usersList);  // Re-render the table with updated role
+            }
+            alert(data.message);
+        } else {
+            alert(data.message);
+            console.error('Error al actualizar el rol:', data.message);
+            console.error('Detalles del error:', data.error_detail); // Mostrar detalles específicos del error, si existen
+        }
+    })
+    .catch(error => {
+        alert('Error al actualizar el rol: ' + error.message);
+        console.error('Error en la solicitud:', error);
     });
+
+    editModal.style.display = 'none';
+});
+
 
     // Function to delete (deactivate) a user
     window.deleteUser = function(userId) {

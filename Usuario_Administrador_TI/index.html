@@ -30,7 +30,7 @@
                     <li class="op-menu"><a id="clic1" href="#home" class="activo">Home</a></li>
                     <li class="op-menu"><a href="#Horarios">Gestión de Usuarios y Permisos</a></li>
                     <li class="op-menu"><a href="#Gimnasios">Seguridad del Sistema</a></li>
-                    <li class="op-menu"><a href="#Sobre nosotros">Monitoreo Técnico</a></li>
+
                     <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button> <!-- Botón de cierre de sesión -->
                 </ul>
 
@@ -38,7 +38,7 @@
                     <div class="menu-hidden" id="menuHidden">
                         <li class="oc-menu"><a href="#home">Home</a></li>
                         <li class="oc-menu"><a href="#Gimnasios">Seguridad del Sistema</a></li>
-                        <li class="oc-menu"><a href="#Sobre nosotros">Monitoreo Técnico</a></li>
+
                         <li class="oc-menu"><a href="#Horarios">Gestión de Usuarios y Permisos</a></li>
                         <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button> <!-- Botón de cierre de sesión -->
                     </div>
@@ -141,10 +141,11 @@
                             <select id="editRole" name="editRole">
                                 <option value="0">Usuario </option>
                                 <option value="1">Usuario cliente</option>
-                                <option value="2">Entrenador</option>
-                                <option value="3">usuario avanzado</option>
-                                <option value="4">Usuario administrativo</option>
-                                <option value="5">usuario seleccionador</option>
+                                <option value="2">Usuario cliente fisioterapia</option>
+                                <option value="3">Entrenador</option>
+                                <option value="4">usuario avanzado</option>
+                                <option value="5">Usuario administrativo</option>
+                                <option value="6">usuario seleccionador</option>
                             </select>
                             <div class="form-group">
                                 <button type="submit">Guardar Cambios</button>
@@ -185,8 +186,7 @@
             <div class="section-title">
                 <h3 class="tituloo">Seguridad del Sistema</h3>
                 <p class="parrafo2">Garantiza la integridad y seguridad de la infraestructura técnica de tu página. <br>
-                    Realiza monitoreos constantes, gestiona bases de datos, y asegura la protección de la información
-                    con nuestras herramientas avanzadas.</p>
+                    Realiza monitoreos constantes, gestiona bases de datos.</p>
             </div>
 
             <div class="container">
@@ -196,7 +196,7 @@
                     <div class="paragraphs-and-button">
                         <p class="parrafo3">Supervisa el rendimiento y la seguridad de tu infraestructura técnica para
                             prevenir fallos y mantener un servicio óptimo.</p>
-                        <a class="boton2" href="#MonitorearInfraestructura">Monitorear</a>
+                        <a class="boton2" href="http://localhost/phpmyadmin/index.php?route=/database/structure&db=sekta">Monitorear</a>
                     </div>
                 </div>
 
@@ -206,83 +206,14 @@
                     <div class="paragraphs-and-button">
                         <p class="parrafo3">Administra y optimiza tus bases de datos para un manejo eficiente de la
                             información y mejora en los tiempos de respuesta.</p>
-                        <a class="boton2" href="#GestionBasesDeDatos">Gestionar Bases de Datos</a>
+                        <a class="boton2" href="http://localhost/phpmyadmin/index.php?route=/database/structure&db=sekta">Gestionar Bases de Datos</a>
                     </div>
                 </div>
 
 
-                <div class="item-container">
-                    <h4>Realizar<br>Backups</h4>
-                    <div class="paragraphs-and-button">
-                        <p class="parrafo33">Configura y ejecuta copias de seguridad automáticas <br> para proteger tus
-                            datos críticos <br> ante cualquier eventualidad.</p>
-                        <a class="boton23" href="#RealizarBackups">Realizar Backup</a>
-                    </div>
-                </div>
 
-
-                <div class="item-container">
-                    <h4>Supervisar<br>Seguridad</h4>
-                    <div class="paragraphs-and-button">
-                        <p class="parrafo3">Verifica y ajusta los niveles de seguridad para proteger tu sistema de
-                            accesos no autorizados y posibles amenazas.</p>
-                        <a class="boton2" href="#SupervisarSeguridad">Supervisar Seguridad</a>
-                    </div>
-                </div>
-            </div>
         </section>
 
-
-        <section id="Sobre nosotros">
-            <h2 style="color: var(--color3);">Monitoreo Técnico</h2>
-            <div id="alertas-container">
-
-                <div id="configuracion-alertas">
-                    <h3>Configuración de Alertas</h3>
-                    <form id="alertas-form">
-                        <label for="tipo-alerta">Tipo de Alerta:</label>
-                        <select id="tipo-alerta" name="tipo-alerta" required>
-                            <option value="">Seleccionar tipo</option>
-                            <option value="seguridad">Seguridad</option>
-                            <option value="rendimiento">Rendimiento</option>
-                            <option value="disponibilidad">Disponibilidad</option>
-                        </select>
-
-                        <label for="parametros-alerta">Parámetros:</label>
-                        <textarea id="parametros-alerta" name="parametros-alerta"
-                            placeholder="Define los parámetros de la alerta"></textarea>
-
-                        <label for="nivel-alerta">Nivel de Alerta:</label>
-                        <select id="nivel-alerta" name="nivel-alerta" required>
-                            <option value="">Seleccionar nivel</option>
-                            <option value="bajo">Bajo</option>
-                            <option value="medio">Medio</option>
-                            <option value="alto">Alto</option>
-                        </select>
-
-                        <button type="submit" id="guardar-alerta-btn">Guardar Alerta</button>
-                    </form>
-                </div>
-
-
-                <div id="lista-alertas">
-                    <h3>Alertas Creadas</h3>
-                    <table id="alertas-table">
-                        <thead>
-                            <tr>
-                                <th>Tipo de Alerta</th>
-                                <th>Parámetros</th>
-                                <th>Nivel de Alerta</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
 
 
         
