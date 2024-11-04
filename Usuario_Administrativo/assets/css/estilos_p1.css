@@ -353,8 +353,15 @@ h3 {
     font-size: 30px;
 }
 
+.parrafo  {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .parrafo3 {
-    margin-top: 25px;
+    margin: 1rem;
     text-align: center;
     color: var(--color2);
     line-height: 1.1;
@@ -637,3 +644,6 @@ a:hover {
     margin: auto;
 }
 
+.calendar-container h2 {
+    color: var(--color3);
+}

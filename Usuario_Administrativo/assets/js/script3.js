@@ -1,119 +1,202 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    var messageDiv = document.getElementById('messageDiv');
-    var currentEvent = null; // Variable para almacenar el evento actual
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Documento listo.");
 
-    var trainers = {
-        "1": [],
-        "2": [],
-        "3": []
-    }; // Simulación de sesiones ocupadas por cada entrenador, para demo
+    const calendarEl = document.getElementById('calendar');
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        locale: 'es', // Configuración para idioma español
-        initialView: 'dayGridMonth',
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        buttonText: {
-            today: 'Hoy',
-            month: 'Mes',
-            week: 'Semana',
-            day: 'Día',
-            list: 'Agenda'
-        },
-        editable: true,
-        selectable: true,
-        
-        dateClick: function(info) {
-            document.getElementById('sessionForm').reset();
-            document.getElementById('eventId').value = '';
-            $('#sessionDate').val(info.dateStr);
-            $('#deleteSession').hide(); // Ocultar el botón de eliminar en modo de creación
-            $('#sessionModal').modal('show');
-            currentEvent = null;
-        },
-        eventClick: function(info) {
-            currentEvent = info.event;
-            document.getElementById('eventId').value = info.event.id;
-            document.getElementById('sessionTitle').value = info.event.title;
-            document.getElementById('sessionDescription').value = info.event.extendedProps.description;
-            $('#sessionDate').val(info.event.startStr);
-            $('#trainerSelect').val(info.event.extendedProps.trainerId || ''); // Asignar el entrenador
-            $('#deleteSession').show(); // Mostrar el botón de eliminar en modo de edición
-            $('#sessionModal').modal('show');
-        }
-    });
+    if (calendarEl) {
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek',
+            locale: 'es',
+            headerToolbar: {
+                left: 'prev,next',
+                center: 'title',
+                right: 'today'
+            },
+            titleFormat: {
+                month: 'long',
+                year: 'numeric',
+                day: 'numeric'
+            },
+            allDaySlot: false,
+            businessHours: {
+                daysOfWeek: [1, 2, 3, 4, 5], // Días de lunes a viernes
+                startTime: '08:00',
+                endTime: '18:00'
+            },
+            selectable: true,
+            selectConstraint: 'businessHours',
+            events: {
+                url: 'assets/php/obtener_sesiones.php',
+                method: 'GET',
+                failure: function () {
+                    alert('Error al cargar las sesiones.');
+                }
+            },
+            dateClick: function (info) {
+                if (info.date.getDay() !== 0 && info.date.getDay() !== 6) { // Solo permite seleccionar días laborables
+                    const fechaSeleccionada = info.dateStr.split("T")[0];
+                    const horaInicio = info.dateStr.split("T")[1].slice(0, 5) || "08:00"; // Hora de inicio predeterminada
 
-    calendar.render();
+                    // Calcular la hora de fin automáticamente como una hora después de la hora de inicio
+                    const horaFin = incrementarHora(horaInicio);
 
-    // Manejar el envío del formulario
-    document.getElementById('sessionForm').addEventListener('submit', function(e) {
+                    $('#sessionDate').val(fechaSeleccionada);
+                    $('#horaInicio').val(horaInicio);
+                    $('#horaFin').val(horaFin);
+
+                    // Deshabilitar los campos de hora de inicio y hora de fin
+                    $('#horaInicio').prop('disabled', true);
+                    $('#horaFin').prop('disabled', true);
+
+                    // Llenar los selects con clientes y entrenadores
+                    cargarClientesYEntrenadores();
+
+                    // Mostrar el modal para crear la sesión
+                    $('#sessionModal').modal('show');
+                }
+            },
+            eventClick: function (info) {
+                if (confirm(`¿Deseas eliminar la sesión "${info.event.title}"?`)) {
+                    fetch('assets/php/eliminar_sesion.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ id: info.event.id })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            info.event.remove();
+                            alert('Sesión eliminada exitosamente.');
+                        } else {
+                            alert('Error al eliminar la sesión: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error al eliminar la sesión:", error);
+                        alert('Error al eliminar la sesión.');
+                    });
+                }
+            }
+        });
+
+        calendar.render();
+        console.log("Calendario renderizado con eventos.");
+    } else {
+        console.error("Error: No se encontró el elemento #calendar.");
+    }
+
+    // Función para cargar clientes y entrenadores en los select
+    function cargarClientesYEntrenadores() {
+        fetch('assets/php/obtener_clientes_entrenadores.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.clientes && data.entrenadores) {
+                    const clienteSelect = document.getElementById('clienteSelect');
+                    const entrenadorSelect = document.getElementById('trainerSelect');
+
+                    clienteSelect.innerHTML = '';
+                    data.clientes.forEach(cliente => {
+                        let option = document.createElement('option');
+                        option.value = cliente.id_cliente;
+                        option.textContent = cliente.nombre_completo;
+                        clienteSelect.appendChild(option);
+                    });
+
+                    entrenadorSelect.innerHTML = '';
+                    data.entrenadores.forEach(entrenador => {
+                        let option = document.createElement('option');
+                        option.value = entrenador.id_entrenador;
+                        option.textContent = entrenador.nombre_completo;
+                        entrenadorSelect.appendChild(option);
+                    });
+                } else {
+                    console.error("Error: No se encontraron datos de clientes o entrenadores.");
+                }
+            })
+            .catch(error => console.error("Error al cargar clientes y entrenadores:", error));
+    }
+
+    // Función para crear una nueva sesión
+    document.getElementById('sessionForm').addEventListener('submit', function (e) {
         e.preventDefault();
 
-        var title = document.getElementById('sessionTitle').value;
-        var description = document.getElementById('sessionDescription').value;
-        var date = document.getElementById('sessionDate').value;
-        var trainerId = document.getElementById('trainerSelect').value;
+        const fecha = document.getElementById('sessionDate').value;
+        const hora_inicio = document.getElementById('horaInicio').value;
+        const hora_fin = document.getElementById('horaFin').value;
+        const id_cliente = document.getElementById('clienteSelect').value;
+        const entrenador_id = document.getElementById('trainerSelect').value;
 
-        if (title) {
-            // Verificar disponibilidad del entrenador
-            if (trainers[trainerId].includes(date)) {
-                showMessage('El entrenador no está disponible en esta fecha.');
-                return;
-            }
+        if (!fecha || !hora_inicio || !hora_fin || !id_cliente || !entrenador_id) {
+            alert('Todos los campos son obligatorios.');
+            return;
+        }
 
-            if (currentEvent) {
-                // Editar evento existente
-                currentEvent.setProp('title', title);
-                currentEvent.setStart(date);
-                currentEvent.setExtendedProp('description', description);
-                currentEvent.setExtendedProp('trainerId', trainerId);
-                showMessage('Sesión actualizada correctamente.');
+        fetch('assets/php/crear_sesion.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ fecha, hora_inicio, hora_fin, id_cliente, entrenador_id })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Sesión creada correctamente.');
+                $('#sessionModal').modal('hide');
+                
+                // Recargar la página para actualizar el calendario
+                location.reload();
             } else {
-                // Crear nuevo evento
-                var newEvent = calendar.addEvent({
-                    title: title,
-                    start: date,
-                    description: description,
-                    trainerId: trainerId
-                });
-                trainers[trainerId].push(date); // Registrar la fecha como ocupada para el entrenador
-                currentEvent = newEvent; // Establecer el evento creado como actual
-                showMessage('Sesión creada correctamente.');
+                alert('Error al crear la sesión: ' + data.message);
             }
-
-            $('#sessionModal').modal('hide');
-            document.getElementById('sessionForm').reset(); // Resetea el formulario después de agregar/editar la sesión
-        }
+        })
+        .catch(error => console.error('Error en la solicitud:', error));
     });
 
-    // Manejar la eliminación de eventos
-    document.getElementById('deleteSession').addEventListener('click', function() {
-        if (currentEvent) {
-            var trainerId = currentEvent.extendedProps.trainerId;
-            var date = currentEvent.startStr;
-
-            // Eliminar la fecha de la lista de ocupadas para el entrenador
-            var index = trainers[trainerId].indexOf(date);
-            if (index > -1) {
-                trainers[trainerId].splice(index, 1);
-            }
-
-            currentEvent.remove();
-            showMessage('Sesión eliminada correctamente.');
-            $('#sessionModal').modal('hide');
-            document.getElementById('sessionForm').reset();
-            currentEvent = null; // Resetear el evento actual
-        }
-    });
-
-    function showMessage(message) {
-        messageDiv.innerHTML = '<div class="alert alert-info" role="alert">' + message + '</div>';
-        setTimeout(function() {
-            messageDiv.innerHTML = ''; // Limpiar mensaje después de 3 segundos
-        }, 3000);
+    // Función para incrementar la hora en una hora
+    function incrementarHora(horaInicio) {
+        const [horas, minutos] = horaInicio.split(':');
+        const nuevaHora = parseInt(horas) + 1;
+        return `${nuevaHora.toString().padStart(2, '0')}:${minutos}`;
     }
+});
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Documento listo para verificar pagos.");
+
+    // Función para verificar pagos al hacer clic en el botón "Verificar Pago"
+    document.getElementById("verificarPagoBtn").addEventListener("click", function () {
+        fetch('assets/php/verificar_pagos.php')
+            .then(response => response.json())
+            .then(data => {
+                const clientesPagoList = document.getElementById('clientesPagoList');
+                clientesPagoList.innerHTML = '';
+
+                data.clientes.forEach(cliente => {
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+                    listItem.textContent = `${cliente.nombre_completo} - Último pago: ${cliente.fecha_pago}`;
+
+                    // Cambia el color según el estado
+                    if (cliente.estado === 'vencido') {
+                        listItem.style.backgroundColor = 'rgba(255, 0, 0, 0.2)'; // Rojo para vencidos
+                    } else if (cliente.estado === 'cerca_de_vencer') {
+                        listItem.style.backgroundColor = 'rgba(255, 165, 0, 0.2)'; // Naranja para cerca de vencer
+                    } else {
+                        listItem.style.backgroundColor = 'rgba(0, 128, 0, 0.2)'; // Verde para pagado
+                    }
+
+                    clientesPagoList.appendChild(listItem);
+                });
+
+                // Muestra el modal de verificación de pagos
+                $('#verificarPagosModal').modal('show');
+            })
+            .catch(error => console.error("Error al cargar el estado de los pagos:", error));
+    });
 });
