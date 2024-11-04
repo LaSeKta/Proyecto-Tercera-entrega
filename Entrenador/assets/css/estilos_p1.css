@@ -1034,3 +1034,76 @@ a:hover {
 #listaSesiones li strong {
     color: #333;
 }
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.clientes-columna {
+    width: 45%;
+    margin: 0 10px;
+}
+
+.clientes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.clientes-table th,
+.clientes-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.clientes-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.clientes-table td {
+    background-color: #f9f9f9;
+}
+
+.cliente-item {
+    background-color: #d4edda; /* Verde si aprobado */
+}
+
+.cliente-item.red {
+    background-color: #f8d7da; /* Rojo si no aprobado */
+}
+
+.estado-select {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.green-bg td {
+    background-color: #89f7a3!important; /* Verde si aprobado */
+}
+ 
+.red-bg  td {
+    background-color: #f58f97!important; /* Rojo si no aprobado */
+}

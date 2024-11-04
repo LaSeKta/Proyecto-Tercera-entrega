@@ -16,10 +16,11 @@
 <body>
     <div class="contA">
         <nav>
-            <div class="imagen_logo"> 
-                <img src="assets/img/Logos/Logo_home.png" width="120em" height="120em" alt="imagen" class="container-logo">
+            <div class="imagen_logo">
+                <img src="assets/img/Logos/Logo_home.png" width="120em" height="120em" alt="imagen"
+                    class="container-logo">
             </div>
-            
+
             <div class="div-nav-1">
                 <h1>S.I.G.EN</h1>
             </div>
@@ -28,7 +29,8 @@
                     <li class="op-menu"><a id="clic1" href="#home" class="activo">Home</a></li>
                     <li class="op-menu"><a href="#Horarios">Calificación y Evolución</a></li>
                     <li class="op-menu"><a href="#Gimnasios">Gestión de Planes</a></li>
-                    <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button> <!-- Botón de cierre de sesión -->
+                    <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button>
+                    <!-- Botón de cierre de sesión -->
                 </ul>
 
                 <div class="menu-icon" id="menuIcon">☰
@@ -36,7 +38,8 @@
                         <li class="oc-menu"><a href="#home">Home</a></li>
                         <li class="oc-menu"><a href="#Gimnasios">Gestión de Planes</a></li>
                         <li class="oc-menu"><a href="#Horarios">Calificación y Evolución</a></li>
-                        <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button> <!-- Botón de cierre de sesión -->
+                        <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button>
+                        <!-- Botón de cierre de sesión -->
                     </div>
         </nav>
         <header id="home">
@@ -54,17 +57,17 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <a href="#Horarios">
-                                <img src="assets/img/img1.png" alt="Interior design 1">
+                                    <img src="assets/img/img1.png" alt="Interior design 1">
                                 </a>
                             </div>
                             <div class="carousel-item">
                                 <a href="#Gimnasios">
-                                <img src="assets/img/img2.png" alt="Interior design 2">
+                                    <img src="assets/img/img2.png" alt="Interior design 2">
                                 </a>
                             </div>
                             <div class="carousel-item">
                                 <a href="#Sobre nosotros">
-                                <img src="assets/img/img3.png" alt="Interior design 3">
+                                    <img src="assets/img/img3.png" alt="Interior design 3">
                                 </a>
                             </div>
                         </div>
@@ -82,8 +85,9 @@
 
                 <div class="texto">
                     <h2><br>S.I.G.EN</h2>
-                    <p class="parrafo1"> Ver sesiones activas <br>  <br>  <button id="verSesionesBtn" class="btn btn-primary">Sesiones</button></p>
-                    
+                    <p class="parrafo1"> Ver sesiones activas <br> <br> <button id="verSesionesBtn"
+                            class="btn btn-primary">Sesiones</button></p>
+
                 </div>
                 <div id="modal-sesiones" class="modal" style="display: none;">
                     <div class="modal-content">
@@ -98,6 +102,58 @@
 
         <section id="Horarios">
             <h2 class="tituloo" style="color: var(--color3);">Calificación y Evolución</h2>
+<!-- Botón para abrir el modal de clientes -->
+<button id="btn-ver-clientes" class="btn btn-primary">Ver Clientes por Tipo</button>
+
+
+<!-- Modal para mostrar los clientes -->
+<div id="clientesModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeClientesModal">&times;</span>
+        
+        <h3>Clientes por Tipo</h3>
+        
+        <div id="clientes-container" style="display: flex; justify-content: space-around;">
+            <!-- Tabla de clientes en Fisioterapia -->
+            <div class="clientes-columna">
+                <h4>Fisioterapia</h4>
+                <table class="clientes-table">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Puntaje Total</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fisioterapia-clientes">
+                        <!-- Aquí se agregarán los clientes de fisioterapia mediante JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Tabla de clientes Deportistas -->
+            <div class="clientes-columna">
+                <h4>Deportista</h4>
+                <table class="clientes-table">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Puntaje Total</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="deportista-clientes">
+                        <!-- Aquí se agregarán los clientes deportistas mediante JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
             <div class="evolucion-container">
 
                 <div class="evolucion-form-container">
@@ -108,48 +164,53 @@
                                 <option value="">Seleccione un usuario</option>
                             </select>
                         </div>
-                        
-    
+
+
                         <!-- Inputs de porcentaje para cada área de evaluación -->
                         <fieldset>
                             <div class="form-group">
                                 <label for="agendaCompliance">Cumplimiento con la agenda (%):</label>
-                                <input type="number" id="agendaCompliance" name="agendaCompliance" min="1" max="150" required>
+                                <input type="number" id="agendaCompliance" name="agendaCompliance" min="1" max="20"
+                                    required>
                             </div>
 
                             <div class="form-group">
                                 <label for="anaerobicResistance">Resistencia anaeróbica (%):</label>
-                                <input type="number" id="anaerobicResistance" name="anaerobicResistance" min="1" max="150" required>
+                                <input type="number" id="anaerobicResistance" name="anaerobicResistance" min="1"
+                                    max="20" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="muscleStrength">Fuerza muscular (%):</label>
-                                <input type="number" id="muscleStrength" name="muscleStrength" min="1" max="150" required>
+                                <input type="number" id="muscleStrength" name="muscleStrength" min="1" max="20"
+                                    required>
                             </div>
 
                             <div class="form-group">
                                 <label for="muscleResistance">Resistencia muscular (%):</label>
-                                <input type="number" id="muscleResistance" name="muscleResistance" min="1" max="150" required>
+                                <input type="number" id="muscleResistance" name="muscleResistance" min="1" max="20"
+                                    required>
                             </div>
 
                             <div class="form-group">
                                 <label for="flexibility">Flexibilidad (%):</label>
-                                <input type="number" id="flexibility" name="flexibility" min="1" max="150" required>
+                                <input type="number" id="flexibility" name="flexibility" min="1" max="20" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="monotonyResistance">Resistencia a la monotonía (%):</label>
-                                <input type="number" id="monotonyResistance" name="monotonyResistance" min="1" max="150" required>
+                                <input type="number" id="monotonyResistance" name="monotonyResistance" min="1" max="20"
+                                    required>
                             </div>
 
                             <div class="form-group">
                                 <label for="resilience">Resiliencia (%):</label>
-                                <input type="number" id="resilience" name="resilience" min="1" max="150" required>
+                                <input type="number" id="resilience" name="resilience" min="1" max="20" required>
                             </div>
                         </fieldset>
 
                         <div class="form-group">
-                            <button type="submit" >Registrar Evolución</button>
+                            <button type="submit">Registrar Evolución</button>
                         </div>
                     </form>
                 </div>
@@ -168,15 +229,15 @@
                             </tr>
                         </thead>
                         <tbody id="clientEvolutions">
-                            <button id="btn-ver-evolucion"  style="display: none;">Ver Evolución</button>
+                            <button id="btn-ver-evolucion" style="display: none;">Ver Evolución</button>
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
-        
 
-        
+
+
 
         <section id="Gimnasios">
             <h2 class="tituloo" style="color: var(--color3);">Gestión de Planes de Entrenamiento</h2>
@@ -203,7 +264,7 @@
                         </div>
                     </form>
                 </div>
-        
+
                 <div class="gestion-table-container">
                     <table class="gestion-table">
                         <thead>
@@ -217,7 +278,7 @@
                         </tbody>
                     </table>
                 </div>
-        
+
                 <div class="gestion-form-container">
                     <form id="ejercicioForm" class="gestion-form">
                         <h3>Añadir / Modificar Ejercicio</h3>
@@ -256,7 +317,7 @@
                     </form>
                 </div>
             </div>
-        
+
             <div id="modal-asignar-plan" class="modal">
                 <div class="modal-content">
                     <span class="close-modal" id="cerrar-modal-asignar-btn">&times;</span>
@@ -267,15 +328,15 @@
                                 <label for="cliente-select">Seleccionar Cliente:</label>
                                 <select id="cliente-select" name="cliente-select" required>
                                 </select>
-            
+
                                 <label for="plan-select">Seleccionar Plan:</label>
                                 <select id="plan-select" name="plan-select" required>
                                 </select>
-            
+
                                 <button type="submit" id="asignar-plan-btn">Asignar Plan</button>
                             </form>
                         </div>
-            
+
                         <div class="asignaciones-list">
                             <h3 style="color: var(--color3); margin-top: 0%;">Asignaciones de Planes a Clientes</h3>
                             <div class="tabla-asignaciones-container">
@@ -295,20 +356,21 @@
                     </div>
                 </div>
             </div>
-            
-        
+
+
             <div id="modal-tabla-compatibilidad" class="modal">
                 <div class="modal-content">
                     <span class="close-modal" id="cerrar-modal-compatibilidad-btn">&times;</span>
                     <h3 style="margin-top: 2px;">Tabla de Compatibilidad de Deportes</h3>
-                    <img src="../Entrenador/assets/img/tabla_de_compatibilidad.png" alt="Tabla de Compatibilidad de Deportes" style="width: 100%; height: auto;">
+                    <img src="../Entrenador/assets/img/tabla_de_compatibilidad.png"
+                        alt="Tabla de Compatibilidad de Deportes" style="width: 100%; height: auto;">
                 </div>
             </div>
         </section>
-        
-        
-        
-    
+
+
+
+
         <div id="modal-dashboard" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -349,8 +411,8 @@
                 </div>
             </div>
         </div>
-        
-        
+
+
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
@@ -361,7 +423,7 @@
         <script src="assets/js/script.js"></script>
         <script src="assets/js/script3.js"></script>
         <script src="../User/assets/js/logout.js"></script>
-
+        <script src="assets/js/script_cliente.js"></script>
     </div>
 
 

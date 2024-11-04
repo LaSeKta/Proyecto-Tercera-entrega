@@ -34,18 +34,18 @@ try {
 
     $clientes_evaluaciones = [];
     while ($row = mysqli_fetch_assoc($result)) {
-        // Calcula la nota final como promedio de las calificaciones individuales
-        $promedio = (
+        // Calcula la nota final como la suma de las calificaciones individuales
+        $suma = (
             $row['cumplimiento_agenda'] +
             $row['resistencia_anaerobica'] +
             $row['resistencia_muscular'] +
             $row['flexibilidad'] +
             $row['resistencia_monotonia'] +
             $row['resiliencia']
-        ) / 6;
+        );
 
-        // Redondea el promedio y lo guarda en `nota_final`
-        $row['nota_final'] = round($promedio);
+        // Asigna el valor de la suma a `nota_final`
+        $row['nota_final'] = $suma;
 
         $clientes_evaluaciones[] = $row;
     }

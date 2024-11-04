@@ -25,13 +25,13 @@ try {
             
                 // Definir redirecciones según el rol
                 $redirectUrls = [
-                    0 => '../usuario_cliente/index.html',
+                    0 => 'usuario.html',
                     1 => '../usuario_cliente/index.html',
-                    2 => 'moderador.html',
+                    2 => '../usuario_cliente/index.html',
                     3 => '../entrenador/index.html',
-                    4 => 'cliente.html',
-                    5 => 'supervisor.html',
-                    6 => 'moderador.html',
+                    4 => '../usuario_avanzado/index.html',
+                    5 => '../usuario_administrativo/index.html',
+                    6 => '../usuario_seleccionador/index.html',
                     7 => 'entrenador.html',
                     8 => 'cliente.html',
                     9 => 'supervisor.html',
