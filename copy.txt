@@ -1,1 +1,340 @@
-"assets/php/Register.php"
+creame datos de prueba coherentes para todas las tablas, teniendo en cuenta las relaciones y sus datos, los usuarios y sus roles funcionan con una id = a un rol especifico al igual que los estados a continuacion te los proporcionare     
+
+id_roles usuarios
+ const roleMap = {
+        0: 'Usuario ',
+        1: 'Usuario cliente',
+        2: 'Usuario cliente fisioterapia',
+        3: 'Entrenador',
+        4: 'Usuario avanzado',
+        5: 'Usuario administrativo',
+        6: 'Usuario seleccionador',
+    };
+
+id_estados
+
+-- Agregar estados para clientes de Fisioterapia
+INSERT INTO estados (id_estado) VALUES (1); -- Inicio
+INSERT INTO estados (id_estado) VALUES (2); -- Sin evolución
+INSERT INTO estados (id_estado) VALUES (3); -- En evolución
+INSERT INTO estados (id_estado) VALUES (4); -- Satisfactorio
+
+-- Agregar estados para clientes Deportistas
+INSERT INTO estados (id_estado) VALUES (5); -- Principiante
+INSERT INTO estados (id_estado) VALUES (6); -- Bajo
+INSERT INTO estados (id_estado) VALUES (7); -- Medio
+INSERT INTO estados (id_estado) VALUES (8); -- Alto
+INSERT INTO estados (id_estado) VALUES (9); -- Experto
+
+
+creame datos de prueba, todo con coherencia, ejercicios funcionales y que sean coherentes, como estos 
+
+-- Inserción de ejercicios
+INSERT INTO ejercicios (tipo, nombre, descripcion) VALUES
+('Fuerza', 'Press de Banca', '3x10. Pecho superior'),
+('Fuerza', 'Press Militar', '3x10. Hombro'),
+('Fuerza', 'Sentadilla', '4x12. Piernas completas'),
+('Fuerza', 'Peso Muerto', '4x10. Espalda y piernas'),
+('Fuerza', 'Curl de Bíceps', '3x15. Bíceps'),
+('Fuerza', 'Extensión de Tríceps', '3x15. Tríceps'),
+('Fuerza', 'Remo con Barra', '4x12. Espalda media'),
+('Resistencia', 'Burpees', '3x20. Cardio y fuerza'),
+('Resistencia', 'Sprints', '4x30s. Velocidad'),
+('Resistencia', 'Cuerda de Batida', '3x40s. Hombros y brazos'),
+('Resistencia', 'Mountain Climbers', '3x30s. Core y cardio'),
+('Resistencia', 'Jumping Jacks', '4x20. Calentamiento general'),
+('Flexibilidad', 'Estiramiento Piernas', '2x30s. Flexibilidad piernas'),
+('Flexibilidad', 'Estiramiento Hombros', '2x30s. Flexibilidad hombros'),
+('Flexibilidad', 'Estiramiento de Espalda', '2x30s. Espalda baja');
+
+
+
+-- Inserción de planes
+INSERT INTO planes (tipo, nombre, descripcion) VALUES
+('Fuerza', 'Plan de Pecho y Tríceps', 'Fortalece pecho y tríceps'),
+('Fuerza', 'Plan de Espalda y Bíceps', 'Trabaja espalda y bíceps'),
+('Fuerza', 'Plan de Piernas', 'Entrenamiento completo de piernas'),
+('Resistencia', 'Plan de Cardio Intenso', 'Incrementa resistencia'),
+('Flexibilidad', 'Plan de Flexibilidad Completa', 'Mejora movilidad general'),
+('Fuerza', 'Plan de Hombros', 'Fortalece hombros y traps'),
+('Resistencia', 'Plan de Circuito Funcional', 'Combina cardio y fuerza'),
+('Fuerza', 'Plan Full Body', 'Ejercita todo el cuerpo'),
+('Flexibilidad', 'Plan de Estiramientos Diarios', 'Ideal para inicio del día'),
+('Resistencia', 'Plan HIIT', 'Entrenamiento de alta intensidad');
+
+
+
+-- Vinculación de ejercicios a planes
+INSERT INTO planes_ejercicios (id_plan, id_ejercicio) VALUES
+-- Plan 1: Plan de Pecho y Tríceps
+(1, 1), (1, 2), (1, 6), (1, 7), (1, 5), (1, 13), (1, 14),
+-- Plan 2: Plan de Espalda y Bíceps
+(2, 7), (2, 4), (2, 5), (2, 11), (2, 12), (2, 6), (2, 8),
+-- Plan 3: Plan de Piernas
+(3, 3), (3, 4), (3, 13), (3, 15), (3, 8), (3, 10), (3, 11),
+-- Plan 4: Plan de Cardio Intenso
+(4, 8), (4, 9), (4, 10), (4, 11), (4, 14), (4, 13), (4, 15),
+-- Plan 5: Plan de Flexibilidad Completa
+(5, 13), (5, 14), (5, 15), (5, 8), (5, 12), (5, 3), (5, 2),
+-- Plan 6: Plan de Hombros
+(6, 2), (6, 7), (6, 6), (6, 8), (6, 12), (6, 14), (6, 10),
+-- Plan 7: Plan de Circuito Funcional
+(7, 9), (7, 11), (7, 8), (7, 6), (7, 3), (7, 5), (7, 10),
+-- Plan 8: Plan Full Body
+(8, 1), (8, 3), (8, 4), (8, 5), (8, 7), (8, 13), (8, 15),
+-- Plan 9: Plan de Estiramientos Diarios
+(9, 13), (9, 14), (9, 15), (9, 12), (9, 3), (9, 1), (9, 11),
+-- Plan 10: Plan HIIT
+(10, 8), (10, 9), (10, 10), (10, 11), (10, 5), (10, 4), (10, 6);
+
+
+
+esta, es la base de datos, incerta sus datos 
+CREATE DATABASE sekta;
+
+USE sekta;
+
+CREATE TABLE IF NOT EXISTS usuarios (
+  `CI` varchar(50) NOT NULL PRIMARY KEY,
+  `contrasena` varchar(255) NOT NULL,
+  `id_rol` int NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS personas (
+  `id_persona` varchar(50) NOT NULL PRIMARY KEY,
+  `nombre` varchar(50) NOT NULL,
+  `apellido` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  FOREIGN KEY (`id_persona`) REFERENCES usuarios(`CI`)
+);
+
+CREATE TABLE IF NOT EXISTS entrenador (
+  `id_entrenador` varchar(50) NOT NULL PRIMARY KEY,
+  FOREIGN KEY (`id_entrenador`) REFERENCES personas(`id_persona`)
+);
+
+CREATE TABLE IF NOT EXISTS clientes (
+  `id_cliente` varchar(50) NOT NULL PRIMARY KEY,
+  `user_estado` int NOT NULL,
+  `alertas` varchar(50) NOT NULL,
+  FOREIGN KEY (`id_cliente`) REFERENCES personas(`id_persona`)
+);
+
+CREATE TABLE IF NOT EXISTS pagos (
+  `id_pago` int NOT NULL AUTO_INCREMENT PRIMARY KEY
+);
+
+CREATE TABLE IF NOT EXISTS evaluaciones (
+  `id_evaluacion` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `cumplimiento_agenda` int NOT NULL,
+  `resistencia_anaerobica` int NOT NULL,
+  `resistencia_muscular` int NOT NULL,
+  `flexibilidad` int NOT NULL,
+  `resistencia_monotonia` int NOT NULL,
+  `resiliencia` int NOT NULL,
+  `nota` int NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sucursales (
+  `id_sucursal` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `capacidad` int
+);
+
+CREATE TABLE IF NOT EXISTS planes (
+  `id_plan` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `tipo` varchar(50) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `descripcion` varchar(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS ejercicios (
+  `id_ejercicio` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `tipo` varchar(50) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `descripcion` varchar(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS deportes (
+  `id_deporte` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `tipo` varchar(50),
+  `nombre` varchar(50),
+  `descripcion` varchar(255)
+);
+
+CREATE TABLE IF NOT EXISTS sesiones (
+  `id_sesion` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `fecha` date,
+  `hora_inicio` time,
+  `hora_fin` time,
+  `asistencia` TINYINT(1)
+);
+
+CREATE TABLE IF NOT EXISTS horarios (
+  `id_horario` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `dia` varchar(50),
+  `hora_inicio` time,
+  `hora_fin` time
+);
+
+CREATE TABLE IF NOT EXISTS estados (
+  `id_estado` int NOT NULL AUTO_INCREMENT PRIMARY KEY
+);
+
+
+-- Crear tabla de equipos
+CREATE TABLE IF NOT EXISTS equipos (
+    id_equipo INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre_equipo VARCHAR(50) NOT NULL,
+    deporte VARCHAR(50) NOT NULL,
+    tipo_actividad VARCHAR(50) NOT NULL
+);
+
+
+
+
+
+
+-- Relaciones
+
+CREATE TABLE IF NOT EXISTS clientes_equipos (
+    id_equipo INT NOT NULL,
+    id_cliente VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_equipo, id_cliente),
+    FOREIGN KEY (id_equipo) REFERENCES equipos(id_equipo),
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
+);
+
+
+CREATE TABLE IF NOT EXISTS planes_ejercicios (
+  `id_plan` int NOT NULL,
+  `id_ejercicio` int NOT NULL,
+  PRIMARY KEY (`id_plan`, `id_ejercicio`),
+  FOREIGN KEY (`id_plan`) REFERENCES planes(`id_plan`),
+  FOREIGN KEY (`id_ejercicio`) REFERENCES ejercicios(`id_ejercicio`)
+);
+
+CREATE TABLE IF NOT EXISTS clientes_estados (
+  `id_cliente` varchar(50) NOT NULL,
+  `id_estado` int NOT NULL,
+  PRIMARY KEY (`id_cliente`, `id_estado`),
+  FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
+  FOREIGN KEY (`id_estado`) REFERENCES estados(`id_estado`)
+);
+
+CREATE TABLE IF NOT EXISTS clientes_evaluaciones (
+  `id_cliente` varchar(50) NOT NULL,
+  `id_evaluacion` int NOT NULL,
+  `fecha_evaluacion` date,
+  PRIMARY KEY (`id_cliente`, `id_evaluacion`),
+  FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
+  FOREIGN KEY (`id_evaluacion`) REFERENCES evaluaciones(`id_evaluacion`)
+);
+
+CREATE TABLE IF NOT EXISTS clientes_deportes (
+  `id_cliente` varchar(50) NOT NULL,
+  `id_deporte` int NOT NULL,
+  PRIMARY KEY (`id_cliente`, `id_deporte`),
+  FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
+  FOREIGN KEY (`id_deporte`) REFERENCES deportes(`id_deporte`)
+);
+
+CREATE TABLE IF NOT EXISTS clientes_sesiones (
+  `id_cliente` varchar(50) NOT NULL,
+  `id_sesion` int NOT NULL,
+  PRIMARY KEY (`id_cliente`, `id_sesion`),
+  FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
+  FOREIGN KEY (`id_sesion`) REFERENCES sesiones(`id_sesion`)
+);
+
+CREATE TABLE IF NOT EXISTS entrenador_sesiones (
+  `id_entrenador` varchar(50) NOT NULL,
+  `id_sesion` int NOT NULL,
+  PRIMARY KEY (`id_entrenador`, `id_sesion`),
+  FOREIGN KEY (`id_entrenador`) REFERENCES entrenador(`id_entrenador`),
+  FOREIGN KEY (`id_sesion`) REFERENCES sesiones(`id_sesion`)
+);
+
+CREATE TABLE IF NOT EXISTS entrenador_horario (
+  `id_entrenador` varchar(50) NOT NULL,
+  `id_horario` int NOT NULL,
+  PRIMARY KEY (`id_entrenador`, `id_horario`),
+  FOREIGN KEY (`id_entrenador`) REFERENCES entrenador(`id_entrenador`),
+  FOREIGN KEY (`id_horario`) REFERENCES horarios(`id_horario`)
+);
+
+CREATE TABLE IF NOT EXISTS entrenador_crea (
+  `id_entrenador` varchar(50) NOT NULL,
+  `id_ejercicio` int NOT NULL,
+  `id_plan` int NOT NULL,
+  PRIMARY KEY (`id_entrenador`, `id_ejercicio`, `id_plan`),
+  FOREIGN KEY (`id_entrenador`) REFERENCES entrenador(`id_entrenador`),
+  FOREIGN KEY (`id_ejercicio`) REFERENCES ejercicios(`id_ejercicio`),
+  FOREIGN KEY (`id_plan`) REFERENCES planes(`id_plan`)
+);
+
+CREATE TABLE IF NOT EXISTS sucursal_horario (
+  `id_sucursal` int NOT NULL,
+  `id_horario` int NOT NULL,
+  PRIMARY KEY (`id_sucursal`, `id_horario`),
+  FOREIGN KEY (`id_sucursal`) REFERENCES sucursales(`id_sucursal`),
+  FOREIGN KEY (`id_horario`) REFERENCES horarios(`id_horario`)
+);
+
+CREATE TABLE IF NOT EXISTS clientes_pagos (
+  `id_cliente` varchar(50) NOT NULL,
+  `id_pago` int NOT NULL,
+  `fecha_pago` date,
+  PRIMARY KEY (`id_cliente`, `id_pago`),
+  FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
+  FOREIGN KEY (`id_pago`) REFERENCES pagos(`id_pago`)
+);
+
+CREATE TABLE IF NOT EXISTS clientes_planes (
+  `id_cliente` varchar(50) NOT NULL,
+  `id_plan` int NOT NULL,
+  fecha_asignacion date default current_date,
+  PRIMARY KEY (`id_cliente`, `id_plan`),
+  FOREIGN KEY (`id_cliente`) REFERENCES clientes(`id_cliente`),
+  FOREIGN KEY (`id_plan`) REFERENCES planes(`id_plan`)
+
+);
+
+insert into usuarios (CI, contrasena, id_rol) values    
+(99999999, '$2y$10$nDU.z2lxToX.csqMO2BViuBgvShS5/A2A/k5Hos64ywiNa8QIivDq', 10);
+
+
+
+las contraseñas de los usuarios siempre seran "$2y$10$xzZxW52WQRDudPdhdxWCOOxWRaJsNpiOiTjGdFhxtkGcKxKh3tSQ2" lo cual es equivalente a 123123,
+
+quiero que incertes al menos 15 usuarios con datos diferentes, puntuaciones de evaluaciones diferentes y datos variados pero similares para poder ejercutar consultas en ellos
+los items de las evaluaciones no pueden superar los 20 puntos individuales y el total debe ser menor a 140 (la suma de todos los items) siempre coloca la nota final siendo exacto que es la suma
+de sus items
+
+
+
+
+
+
+INSERT INTO pagos (id_pago) VALUES (1), (2), (3), (4), (5), (6), (7);
+
+INSERT INTO clientes_pagos (id_cliente, id_pago, fecha_pago) VALUES
+('12345678A', 1, '2023-02-15'),
+('23456789B', 2, '2023-03-10'),
+('45678901D', 3, '2023-04-20'),
+('56789012E', 4, '2023-05-25'),
+('67890123F', 5, '2023-06-14'),
+('78901234G', 6, '2023-07-11');
+
+
+-- Agregar estados para clientes de Fisioterapia
+INSERT INTO estados (id_estado) VALUES (1); -- Inicio
+INSERT INTO estados (id_estado) VALUES (2); -- Sin evolución
+INSERT INTO estados (id_estado) VALUES (3); -- En evolución
+INSERT INTO estados (id_estado) VALUES (4); -- Satisfactorio
+
+-- Agregar estados para clientes Deportistas
+INSERT INTO estados (id_estado) VALUES (5); -- Principiante
+INSERT INTO estados (id_estado) VALUES (6); -- Bajo
+INSERT INTO estados (id_estado) VALUES (7); -- Medio
+INSERT INTO estados (id_estado) VALUES (8); -- Alto
+INSERT INTO estados (id_estado) VALUES (9); -- Experto

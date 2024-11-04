@@ -1,0 +1,97 @@
+consulta 1
+
+SELECT e.nombre, e.descripcion
+FROM ejercicios e
+JOIN planes_ejercicios pe ON e.id_ejercicio = pe.id_ejercicio
+JOIN clientes_planes cp ON pe.id_plan = cp.id_plan
+WHERE cp.id_cliente = '12345678A';
+
+
+consulta 2
+
+SELECT p.nombre, p.apellido
+FROM personas p
+JOIN clientes c ON p.id_persona = c.id_cliente
+JOIN clientes_equipos ce ON c.id_cliente = ce.id_cliente
+WHERE YEAR(ce.fecha_asignacion) = YEAR(CURRENT_DATE());
+
+consulta 3
+
+CREATE VIEW vista_puntaje_clientes_mes AS
+SELECT 
+    p.id_persona AS id_cliente, 
+    p.nombre, 
+    p.apellido, 
+    e.cumplimiento_agenda, 
+    e.resistencia_anaerobica, 
+    e.resistencia_muscular, 
+    e.flexibilidad, 
+    e.resistencia_monotonia, 
+    e.resiliencia, 
+    e.nota
+FROM personas p
+JOIN clientes c ON p.id_persona = c.id_cliente
+JOIN clientes_evaluaciones ce ON c.id_cliente = ce.id_cliente
+JOIN evaluaciones e ON ce.id_evaluacion = e.id_evaluacion
+WHERE MONTH(ce.fecha_evaluacion) = MONTH(CURRENT_DATE())
+  AND YEAR(ce.fecha_evaluacion) = YEAR(CURRENT_DATE());
+
+consulta 4
+
+SELECT nombre, apellido, 
+       (cumplimiento_agenda + resistencia_anaerobica + resistencia_muscular + 
+        flexibilidad + resistencia_monotonia + resiliencia + nota) AS puntaje_total
+FROM vista_puntaje_clientes_mes
+ORDER BY puntaje_total DESC
+LIMIT 3;
+
+consulta 5
+
+SELECT p.nombre, p.apellido, c.id_cliente
+FROM personas p
+JOIN clientes c ON p.id_persona = c.id_cliente
+WHERE MONTH(c.fecha_ingreso) = MONTH(CURRENT_DATE())
+  AND YEAR(c.fecha_ingreso) = YEAR(CURRENT_DATE());
+
+
+consulta 6
+
+SELECT p.nombre, p.apellido, c.id_cliente
+FROM personas p
+JOIN clientes c ON p.id_persona = c.id_cliente
+LEFT JOIN clientes_deportes cd ON c.id_cliente = cd.id_cliente
+LEFT JOIN deportes d ON cd.id_deporte = d.id_deporte AND d.nombre = 'Futbol'
+WHERE d.id_deporte IS NULL;
+
+consulta 7
+
+SELECT p.nombre, p.apellido,
+       CASE ce.id_estado
+           WHEN 1 THEN 'Inicio'
+           WHEN 2 THEN 'Sin evolución'
+           WHEN 3 THEN 'En evolución'
+           WHEN 4 THEN 'Satisfactorio'
+           WHEN 5 THEN 'Principiante'
+           WHEN 6 THEN 'Bajo'
+           WHEN 7 THEN 'Medio'
+           WHEN 8 THEN 'Alto'
+           WHEN 9 THEN 'Experto'
+           ELSE 'Desconocido'
+       END AS estado_actual
+FROM personas p
+JOIN clientes c ON p.id_persona = c.id_cliente
+JOIN clientes_estados ce ON c.id_cliente = ce.id_cliente
+WHERE ce.id_estado = (
+    SELECT MAX(ce2.id_estado)
+    FROM clientes_estados ce2
+    WHERE ce2.id_cliente = ce.id_cliente
+);
+
+
+consulta 8
+
+SELECT p.nombre, p.apellido, DATEDIFF(CURRENT_DATE(), c.fecha_ingreso) AS dias_asistencia
+FROM personas p
+JOIN clientes c ON p.id_persona = c.id_cliente
+JOIN usuarios u ON c.id_cliente = u.CI
+WHERE u.id_rol = 2;

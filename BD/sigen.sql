@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS clientes (
   `id_cliente` varchar(50) NOT NULL PRIMARY KEY,
   `user_estado` int NOT NULL,
   `alertas` varchar(50) NOT NULL,
+   `fecha_ingreso ` date default current_date,
   FOREIGN KEY (`id_cliente`) REFERENCES personas(`id_persona`)
 );
 
@@ -107,6 +108,7 @@ CREATE TABLE IF NOT EXISTS equipos (
 CREATE TABLE IF NOT EXISTS clientes_equipos (
     id_equipo INT NOT NULL,
     id_cliente VARCHAR(50) NOT NULL,
+    fecha_asignacion DATE DEFAULT CURRENT_DATE,
     PRIMARY KEY (id_equipo, id_cliente),
     FOREIGN KEY (id_equipo) REFERENCES equipos(id_equipo),
     FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)

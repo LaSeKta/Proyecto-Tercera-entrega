@@ -1107,3 +1107,9 @@ a:hover {
 .red-bg  td {
     background-color: #f58f97!important; /* Rojo si no aprobado */
 }
+
+.evolucion-list-container {
+    max-height: 60vh !important;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-y: scroll; /* Add vertical scrollbar */
+}
