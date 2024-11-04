@@ -1,0 +1,1414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 5.2.1
+- https://www.phpmyadmin.net
+-
+- Servidor: 127.0.0.1
+- Tiempo de generación: 05-11-2024 a las 00:42:10
+- Versión del servidor: 10.4.32-MariaDB
+- Versión de PHP: 8.2.12
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="sekta" collation="utf8mb4_general_ci" charset="utf8mb4">
+            <pma:table name="clientes">
+                CREATE TABLE `clientes` (
+                  `id_cliente` varchar(50) NOT NULL,
+                  `user_estado` int(11) NOT NULL,
+                  `alertas` varchar(50) NOT NULL,
+                  `fecha_ingreso` date DEFAULT NULL,
+                  PRIMARY KEY (`id_cliente`),
+                  CONSTRAINT `clientes_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `personas` (`id_persona`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="clientes_deportes">
+                CREATE TABLE `clientes_deportes` (
+                  `id_cliente` varchar(50) NOT NULL,
+                  `id_deporte` int(11) NOT NULL,
+                  PRIMARY KEY (`id_cliente`,`id_deporte`),
+                  KEY `id_deporte` (`id_deporte`),
+                  CONSTRAINT `clientes_deportes_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`),
+                  CONSTRAINT `clientes_deportes_ibfk_2` FOREIGN KEY (`id_deporte`) REFERENCES `deportes` (`id_deporte`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="clientes_equipos">
+                CREATE TABLE `clientes_equipos` (
+                  `id_equipo` int(11) NOT NULL,
+                  `id_cliente` varchar(50) NOT NULL,
+                  `fecha_asignacion` date DEFAULT curdate(),
+                  PRIMARY KEY (`id_equipo`,`id_cliente`),
+                  KEY `id_cliente` (`id_cliente`),
+                  CONSTRAINT `clientes_equipos_ibfk_1` FOREIGN KEY (`id_equipo`) REFERENCES `equipos` (`id_equipo`),
+                  CONSTRAINT `clientes_equipos_ibfk_2` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="clientes_estados">
+                CREATE TABLE `clientes_estados` (
+                  `id_cliente` varchar(50) NOT NULL,
+                  `id_estado` int(11) NOT NULL,
+                  PRIMARY KEY (`id_cliente`,`id_estado`),
+                  KEY `id_estado` (`id_estado`),
+                  CONSTRAINT `clientes_estados_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`),
+                  CONSTRAINT `clientes_estados_ibfk_2` FOREIGN KEY (`id_estado`) REFERENCES `estados` (`id_estado`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="clientes_evaluaciones">
+                CREATE TABLE `clientes_evaluaciones` (
+                  `id_cliente` varchar(50) NOT NULL,
+                  `id_evaluacion` int(11) NOT NULL,
+                  `fecha_evaluacion` date DEFAULT NULL,
+                  PRIMARY KEY (`id_cliente`,`id_evaluacion`),
+                  KEY `id_evaluacion` (`id_evaluacion`),
+                  CONSTRAINT `clientes_evaluaciones_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`),
+                  CONSTRAINT `clientes_evaluaciones_ibfk_2` FOREIGN KEY (`id_evaluacion`) REFERENCES `evaluaciones` (`id_evaluacion`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="clientes_pagos">
+                CREATE TABLE `clientes_pagos` (
+                  `id_cliente` varchar(50) NOT NULL,
+                  `id_pago` int(11) NOT NULL,
+                  `fecha_pago` date DEFAULT NULL,
+                  PRIMARY KEY (`id_cliente`,`id_pago`),
+                  KEY `id_pago` (`id_pago`),
+                  CONSTRAINT `clientes_pagos_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`),
+                  CONSTRAINT `clientes_pagos_ibfk_2` FOREIGN KEY (`id_pago`) REFERENCES `pagos` (`id_pago`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="clientes_planes">
+                CREATE TABLE `clientes_planes` (
+                  `id_cliente` varchar(50) NOT NULL,
+                  `id_plan` int(11) NOT NULL,
+                  `fecha_asignacion` date DEFAULT curdate(),
+                  PRIMARY KEY (`id_cliente`,`id_plan`),
+                  KEY `id_plan` (`id_plan`),
+                  CONSTRAINT `clientes_planes_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`),
+                  CONSTRAINT `clientes_planes_ibfk_2` FOREIGN KEY (`id_plan`) REFERENCES `planes` (`id_plan`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="clientes_sesiones">
+                CREATE TABLE `clientes_sesiones` (
+                  `id_cliente` varchar(50) NOT NULL,
+                  `id_sesion` int(11) NOT NULL,
+                  PRIMARY KEY (`id_cliente`,`id_sesion`),
+                  KEY `id_sesion` (`id_sesion`),
+                  CONSTRAINT `clientes_sesiones_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`),
+                  CONSTRAINT `clientes_sesiones_ibfk_2` FOREIGN KEY (`id_sesion`) REFERENCES `sesiones` (`id_sesion`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="deportes">
+                CREATE TABLE `deportes` (
+                  `id_deporte` int(11) NOT NULL AUTO_INCREMENT,
+                  `tipo` varchar(50) DEFAULT NULL,
+                  `nombre` varchar(50) DEFAULT NULL,
+                  `descripcion` varchar(255) DEFAULT NULL,
+                  PRIMARY KEY (`id_deporte`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="ejercicios">
+                CREATE TABLE `ejercicios` (
+                  `id_ejercicio` int(11) NOT NULL AUTO_INCREMENT,
+                  `tipo` varchar(50) NOT NULL,
+                  `nombre` varchar(50) NOT NULL,
+                  `descripcion` varchar(255) NOT NULL,
+                  PRIMARY KEY (`id_ejercicio`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="entrenador">
+                CREATE TABLE `entrenador` (
+                  `id_entrenador` varchar(50) NOT NULL,
+                  PRIMARY KEY (`id_entrenador`),
+                  CONSTRAINT `entrenador_ibfk_1` FOREIGN KEY (`id_entrenador`) REFERENCES `personas` (`id_persona`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="entrenador_crea">
+                CREATE TABLE `entrenador_crea` (
+                  `id_entrenador` varchar(50) NOT NULL,
+                  `id_ejercicio` int(11) NOT NULL,
+                  `id_plan` int(11) NOT NULL,
+                  PRIMARY KEY (`id_entrenador`,`id_ejercicio`,`id_plan`),
+                  KEY `id_ejercicio` (`id_ejercicio`),
+                  KEY `id_plan` (`id_plan`),
+                  CONSTRAINT `entrenador_crea_ibfk_1` FOREIGN KEY (`id_entrenador`) REFERENCES `entrenador` (`id_entrenador`),
+                  CONSTRAINT `entrenador_crea_ibfk_2` FOREIGN KEY (`id_ejercicio`) REFERENCES `ejercicios` (`id_ejercicio`),
+                  CONSTRAINT `entrenador_crea_ibfk_3` FOREIGN KEY (`id_plan`) REFERENCES `planes` (`id_plan`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="entrenador_horario">
+                CREATE TABLE `entrenador_horario` (
+                  `id_entrenador` varchar(50) NOT NULL,
+                  `id_horario` int(11) NOT NULL,
+                  PRIMARY KEY (`id_entrenador`,`id_horario`),
+                  KEY `id_horario` (`id_horario`),
+                  CONSTRAINT `entrenador_horario_ibfk_1` FOREIGN KEY (`id_entrenador`) REFERENCES `entrenador` (`id_entrenador`),
+                  CONSTRAINT `entrenador_horario_ibfk_2` FOREIGN KEY (`id_horario`) REFERENCES `horarios` (`id_horario`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="entrenador_sesiones">
+                CREATE TABLE `entrenador_sesiones` (
+                  `id_entrenador` varchar(50) NOT NULL,
+                  `id_sesion` int(11) NOT NULL,
+                  PRIMARY KEY (`id_entrenador`,`id_sesion`),
+                  KEY `id_sesion` (`id_sesion`),
+                  CONSTRAINT `entrenador_sesiones_ibfk_1` FOREIGN KEY (`id_entrenador`) REFERENCES `entrenador` (`id_entrenador`),
+                  CONSTRAINT `entrenador_sesiones_ibfk_2` FOREIGN KEY (`id_sesion`) REFERENCES `sesiones` (`id_sesion`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="equipos">
+                CREATE TABLE `equipos` (
+                  `id_equipo` int(11) NOT NULL AUTO_INCREMENT,
+                  `nombre_equipo` varchar(50) NOT NULL,
+                  `deporte` varchar(50) NOT NULL,
+                  `tipo_actividad` varchar(50) NOT NULL,
+                  PRIMARY KEY (`id_equipo`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="estados">
+                CREATE TABLE `estados` (
+                  `id_estado` int(11) NOT NULL AUTO_INCREMENT,
+                  PRIMARY KEY (`id_estado`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="evaluaciones">
+                CREATE TABLE `evaluaciones` (
+                  `id_evaluacion` int(11) NOT NULL AUTO_INCREMENT,
+                  `cumplimiento_agenda` int(11) NOT NULL,
+                  `resistencia_anaerobica` int(11) NOT NULL,
+                  `resistencia_muscular` int(11) NOT NULL,
+                  `flexibilidad` int(11) NOT NULL,
+                  `resistencia_monotonia` int(11) NOT NULL,
+                  `resiliencia` int(11) NOT NULL,
+                  `nota` int(11) NOT NULL,
+                  PRIMARY KEY (`id_evaluacion`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="horarios">
+                CREATE TABLE `horarios` (
+                  `id_horario` int(11) NOT NULL AUTO_INCREMENT,
+                  `dia` varchar(50) DEFAULT NULL,
+                  `hora_inicio` time DEFAULT NULL,
+                  `hora_fin` time DEFAULT NULL,
+                  PRIMARY KEY (`id_horario`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="pagos">
+                CREATE TABLE `pagos` (
+                  `id_pago` int(11) NOT NULL AUTO_INCREMENT,
+                  PRIMARY KEY (`id_pago`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="personas">
+                CREATE TABLE `personas` (
+                  `id_persona` varchar(50) NOT NULL,
+                  `nombre` varchar(50) NOT NULL,
+                  `apellido` varchar(50) NOT NULL,
+                  `email` varchar(50) NOT NULL,
+                  PRIMARY KEY (`id_persona`),
+                  CONSTRAINT `personas_ibfk_1` FOREIGN KEY (`id_persona`) REFERENCES `usuarios` (`CI`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="planes">
+                CREATE TABLE `planes` (
+                  `id_plan` int(11) NOT NULL AUTO_INCREMENT,
+                  `tipo` varchar(50) NOT NULL,
+                  `nombre` varchar(50) NOT NULL,
+                  `descripcion` varchar(255) NOT NULL,
+                  PRIMARY KEY (`id_plan`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="planes_ejercicios">
+                CREATE TABLE `planes_ejercicios` (
+                  `id_plan` int(11) NOT NULL,
+                  `id_ejercicio` int(11) NOT NULL,
+                  PRIMARY KEY (`id_plan`,`id_ejercicio`),
+                  KEY `id_ejercicio` (`id_ejercicio`),
+                  CONSTRAINT `planes_ejercicios_ibfk_1` FOREIGN KEY (`id_plan`) REFERENCES `planes` (`id_plan`),
+                  CONSTRAINT `planes_ejercicios_ibfk_2` FOREIGN KEY (`id_ejercicio`) REFERENCES `ejercicios` (`id_ejercicio`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="sesiones">
+                CREATE TABLE `sesiones` (
+                  `id_sesion` int(11) NOT NULL AUTO_INCREMENT,
+                  `fecha` date DEFAULT NULL,
+                  `hora_inicio` time DEFAULT NULL,
+                  `hora_fin` time DEFAULT NULL,
+                  `asistencia` tinyint(1) DEFAULT NULL,
+                  PRIMARY KEY (`id_sesion`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="sucursales">
+                CREATE TABLE `sucursales` (
+                  `id_sucursal` int(11) NOT NULL AUTO_INCREMENT,
+                  `capacidad` int(11) DEFAULT NULL,
+                  PRIMARY KEY (`id_sucursal`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="sucursal_horario">
+                CREATE TABLE `sucursal_horario` (
+                  `id_sucursal` int(11) NOT NULL,
+                  `id_horario` int(11) NOT NULL,
+                  PRIMARY KEY (`id_sucursal`,`id_horario`),
+                  KEY `id_horario` (`id_horario`),
+                  CONSTRAINT `sucursal_horario_ibfk_1` FOREIGN KEY (`id_sucursal`) REFERENCES `sucursales` (`id_sucursal`),
+                  CONSTRAINT `sucursal_horario_ibfk_2` FOREIGN KEY (`id_horario`) REFERENCES `horarios` (`id_horario`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="usuarios">
+                CREATE TABLE `usuarios` (
+                  `CI` varchar(50) NOT NULL,
+                  `contrasena` varchar(255) NOT NULL,
+                  `id_rol` int(11) NOT NULL,
+                  PRIMARY KEY (`CI`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:view name="vista_puntaje_clientes_mes">
+                CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sekta`.`vista_puntaje_clientes_mes` AS select `p`.`id_persona` AS `id_cliente`,`p`.`nombre` AS `nombre`,`p`.`apellido` AS `apellido`,`e`.`cumplimiento_agenda` AS `cumplimiento_agenda`,`e`.`resistencia_anaerobica` AS `resistencia_anaerobica`,`e`.`resistencia_muscular` AS `resistencia_muscular`,`e`.`flexibilidad` AS `flexibilidad`,`e`.`resistencia_monotonia` AS `resistencia_monotonia`,`e`.`resiliencia` AS `resiliencia`,`e`.`nota` AS `nota` from (((`sekta`.`personas` `p` join `sekta`.`clientes` `c` on(`p`.`id_persona` = `c`.`id_cliente`)) join `sekta`.`clientes_evaluaciones` `ce` on(`c`.`id_cliente` = `ce`.`id_cliente`)) join `sekta`.`evaluaciones` `e` on(`ce`.`id_evaluacion` = `e`.`id_evaluacion`)) where month(`ce`.`fecha_evaluacion`) = month(curdate()) and year(`ce`.`fecha_evaluacion`) = year(curdate());
+            </pma:view>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Base de datos: 'sekta'
+    -->
+    <database name="sekta">
+        <!-- Tabla clientes -->
+        <table name="clientes">
+            <column name="id_cliente">11111111</column>
+            <column name="user_estado">1</column>
+            <column name="alertas"></column>
+            <column name="fecha_ingreso">NULL</column>
+        </table>
+        <table name="clientes">
+            <column name="id_cliente">12345678A</column>
+            <column name="user_estado">1</column>
+            <column name="alertas">Sin alertas</column>
+            <column name="fecha_ingreso">2023-01-15</column>
+        </table>
+        <table name="clientes">
+            <column name="id_cliente">23456789B</column>
+            <column name="user_estado">1</column>
+            <column name="alertas">Control mensual requerido</column>
+            <column name="fecha_ingreso">2023-03-20</column>
+        </table>
+        <table name="clientes">
+            <column name="id_cliente">45678901D</column>
+            <column name="user_estado">1</column>
+            <column name="alertas">Alerta leve</column>
+            <column name="fecha_ingreso">2023-05-10</column>
+        </table>
+        <table name="clientes">
+            <column name="id_cliente">56789012E</column>
+            <column name="user_estado">1</column>
+            <column name="alertas">En observación</column>
+            <column name="fecha_ingreso">2023-07-25</column>
+        </table>
+        <table name="clientes">
+            <column name="id_cliente">67890123F</column>
+            <column name="user_estado">1</column>
+            <column name="alertas">Progreso satisfactorio</column>
+            <column name="fecha_ingreso">2023-09-05</column>
+        </table>
+        <table name="clientes">
+            <column name="id_cliente">78901234G</column>
+            <column name="user_estado">1</column>
+            <column name="alertas">Requiere revisión</column>
+            <column name="fecha_ingreso">2024-11-01</column>
+        </table>
+        <!-- Tabla clientes_deportes -->
+        <table name="clientes_deportes">
+            <column name="id_cliente">12345678A</column>
+            <column name="id_deporte">1</column>
+        </table>
+        <table name="clientes_deportes">
+            <column name="id_cliente">23456789B</column>
+            <column name="id_deporte">2</column>
+        </table>
+        <table name="clientes_deportes">
+            <column name="id_cliente">45678901D</column>
+            <column name="id_deporte">3</column>
+        </table>
+        <table name="clientes_deportes">
+            <column name="id_cliente">56789012E</column>
+            <column name="id_deporte">4</column>
+        </table>
+        <table name="clientes_deportes">
+            <column name="id_cliente">67890123F</column>
+            <column name="id_deporte">5</column>
+        </table>
+        <!-- Tabla clientes_equipos -->
+        <table name="clientes_equipos">
+            <column name="id_equipo">1</column>
+            <column name="id_cliente">12345678A</column>
+            <column name="fecha_asignacion">2024-11-04</column>
+        </table>
+        <table name="clientes_equipos">
+            <column name="id_equipo">1</column>
+            <column name="id_cliente">67890123F</column>
+            <column name="fecha_asignacion">2024-11-04</column>
+        </table>
+        <table name="clientes_equipos">
+            <column name="id_equipo">2</column>
+            <column name="id_cliente">23456789B</column>
+            <column name="fecha_asignacion">2024-11-04</column>
+        </table>
+        <table name="clientes_equipos">
+            <column name="id_equipo">2</column>
+            <column name="id_cliente">45678901D</column>
+            <column name="fecha_asignacion">2024-11-04</column>
+        </table>
+        <table name="clientes_equipos">
+            <column name="id_equipo">3</column>
+            <column name="id_cliente">56789012E</column>
+            <column name="fecha_asignacion">2024-11-04</column>
+        </table>
+        <table name="clientes_equipos">
+            <column name="id_equipo">3</column>
+            <column name="id_cliente">78901234G</column>
+            <column name="fecha_asignacion">2023-11-04</column>
+        </table>
+        <!-- Tabla clientes_estados -->
+        <table name="clientes_estados">
+            <column name="id_cliente">12345678A</column>
+            <column name="id_estado">6</column>
+        </table>
+        <table name="clientes_estados">
+            <column name="id_cliente">23456789B</column>
+            <column name="id_estado">3</column>
+        </table>
+        <!-- Tabla clientes_evaluaciones -->
+        <table name="clientes_evaluaciones">
+            <column name="id_cliente">12345678A</column>
+            <column name="id_evaluacion">1</column>
+            <column name="fecha_evaluacion">2023-02-20</column>
+        </table>
+        <table name="clientes_evaluaciones">
+            <column name="id_cliente">23456789B</column>
+            <column name="id_evaluacion">2</column>
+            <column name="fecha_evaluacion">2024-11-04</column>
+        </table>
+        <table name="clientes_evaluaciones">
+            <column name="id_cliente">45678901D</column>
+            <column name="id_evaluacion">3</column>
+            <column name="fecha_evaluacion">2024-11-05</column>
+        </table>
+        <table name="clientes_evaluaciones">
+            <column name="id_cliente">56789012E</column>
+            <column name="id_evaluacion">4</column>
+            <column name="fecha_evaluacion">2023-05-18</column>
+        </table>
+        <table name="clientes_evaluaciones">
+            <column name="id_cliente">67890123F</column>
+            <column name="id_evaluacion">5</column>
+            <column name="fecha_evaluacion">2024-11-12</column>
+        </table>
+        <table name="clientes_evaluaciones">
+            <column name="id_cliente">78901234G</column>
+            <column name="id_evaluacion">6</column>
+            <column name="fecha_evaluacion">2024-11-20</column>
+        </table>
+        <!-- Tabla clientes_pagos -->
+        <table name="clientes_pagos">
+            <column name="id_cliente">12345678A</column>
+            <column name="id_pago">1</column>
+            <column name="fecha_pago">2023-02-15</column>
+        </table>
+        <table name="clientes_pagos">
+            <column name="id_cliente">23456789B</column>
+            <column name="id_pago">2</column>
+            <column name="fecha_pago">2023-03-10</column>
+        </table>
+        <table name="clientes_pagos">
+            <column name="id_cliente">45678901D</column>
+            <column name="id_pago">3</column>
+            <column name="fecha_pago">2023-04-20</column>
+        </table>
+        <table name="clientes_pagos">
+            <column name="id_cliente">56789012E</column>
+            <column name="id_pago">4</column>
+            <column name="fecha_pago">2023-05-25</column>
+        </table>
+        <table name="clientes_pagos">
+            <column name="id_cliente">67890123F</column>
+            <column name="id_pago">5</column>
+            <column name="fecha_pago">2023-06-14</column>
+        </table>
+        <table name="clientes_pagos">
+            <column name="id_cliente">78901234G</column>
+            <column name="id_pago">6</column>
+            <column name="fecha_pago">2023-07-11</column>
+        </table>
+        <!-- Tabla clientes_planes -->
+        <table name="clientes_planes">
+            <column name="id_cliente">12345678A</column>
+            <column name="id_plan">2</column>
+            <column name="fecha_asignacion">2024-11-04</column>
+        </table>
+        <!-- Tabla clientes_sesiones -->
+        <table name="clientes_sesiones">
+            <column name="id_cliente">12345678A</column>
+            <column name="id_sesion">1</column>
+        </table>
+        <table name="clientes_sesiones">
+            <column name="id_cliente">23456789B</column>
+            <column name="id_sesion">2</column>
+        </table>
+        <table name="clientes_sesiones">
+            <column name="id_cliente">45678901D</column>
+            <column name="id_sesion">3</column>
+        </table>
+        <table name="clientes_sesiones">
+            <column name="id_cliente">56789012E</column>
+            <column name="id_sesion">4</column>
+        </table>
+        <table name="clientes_sesiones">
+            <column name="id_cliente">67890123F</column>
+            <column name="id_sesion">5</column>
+        </table>
+        <!-- Tabla deportes -->
+        <table name="deportes">
+            <column name="id_deporte">1</column>
+            <column name="tipo">Individual</column>
+            <column name="nombre">Natación</column>
+            <column name="descripcion">Entrenamiento de natación en piscina</column>
+        </table>
+        <table name="deportes">
+            <column name="id_deporte">2</column>
+            <column name="tipo">Equipo</column>
+            <column name="nombre">Fútbol</column>
+            <column name="descripcion">Entrenamiento en equipo para habilidades futbolísticas</column>
+        </table>
+        <table name="deportes">
+            <column name="id_deporte">3</column>
+            <column name="tipo">Individual</column>
+            <column name="nombre">Ciclismo</column>
+            <column name="descripcion">Entrenamiento de resistencia en ciclismo</column>
+        </table>
+        <table name="deportes">
+            <column name="id_deporte">4</column>
+            <column name="tipo">Individual</column>
+            <column name="nombre">Running</column>
+            <column name="descripcion">Carrera y resistencia</column>
+        </table>
+        <table name="deportes">
+            <column name="id_deporte">5</column>
+            <column name="tipo">Equipo</column>
+            <column name="nombre">Voleibol</column>
+            <column name="descripcion">Entrenamiento en equipo de voleibol</column>
+        </table>
+        <!-- Tabla ejercicios -->
+        <table name="ejercicios">
+            <column name="id_ejercicio">1</column>
+            <column name="tipo">Fuerza</column>
+            <column name="nombre">Press de Banca</column>
+            <column name="descripcion">3x10. Pecho superior</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">2</column>
+            <column name="tipo">Fuerza</column>
+            <column name="nombre">Press Militar</column>
+            <column name="descripcion">3x10. Hombro</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">3</column>
+            <column name="tipo">Fuerza</column>
+            <column name="nombre">Sentadilla</column>
+            <column name="descripcion">4x12. Piernas completas</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">4</column>
+            <column name="tipo">Fuerza</column>
+            <column name="nombre">Peso Muerto</column>
+            <column name="descripcion">4x10. Espalda y piernas</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">5</column>
+            <column name="tipo">Fuerza</column>
+            <column name="nombre">Curl de Bíceps</column>
+            <column name="descripcion">3x15. Bíceps</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">6</column>
+            <column name="tipo">Fuerza</column>
+            <column name="nombre">Extensión de Tríceps</column>
+            <column name="descripcion">3x15. Tríceps</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">7</column>
+            <column name="tipo">Fuerza</column>
+            <column name="nombre">Remo con Barra</column>
+            <column name="descripcion">4x12. Espalda media</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">8</column>
+            <column name="tipo">Resistencia</column>
+            <column name="nombre">Burpees</column>
+            <column name="descripcion">3x20. Cardio y fuerza</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">9</column>
+            <column name="tipo">Resistencia</column>
+            <column name="nombre">Sprints</column>
+            <column name="descripcion">4x30s. Velocidad</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">10</column>
+            <column name="tipo">Resistencia</column>
+            <column name="nombre">Cuerda de Batida</column>
+            <column name="descripcion">3x40s. Hombros y brazos</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">11</column>
+            <column name="tipo">Resistencia</column>
+            <column name="nombre">Mountain Climbers</column>
+            <column name="descripcion">3x30s. Core y cardio</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">12</column>
+            <column name="tipo">Resistencia</column>
+            <column name="nombre">Jumping Jacks</column>
+            <column name="descripcion">4x20. Calentamiento general</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">13</column>
+            <column name="tipo">Flexibilidad</column>
+            <column name="nombre">Estiramiento Piernas</column>
+            <column name="descripcion">2x30s. Flexibilidad piernas</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">14</column>
+            <column name="tipo">Flexibilidad</column>
+            <column name="nombre">Estiramiento Hombros</column>
+            <column name="descripcion">2x30s. Flexibilidad hombros</column>
+        </table>
+        <table name="ejercicios">
+            <column name="id_ejercicio">15</column>
+            <column name="tipo">Flexibilidad</column>
+            <column name="nombre">Estiramiento de Espalda</column>
+            <column name="descripcion">2x30s. Espalda baja</column>
+        </table>
+        <!-- Tabla entrenador -->
+        <table name="entrenador">
+            <column name="id_entrenador">34567890C</column>
+        </table>
+        <table name="entrenador">
+            <column name="id_entrenador">55555555</column>
+        </table>
+        <!-- Tabla entrenador_crea -->
+        <table name="entrenador_crea">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_ejercicio">1</column>
+            <column name="id_plan">1</column>
+        </table>
+        <table name="entrenador_crea">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_ejercicio">2</column>
+            <column name="id_plan">1</column>
+        </table>
+        <table name="entrenador_crea">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_ejercicio">3</column>
+            <column name="id_plan">2</column>
+        </table>
+        <table name="entrenador_crea">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_ejercicio">4</column>
+            <column name="id_plan">2</column>
+        </table>
+        <table name="entrenador_crea">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_ejercicio">5</column>
+            <column name="id_plan">3</column>
+        </table>
+        <table name="entrenador_crea">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_ejercicio">6</column>
+            <column name="id_plan">3</column>
+        </table>
+        <!-- Tabla entrenador_horario -->
+        <table name="entrenador_horario">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_horario">1</column>
+        </table>
+        <table name="entrenador_horario">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_horario">2</column>
+        </table>
+        <table name="entrenador_horario">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_horario">3</column>
+        </table>
+        <table name="entrenador_horario">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_horario">4</column>
+        </table>
+        <table name="entrenador_horario">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_horario">5</column>
+        </table>
+        <!-- Tabla entrenador_sesiones -->
+        <table name="entrenador_sesiones">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_sesion">1</column>
+        </table>
+        <table name="entrenador_sesiones">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_sesion">2</column>
+        </table>
+        <table name="entrenador_sesiones">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_sesion">3</column>
+        </table>
+        <table name="entrenador_sesiones">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_sesion">4</column>
+        </table>
+        <table name="entrenador_sesiones">
+            <column name="id_entrenador">34567890C</column>
+            <column name="id_sesion">5</column>
+        </table>
+        <!-- Tabla equipos -->
+        <table name="equipos">
+            <column name="id_equipo">1</column>
+            <column name="nombre_equipo">Team Alpha</column>
+            <column name="deporte">Fútbol</column>
+            <column name="tipo_actividad">Competencia</column>
+        </table>
+        <table name="equipos">
+            <column name="id_equipo">2</column>
+            <column name="nombre_equipo">Power Lifters</column>
+            <column name="deporte">Pesas</column>
+            <column name="tipo_actividad">Entrenamiento</column>
+        </table>
+        <table name="equipos">
+            <column name="id_equipo">3</column>
+            <column name="nombre_equipo">Speedsters</column>
+            <column name="deporte">Carrera</column>
+            <column name="tipo_actividad">Velocidad</column>
+        </table>
+        <table name="equipos">
+            <column name="id_equipo">4</column>
+            <column name="nombre_equipo">Runners United</column>
+            <column name="deporte">Running</column>
+            <column name="tipo_actividad">Competencia</column>
+        </table>
+        <table name="equipos">
+            <column name="id_equipo">5</column>
+            <column name="nombre_equipo">Cycling Club</column>
+            <column name="deporte">Ciclismo</column>
+            <column name="tipo_actividad">Entrenamiento</column>
+        </table>
+        <table name="equipos">
+            <column name="id_equipo">6</column>
+            <column name="nombre_equipo">Swim Team</column>
+            <column name="deporte">Natación</column>
+            <column name="tipo_actividad">Entrenamiento en piscina</column>
+        </table>
+        <!-- Tabla estados -->
+        <table name="estados">
+            <column name="id_estado">1</column>
+        </table>
+        <table name="estados">
+            <column name="id_estado">2</column>
+        </table>
+        <table name="estados">
+            <column name="id_estado">3</column>
+        </table>
+        <table name="estados">
+            <column name="id_estado">4</column>
+        </table>
+        <table name="estados">
+            <column name="id_estado">5</column>
+        </table>
+        <table name="estados">
+            <column name="id_estado">6</column>
+        </table>
+        <table name="estados">
+            <column name="id_estado">7</column>
+        </table>
+        <table name="estados">
+            <column name="id_estado">8</column>
+        </table>
+        <table name="estados">
+            <column name="id_estado">9</column>
+        </table>
+        <!-- Tabla evaluaciones -->
+        <table name="evaluaciones">
+            <column name="id_evaluacion">1</column>
+            <column name="cumplimiento_agenda">18</column>
+            <column name="resistencia_anaerobica">15</column>
+            <column name="resistencia_muscular">12</column>
+            <column name="flexibilidad">10</column>
+            <column name="resistencia_monotonia">18</column>
+            <column name="resiliencia">17</column>
+            <column name="nota">90</column>
+        </table>
+        <table name="evaluaciones">
+            <column name="id_evaluacion">2</column>
+            <column name="cumplimiento_agenda">14</column>
+            <column name="resistencia_anaerobica">18</column>
+            <column name="resistencia_muscular">15</column>
+            <column name="flexibilidad">13</column>
+            <column name="resistencia_monotonia">19</column>
+            <column name="resiliencia">20</column>
+            <column name="nota">99</column>
+        </table>
+        <table name="evaluaciones">
+            <column name="id_evaluacion">3</column>
+            <column name="cumplimiento_agenda">13</column>
+            <column name="resistencia_anaerobica">16</column>
+            <column name="resistencia_muscular">17</column>
+            <column name="flexibilidad">15</column>
+            <column name="resistencia_monotonia">16</column>
+            <column name="resiliencia">18</column>
+            <column name="nota">95</column>
+        </table>
+        <table name="evaluaciones">
+            <column name="id_evaluacion">4</column>
+            <column name="cumplimiento_agenda">17</column>
+            <column name="resistencia_anaerobica">12</column>
+            <column name="resistencia_muscular">13</column>
+            <column name="flexibilidad">19</column>
+            <column name="resistencia_monotonia">20</column>
+            <column name="resiliencia">16</column>
+            <column name="nota">97</column>
+        </table>
+        <table name="evaluaciones">
+            <column name="id_evaluacion">5</column>
+            <column name="cumplimiento_agenda">18</column>
+            <column name="resistencia_anaerobica">16</column>
+            <column name="resistencia_muscular">15</column>
+            <column name="flexibilidad">14</column>
+            <column name="resistencia_monotonia">13</column>
+            <column name="resiliencia">15</column>
+            <column name="nota">91</column>
+        </table>
+        <table name="evaluaciones">
+            <column name="id_evaluacion">6</column>
+            <column name="cumplimiento_agenda">12</column>
+            <column name="resistencia_anaerobica">10</column>
+            <column name="resistencia_muscular">15</column>
+            <column name="flexibilidad">17</column>
+            <column name="resistencia_monotonia">16</column>
+            <column name="resiliencia">18</column>
+            <column name="nota">88</column>
+        </table>
+        <table name="evaluaciones">
+            <column name="id_evaluacion">7</column>
+            <column name="cumplimiento_agenda">15</column>
+            <column name="resistencia_anaerobica">13</column>
+            <column name="resistencia_muscular">17</column>
+            <column name="flexibilidad">16</column>
+            <column name="resistencia_monotonia">14</column>
+            <column name="resiliencia">13</column>
+            <column name="nota">88</column>
+        </table>
+        <!-- Tabla horarios -->
+        <table name="horarios">
+            <column name="id_horario">1</column>
+            <column name="dia">Lunes</column>
+            <column name="hora_inicio">08:00:00</column>
+            <column name="hora_fin">10:00:00</column>
+        </table>
+        <table name="horarios">
+            <column name="id_horario">2</column>
+            <column name="dia">Martes</column>
+            <column name="hora_inicio">10:00:00</column>
+            <column name="hora_fin">12:00:00</column>
+        </table>
+        <table name="horarios">
+            <column name="id_horario">3</column>
+            <column name="dia">Miércoles</column>
+            <column name="hora_inicio">08:00:00</column>
+            <column name="hora_fin">10:00:00</column>
+        </table>
+        <table name="horarios">
+            <column name="id_horario">4</column>
+            <column name="dia">Jueves</column>
+            <column name="hora_inicio">10:00:00</column>
+            <column name="hora_fin">12:00:00</column>
+        </table>
+        <table name="horarios">
+            <column name="id_horario">5</column>
+            <column name="dia">Viernes</column>
+            <column name="hora_inicio">08:00:00</column>
+            <column name="hora_fin">10:00:00</column>
+        </table>
+        <!-- Tabla pagos -->
+        <table name="pagos">
+            <column name="id_pago">1</column>
+        </table>
+        <table name="pagos">
+            <column name="id_pago">2</column>
+        </table>
+        <table name="pagos">
+            <column name="id_pago">3</column>
+        </table>
+        <table name="pagos">
+            <column name="id_pago">4</column>
+        </table>
+        <table name="pagos">
+            <column name="id_pago">5</column>
+        </table>
+        <table name="pagos">
+            <column name="id_pago">6</column>
+        </table>
+        <table name="pagos">
+            <column name="id_pago">7</column>
+        </table>
+        <!-- Tabla personas -->
+        <table name="personas">
+            <column name="id_persona">11111111</column>
+            <column name="nombre">Pedro</column>
+            <column name="apellido">Pascal</column>
+            <column name="email">test@example.us</column>
+        </table>
+        <table name="personas">
+            <column name="id_persona">12345678A</column>
+            <column name="nombre">Carlos</column>
+            <column name="apellido">Pérez</column>
+            <column name="email">carlos.perez@example.com</column>
+        </table>
+        <table name="personas">
+            <column name="id_persona">22222222</column>
+            <column name="nombre">Administrativo</column>
+            <column name="apellido">Rodriguez</column>
+            <column name="email">test@example.us</column>
+        </table>
+        <table name="personas">
+            <column name="id_persona">23456789B</column>
+            <column name="nombre">Laura</column>
+            <column name="apellido">Gómez</column>
+            <column name="email">laura.gomez@example.com</column>
+        </table>
+        <table name="personas">
+            <column name="id_persona">33333333</column>
+            <column name="nombre">Seleccionador</column>
+            <column name="apellido">Gomez</column>
+            <column name="email">test@example.us</column>
+        </table>
+        <table name="personas">
+            <column name="id_persona">34567890C</column>
+            <column name="nombre">Miguel</column>
+            <column name="apellido">López</column>
+            <column name="email">miguel.lopez@example.com</column>
+        </table>
+        <table name="personas">
+            <column name="id_persona">44444444</column>
+            <column name="nombre">Avanzado</column>
+            <column name="apellido">Leibniz</column>
+            <column name="email">test@example.us</column>
+        </table>
+        <table name="personas">
+            <column name="id_persona">45678901D</column>
+            <column name="nombre">Sofía</column>
+            <column name="apellido">Martínez</column>
+            <column name="email">sofia.martinez@example.com</column>
+        </table>
+        <table name="personas">
+            <column name="id_persona">55555555</column>
+            <column name="nombre">Entrenador</column>
+            <column name="apellido">Cabrera</column>
+            <column name="email">test@example.us</column>
+        </table>
+        <table name="personas">
+            <column name="id_persona">56789012E</column>
+            <column name="nombre">Antonio</column>
+            <column name="apellido">Ramírez</column>
+            <column name="email">antonio.ramirez@example.com</column>
+        </table>
+        <table name="personas">
+            <column name="id_persona">67890123F</column>
+            <column name="nombre">Elena</column>
+            <column name="apellido">Fernández</column>
+            <column name="email">elena.fernandez@example.com</column>
+        </table>
+        <table name="personas">
+            <column name="id_persona">78901234G</column>
+            <column name="nombre">José</column>
+            <column name="apellido">García</column>
+            <column name="email">jose.garcia@example.com</column>
+        </table>
+        <!-- Tabla planes -->
+        <table name="planes">
+            <column name="id_plan">1</column>
+            <column name="tipo">Fuerza</column>
+            <column name="nombre">Plan de Pecho y Tríceps</column>
+            <column name="descripcion">Fortalece pecho y tríceps</column>
+        </table>
+        <table name="planes">
+            <column name="id_plan">2</column>
+            <column name="tipo">Fuerza</column>
+            <column name="nombre">Plan de Espalda y Bíceps</column>
+            <column name="descripcion">Trabaja espalda y bíceps</column>
+        </table>
+        <table name="planes">
+            <column name="id_plan">3</column>
+            <column name="tipo">Fuerza</column>
+            <column name="nombre">Plan de Piernas</column>
+            <column name="descripcion">Entrenamiento completo de piernas</column>
+        </table>
+        <table name="planes">
+            <column name="id_plan">4</column>
+            <column name="tipo">Resistencia</column>
+            <column name="nombre">Plan de Cardio Intenso</column>
+            <column name="descripcion">Incrementa resistencia</column>
+        </table>
+        <table name="planes">
+            <column name="id_plan">5</column>
+            <column name="tipo">Flexibilidad</column>
+            <column name="nombre">Plan de Flexibilidad Completa</column>
+            <column name="descripcion">Mejora movilidad general</column>
+        </table>
+        <table name="planes">
+            <column name="id_plan">6</column>
+            <column name="tipo">Fuerza</column>
+            <column name="nombre">Plan de Hombros</column>
+            <column name="descripcion">Fortalece hombros y traps</column>
+        </table>
+        <table name="planes">
+            <column name="id_plan">7</column>
+            <column name="tipo">Resistencia</column>
+            <column name="nombre">Plan de Circuito Funcional</column>
+            <column name="descripcion">Combina cardio y fuerza</column>
+        </table>
+        <table name="planes">
+            <column name="id_plan">8</column>
+            <column name="tipo">Fuerza</column>
+            <column name="nombre">Plan Full Body</column>
+            <column name="descripcion">Ejercita todo el cuerpo</column>
+        </table>
+        <table name="planes">
+            <column name="id_plan">9</column>
+            <column name="tipo">Flexibilidad</column>
+            <column name="nombre">Plan de Estiramientos Diarios</column>
+            <column name="descripcion">Ideal para inicio del día</column>
+        </table>
+        <table name="planes">
+            <column name="id_plan">10</column>
+            <column name="tipo">Resistencia</column>
+            <column name="nombre">Plan HIIT</column>
+            <column name="descripcion">Entrenamiento de alta intensidad</column>
+        </table>
+        <!-- Tabla planes_ejercicios -->
+        <table name="planes_ejercicios">
+            <column name="id_plan">1</column>
+            <column name="id_ejercicio">1</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">1</column>
+            <column name="id_ejercicio">2</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">1</column>
+            <column name="id_ejercicio">5</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">1</column>
+            <column name="id_ejercicio">6</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">1</column>
+            <column name="id_ejercicio">7</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">1</column>
+            <column name="id_ejercicio">13</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">1</column>
+            <column name="id_ejercicio">14</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">2</column>
+            <column name="id_ejercicio">4</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">2</column>
+            <column name="id_ejercicio">5</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">2</column>
+            <column name="id_ejercicio">6</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">2</column>
+            <column name="id_ejercicio">7</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">2</column>
+            <column name="id_ejercicio">8</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">2</column>
+            <column name="id_ejercicio">11</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">2</column>
+            <column name="id_ejercicio">12</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">3</column>
+            <column name="id_ejercicio">3</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">3</column>
+            <column name="id_ejercicio">4</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">3</column>
+            <column name="id_ejercicio">8</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">3</column>
+            <column name="id_ejercicio">10</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">3</column>
+            <column name="id_ejercicio">11</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">3</column>
+            <column name="id_ejercicio">13</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">3</column>
+            <column name="id_ejercicio">15</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">4</column>
+            <column name="id_ejercicio">8</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">4</column>
+            <column name="id_ejercicio">9</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">4</column>
+            <column name="id_ejercicio">10</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">4</column>
+            <column name="id_ejercicio">11</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">4</column>
+            <column name="id_ejercicio">13</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">4</column>
+            <column name="id_ejercicio">14</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">4</column>
+            <column name="id_ejercicio">15</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">5</column>
+            <column name="id_ejercicio">2</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">5</column>
+            <column name="id_ejercicio">3</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">5</column>
+            <column name="id_ejercicio">8</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">5</column>
+            <column name="id_ejercicio">12</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">5</column>
+            <column name="id_ejercicio">13</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">5</column>
+            <column name="id_ejercicio">14</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">5</column>
+            <column name="id_ejercicio">15</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">6</column>
+            <column name="id_ejercicio">2</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">6</column>
+            <column name="id_ejercicio">6</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">6</column>
+            <column name="id_ejercicio">7</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">6</column>
+            <column name="id_ejercicio">8</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">6</column>
+            <column name="id_ejercicio">10</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">6</column>
+            <column name="id_ejercicio">12</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">6</column>
+            <column name="id_ejercicio">14</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">7</column>
+            <column name="id_ejercicio">3</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">7</column>
+            <column name="id_ejercicio">5</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">7</column>
+            <column name="id_ejercicio">6</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">7</column>
+            <column name="id_ejercicio">8</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">7</column>
+            <column name="id_ejercicio">9</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">7</column>
+            <column name="id_ejercicio">10</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">7</column>
+            <column name="id_ejercicio">11</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">8</column>
+            <column name="id_ejercicio">1</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">8</column>
+            <column name="id_ejercicio">3</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">8</column>
+            <column name="id_ejercicio">4</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">8</column>
+            <column name="id_ejercicio">5</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">8</column>
+            <column name="id_ejercicio">7</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">8</column>
+            <column name="id_ejercicio">13</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">8</column>
+            <column name="id_ejercicio">15</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">9</column>
+            <column name="id_ejercicio">1</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">9</column>
+            <column name="id_ejercicio">3</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">9</column>
+            <column name="id_ejercicio">11</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">9</column>
+            <column name="id_ejercicio">12</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">9</column>
+            <column name="id_ejercicio">13</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">9</column>
+            <column name="id_ejercicio">14</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">9</column>
+            <column name="id_ejercicio">15</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">10</column>
+            <column name="id_ejercicio">4</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">10</column>
+            <column name="id_ejercicio">5</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">10</column>
+            <column name="id_ejercicio">6</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">10</column>
+            <column name="id_ejercicio">8</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">10</column>
+            <column name="id_ejercicio">9</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">10</column>
+            <column name="id_ejercicio">10</column>
+        </table>
+        <table name="planes_ejercicios">
+            <column name="id_plan">10</column>
+            <column name="id_ejercicio">11</column>
+        </table>
+        <!-- Tabla sesiones -->
+        <table name="sesiones">
+            <column name="id_sesion">1</column>
+            <column name="fecha">2023-01-15</column>
+            <column name="hora_inicio">08:00:00</column>
+            <column name="hora_fin">09:00:00</column>
+            <column name="asistencia">1</column>
+        </table>
+        <table name="sesiones">
+            <column name="id_sesion">2</column>
+            <column name="fecha">2023-02-12</column>
+            <column name="hora_inicio">09:30:00</column>
+            <column name="hora_fin">10:30:00</column>
+            <column name="asistencia">1</column>
+        </table>
+        <table name="sesiones">
+            <column name="id_sesion">3</column>
+            <column name="fecha">2023-03-10</column>
+            <column name="hora_inicio">10:00:00</column>
+            <column name="hora_fin">11:00:00</column>
+            <column name="asistencia">0</column>
+        </table>
+        <table name="sesiones">
+            <column name="id_sesion">4</column>
+            <column name="fecha">2023-04-25</column>
+            <column name="hora_inicio">11:15:00</column>
+            <column name="hora_fin">12:15:00</column>
+            <column name="asistencia">1</column>
+        </table>
+        <table name="sesiones">
+            <column name="id_sesion">5</column>
+            <column name="fecha">2023-05-05</column>
+            <column name="hora_inicio">12:30:00</column>
+            <column name="hora_fin">13:30:00</column>
+            <column name="asistencia">1</column>
+        </table>
+        <!-- Tabla sucursales -->
+        <table name="sucursales">
+            <column name="id_sucursal">1</column>
+            <column name="capacidad">100</column>
+        </table>
+        <table name="sucursales">
+            <column name="id_sucursal">2</column>
+            <column name="capacidad">150</column>
+        </table>
+        <table name="sucursales">
+            <column name="id_sucursal">3</column>
+            <column name="capacidad">200</column>
+        </table>
+        <!-- Tabla sucursal_horario -->
+        <table name="sucursal_horario">
+            <column name="id_sucursal">1</column>
+            <column name="id_horario">1</column>
+        </table>
+        <table name="sucursal_horario">
+            <column name="id_sucursal">1</column>
+            <column name="id_horario">2</column>
+        </table>
+        <table name="sucursal_horario">
+            <column name="id_sucursal">2</column>
+            <column name="id_horario">3</column>
+        </table>
+        <table name="sucursal_horario">
+            <column name="id_sucursal">2</column>
+            <column name="id_horario">4</column>
+        </table>
+        <table name="sucursal_horario">
+            <column name="id_sucursal">3</column>
+            <column name="id_horario">5</column>
+        </table>
+        <!-- Tabla usuarios -->
+        <table name="usuarios">
+            <column name="CI">11111111</column>
+            <column name="contrasena">$2y$10$oIHp.L19v8DwgjAo.O3VxOD7JXcOjpRjR3sOZkX1uzk0ux54FjhyO</column>
+            <column name="id_rol">1</column>
+        </table>
+        <table name="usuarios">
+            <column name="CI">12345678A</column>
+            <column name="contrasena">$2y$10$xzZxW52WQRDudPdhdxWCOOxWRaJsNpiOiTjGdFhxtkGcKxKh3tSQ2</column>
+            <column name="id_rol">1</column>
+        </table>
+        <table name="usuarios">
+            <column name="CI">22222222</column>
+            <column name="contrasena">$2y$10$4/53ygXuIjph5QTXSRK4bePU/LNNtqm./oHftd504K53Y/Ql/UfGG</column>
+            <column name="id_rol">5</column>
+        </table>
+        <table name="usuarios">
+            <column name="CI">23456789B</column>
+            <column name="contrasena">$2y$10$xzZxW52WQRDudPdhdxWCOOxWRaJsNpiOiTjGdFhxtkGcKxKh3tSQ2</column>
+            <column name="id_rol">2</column>
+        </table>
+        <table name="usuarios">
+            <column name="CI">33333333</column>
+            <column name="contrasena">$2y$10$W2OrDRc5z/tYaACDREA4/O6sa2bo8ffubwrRM0f0Q2iCE0Zg9aEFq</column>
+            <column name="id_rol">6</column>
+        </table>
+        <table name="usuarios">
+            <column name="CI">34567890C</column>
+            <column name="contrasena">$2y$10$xzZxW52WQRDudPdhdxWCOOxWRaJsNpiOiTjGdFhxtkGcKxKh3tSQ2</column>
+            <column name="id_rol">3</column>
+        </table>
+        <table name="usuarios">
+            <column name="CI">44444444</column>
+            <column name="contrasena">$2y$10$GPVTT2kLmLvq7PyyEU7HHOEF1U5umpZ4CTyt2U4R0XdgxyeMTYtAi</column>
+            <column name="id_rol">4</column>
+        </table>
+        <table name="usuarios">
+            <column name="CI">45678901D</column>
+            <column name="contrasena">$2y$10$xzZxW52WQRDudPdhdxWCOOxWRaJsNpiOiTjGdFhxtkGcKxKh3tSQ2</column>
+            <column name="id_rol">4</column>
+        </table>
+        <table name="usuarios">
+            <column name="CI">55555555</column>
+            <column name="contrasena">$2y$10$KB6Bgnv5rWsVoisI9o1W2OYm7J8NzAznH2rkjCR.JGrGPM87fdAou</column>
+            <column name="id_rol">3</column>
+        </table>
+        <table name="usuarios">
+            <column name="CI">56789012E</column>
+            <column name="contrasena">$2y$10$xzZxW52WQRDudPdhdxWCOOxWRaJsNpiOiTjGdFhxtkGcKxKh3tSQ2</column>
+            <column name="id_rol">5</column>
+        </table>
+        <table name="usuarios">
+            <column name="CI">67890123F</column>
+            <column name="contrasena">$2y$10$xzZxW52WQRDudPdhdxWCOOxWRaJsNpiOiTjGdFhxtkGcKxKh3tSQ2</column>
+            <column name="id_rol">6</column>
+        </table>
+        <table name="usuarios">
+            <column name="CI">78901234G</column>
+            <column name="contrasena">$2y$10$xzZxW52WQRDudPdhdxWCOOxWRaJsNpiOiTjGdFhxtkGcKxKh3tSQ2</column>
+            <column name="id_rol">0</column>
+        </table>
+        <table name="usuarios">
+            <column name="CI">99999999</column>
+            <column name="contrasena">$2y$10$nDU.z2lxToX.csqMO2BViuBgvShS5/A2A/k5Hos64ywiNa8QIivDq</column>
+            <column name="id_rol">10</column>
+        </table>
+    </database>
+</pma_xml_export>
