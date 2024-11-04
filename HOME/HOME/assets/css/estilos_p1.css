@@ -204,6 +204,8 @@ h2 {
 }
 
 .parrafo1 {
+    padding-left: 16rem;
+    padding-right: 16rem;
     text-align: center;
     color: var(--color2);
     line-height: 1.1;
@@ -440,6 +442,7 @@ a:hover {
 }
 
 .containerD {
+    display: flex;
     color: var(--color3);
     border: 2px solid;
     border-radius: 15px;
@@ -462,6 +465,8 @@ a:hover {
 }
 
 .boton3 {
+    margin: 3rem!important;
+    display: flex;
     margin: 10px auto;
     padding: 4px;
     background: var(--color3);

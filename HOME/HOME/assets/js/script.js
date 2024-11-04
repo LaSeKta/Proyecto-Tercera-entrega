@@ -1,36 +1,3 @@
-$(document).ready(function () {
-    // Activar carrusel
-    $("#EfectoCarrusel").carousel();
-
-    // Activar los indicadores del carrusel
-    $(".item1").click(function (event) {
-        event.preventDefault(); // Evita el desplazamiento predeterminado
-        $("#EfectoCarrusel").carousel(0);
-    });
-    $(".item2").click(function (event) {
-        event.preventDefault();
-        $("#EfectoCarrusel").carousel(1);
-    });
-    $(".item3").click(function (event) {
-        event.preventDefault();
-        $("#EfectoCarrusel").carousel(2);
-    });
-
-    // Activar dirección del carrusel
-    $(".carousel-control-prev").click(function (event) {
-        event.preventDefault();
-        $("#EfectoCarrusel").carousel("prev");
-    });
-    $(".carousel-control-next").click(function (event) {
-        event.preventDefault();
-        $("#EfectoCarrusel").carousel("next");
-    });
-
-    // Redirigir al #Acceder cuando se hace clic en una imagen del carrusel
-    $("#carouselImage1, #carouselImage2, #carouselImage3").click(function () {
-        window.location.href = '#Acceder';
-    });
-});
 
 //NAV BOTONES
 const enlacesMenu = document.querySelectorAll(".op-menu a");
