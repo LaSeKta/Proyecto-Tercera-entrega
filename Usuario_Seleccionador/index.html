@@ -98,33 +98,20 @@
             <h2 class="tituloo" style="color: var(--color3);">Gestión de Clubes y Entrenadores</h2>
             <div class="gestion-container">
 
-                <div class="gestion-form-container">
-                    <form id="clubForm" class="gestion-form">
-                        <h3>Añadir / Modificar <br> Club</h3>
-                        <div class="form-group">
-                            <label for="clubName">Nombre del Club:</label>
-                            <input type="text" id="clubName" name="clubName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="clubLocation">Ubicación del Club:</label>
-                            <input type="text" id="clubLocation" name="clubLocation" required>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit">Registrar Club</button>
-                        </div>
-                    </form>
-                </div>
+
         
                 <div class="gestion-table-container">
+
                     <table class="gestion-table">
                         <thead>
                             <tr>
-                                <th>Nombre del Club</th>
-                                <th>Ubicación</th>
-                                <th>Entrenador</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
                             </tr>
                         </thead>
-                        <tbody id="clubTrainerList">
+                        <tbody id="entrenadoresList">
+                            <!-- Aquí se cargarán los entrenadores mediante JavaScript -->
                         </tbody>
                     </table>
                 </div>
@@ -133,21 +120,32 @@
                     <form id="entrenadorForm" class="gestion-form">
                         <h3>Añadir / Modificar Entrenador</h3>
                         <div class="form-group">
+                            <label for="entrenadorCI">CI del Entrenador:</label>
+                            <input type="text" id="entrenadorCI" name="entrenadorCI" required>
+                        </div>
+                        <div class="form-group">
                             <label for="entrenadorName">Nombre del Entrenador:</label>
                             <input type="text" id="entrenadorName" name="entrenadorName" required>
                         </div>
                         <div class="form-group">
-                            <label for="clubAsignado">Club Asignado:</label>
-                            <select id="clubAsignado" name="clubAsignado" required>
-                                <option value="" disabled selected>Seleccione un Club</option>
-                            </select>
+                            <label for="entrenadorApellido">Apellido del Entrenador:</label>
+                            <input type="text" id="entrenadorApellido" name="entrenadorApellido" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="entrenadorEmail">Email del Entrenador:</label>
+                            <input type="email" id="entrenadorEmail" name="entrenadorEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="entrenadorPassword">Contraseña:</label>
+                            <input type="password" id="entrenadorPassword" name="entrenadorPassword" required>
                         </div>
                         <div class="form-group">
                             <button type="submit">Registrar Entrenador</button>
                         </div>
                     </form>
                 </div>
-            </div>
+                
+                
         </section>
         
         
@@ -172,58 +170,57 @@
                     </table>
                 </div>
         
-                <div id="formulario-equipo">
-                    <h3>Crear o Modificar Equipo</h3>
-                    <form id="equipo-form">
-                        <label for="equipo-select">Seleccionar Equipo:</label>
-                        <select id="equipo-select" name="equipo-select" required>
-                            <option value="" disabled selected>Seleccione un equipo</option>
-                        </select>
-        
-                        <label for="deporte-equipo">Deporte:</label>
-                        <select id="deporte-equipo" name="deporte-equipo" required>
-                            <option value="Baloncesto">Baloncesto</option>
-                            <option value="Fútbol">Fútbol</option>
-                            <option value="Tenis">Tenis</option>
-                            <option value="Carrera">Carrera</option>
-                            <option value="Natación">Natación</option>
-                            <option value="Ciclismo">Ciclismo</option>
-                            <option value="Artes marciales">Artes marciales</option>
-                            <option value="Esquí de fondo">Esquí de fondo</option>
-                            <option value="Patinaje">Patinaje</option>
-                        </select>
-        
-                        <label for="tipo-actividad">Tipo de Actividad:</label>
-                        <select id="tipo-actividad" name="tipo-actividad" required>
-                            <option value="Competencia">Competencia</option>
-                            <option value="Entrenamiento">Entrenamiento</option>
-                        </select>
-        
-                        <label for="deportistas-select">Seleccionar Deportistas:</label>
-                        <select id="deportistas-select" name="deportistas-select" multiple required>
-                        </select>
-        
-                        <button type="submit" id="guardar-equipo-btn">Guardar Equipo</button>
+                <div class="gestion-form-container">
+                    <form id="equipoForm" class="gestion-form">
+                        <h3>Añadir / Modificar Equipo</h3>
+                        <div class="form-group">
+                            <label for="nombreEquipo">Nombre del Equipo:</label>
+                            <input type="text" id="nombreEquipo" name="nombreEquipo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="deporteEquipo">Deporte:</label>
+                            <select id="deporteEquipo" name="deporteEquipo" required>
+                                <!-- Opciones de deportes se cargarán dinámicamente -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoActividad">Tipo de Actividad:</label>
+                            <select id="tipoActividad" name="tipoActividad" required>
+                                <option value="Competencia">Competencia</option>
+                                <option value="Entrenamiento">Entrenamiento</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientesSelect">Seleccionar Clientes:</label>
+                            <select id="clientesSelect" name="clientesSelect" multiple required>
+                                <!-- Opciones de clientes se cargarán dinámicamente -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit">Registrar Equipo</button>
+                        </div>
                     </form>
                 </div>
-            </div>
+                
+                
         </section>
         
         <section id="Sobre nosotros">
             <div id="evolucion-container">
                 <h2 style="color: var(--color3);">Evolución Global</h2>
-                <p style="color: var(--color3); font-weight: bold;">Comparar y analizar el desempeño de deportistas de diferentes clubes.</p>
+                <p style="color: var(--color3); font-weight: bold;">analizar el desempeño de deportistas.</p>
         
                 <table id="tabla-evolucion">
                     <thead>
                         <tr>
-                            <th>Deportista</th>
-                            <th>Club</th>
-                            <th>Progreso</th>
-                            <th>Comparar</th>
+                            <th>Nombre Completo</th>
+                            <th>CI</th>
+                            <th>Puntaje Global</th>
+                            <th>Calificaciones</th>
                         </tr>
                     </thead>
                     <tbody id="evolucion-list">
+                        <!-- Evaluaciones se cargarán aquí -->
                     </tbody>
                 </table>
             </div>
@@ -244,7 +241,6 @@
         <script src="assets/js/script.js"></script>
         <script src="assets/js/script2.js"></script>
         <script src="assets/js/script3.js"></script>
-        <script src="assets/js/script4.js"></script>
         <script src="../User/assets/js/logout.js"></script>
     </div>
 

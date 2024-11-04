@@ -1,60 +1,159 @@
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Documento listo para gestionar equipos.");
 
-// Manejo del formulario de Formación de Equipos
-document.getElementById('equipo-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+    // Cargar clientes (id_rol=1) y deportes al cargar el formulario
+    function cargarClientesYDeportes() {
+        fetch('assets/php/obtener_clientes_deportes.php')
+            .then(response => response.json())
+            .then(data => {
+                const clientesSelect = document.getElementById("clientesSelect");
+                const deporteSelect = document.getElementById("deporteEquipo");
 
-    // Obtener valores del formulario de Equipo
-    const equipoSeleccionado = document.getElementById('equipo-select').value;
-    const deporteEquipo = document.getElementById('deporte-equipo').value;
-    const tipoActividad = document.getElementById('tipo-actividad').value;
-    const deportistasSeleccionados = Array.from(document.getElementById('deportistas-select').selectedOptions)
-                                          .map(option => option.value);
+                // Limpiar opciones previas
+                clientesSelect.innerHTML = '';
+                deporteSelect.innerHTML = '';
 
-    // Añadir el equipo a la tabla de equipos
-    addEquipoToTable(equipoSeleccionado, deporteEquipo, tipoActividad, deportistasSeleccionados);
+                // Cargar clientes
+                data.clientes.forEach(cliente => {
+                    let option = document.createElement('option');
+                    option.value = cliente.id_cliente;
+                    option.textContent = cliente.nombre_completo;
+                    clientesSelect.appendChild(option);
+                });
 
-    // Añadir deportistas a la tabla de Evolución Global llamando a la función del otro script
-    if (typeof addDeportistasToEvolucionGlobal === 'function') {
-        addDeportistasToEvolucionGlobal(equipoSeleccionado, deportistasSeleccionados);
+                // Cargar deportes
+                data.deportes.forEach(deporte => {
+                    let option = document.createElement('option');
+                    option.value = deporte.nombre;
+                    option.textContent = deporte.nombre;
+                    deporteSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error al cargar clientes y deportes:", error));
     }
 
-    // Limpiar el formulario
-    e.target.reset();
+    cargarClientesYDeportes();
+
+    // Manejar el envío del formulario de equipo
+    document.getElementById("equipoForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const nombreEquipo = document.getElementById("nombreEquipo").value;
+        const deporteEquipo = document.getElementById("deporteEquipo").value;
+        const tipoActividad = document.getElementById("tipoActividad").value;
+        const clientes = Array.from(document.getElementById("clientesSelect").selectedOptions).map(option => option.value);
+
+        fetch('assets/php/registrar_equipo.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nombreEquipo: nombreEquipo,
+                deporteEquipo: deporteEquipo,
+                tipoActividad: tipoActividad,
+                clientes: clientes
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                document.getElementById("equipoForm").reset();
+                // Opcional: recargar o actualizar la lista de equipos
+            } else {
+                alert("Error: " + data.message);
+            }
+        })
+        .catch(error => console.error("Error en la solicitud:", error));
+    });
 });
 
-function addEquipoToTable(equipo, deporte, actividad, deportistas) {
-    const equiposTable = document.getElementById('equipos-list');
-    const row = document.createElement('tr');
 
-    row.innerHTML = `
-        <td>${equipo}</td>
-        <td>${deporte}</td>
-        <td>${actividad}</td>
-        <td>${deportistas.join(', ')}</td>
-        <td><button class="delete-btn">X</button></td> <!-- Botón para eliminar la fila -->
-    `;
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Documento listo para cargar evaluaciones de clientes.");
 
-    // Añadir evento al botón de eliminación
-    row.querySelector('.delete-btn').addEventListener('click', function() {
-        row.remove(); // Eliminar la fila
-    });
+    function cargarEvaluaciones() {
+        fetch('assets/php/obtener_evaluaciones.php')
+            .then(response => response.json())
+            .then(data => {
+                const evolucionList = document.getElementById("evolucion-list");
+                evolucionList.innerHTML = ''; // Limpiar contenido previo
 
-    equiposTable.appendChild(row);
-}
+                data.forEach(cliente => {
+                    const row = document.createElement("tr");
 
-// Simulación: Añadir opciones de deportistas al selector
-function populateDeportistas() {
-    const deportistasSelect = document.getElementById('deportistas-select');
-    const deportistas = ['Juan Perez', 'María Gomez', 'Carlos Sanchez', 'Ana Rodriguez'];
+                    row.innerHTML = `
+                        <td>${cliente.nombre_completo}</td>
+                        <td>${cliente.ci}</td>
+                        <td>${cliente.puntuacion_global}</td>
+                        <td>${cliente.progreso_individual}</td>
+                    `;
+                    
+                    evolucionList.appendChild(row);
+                });
+            })
+            .catch(error => console.error("Error al cargar evaluaciones:", error));
+    }
 
-    deportistas.forEach(deportista => {
-        const option = document.createElement('option');
-        option.value = deportista;
-        option.textContent = deportista;
-        deportistasSelect.appendChild(option);
-    });
-}
+    cargarEvaluaciones();
+});
 
-// Llenar select de deportistas al cargar la página
-populateDeportistas();
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Documento listo para cargar equipos.");
+
+    // Cargar equipos
+    function cargarEquipos() {
+        fetch('assets/php/obtener_equipos.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error("Error en la respuesta del servidor:", data.error);
+                    return;
+                }
+
+                const equiposList = document.getElementById("equipos-list");
+                equiposList.innerHTML = ""; // Limpia la lista antes de cargar los equipos
+
+                data.forEach(equipo => {
+                    const row = document.createElement("tr");
+
+                    row.innerHTML = `
+                        <td>${equipo.nombre_equipo}</td>
+                        <td>${equipo.deporte}</td>
+                        <td>${equipo.tipo_actividad}</td>
+                        <td>${equipo.deportistas || "N/A"}</td>
+                        <td><button onclick="eliminarEquipo(${equipo.id_equipo})" title="Eliminar"><span>🗑️</span></button></td>
+                    `;
+
+                    equiposList.appendChild(row);
+                });
+            })
+            .catch(error => console.error("Error al cargar equipos:", error));
+    }
+
+    cargarEquipos();
+
+    // Función para eliminar un equipo
+    window.eliminarEquipo = function (idEquipo) {
+        if (confirm("¿Estás seguro de que deseas eliminar este equipo?")) {
+            fetch('assets/php/eliminar_equipo.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id_equipo: idEquipo })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Equipo eliminado exitosamente.");
+                    cargarEquipos(); // Recargar la lista de equipos
+                } else {
+                    alert("Error al eliminar el equipo: " + data.message);
+                }
+            })
+            .catch(error => console.error("Error en la solicitud:", error));
+        }
+    };
+});

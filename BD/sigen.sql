@@ -88,7 +88,30 @@ CREATE TABLE IF NOT EXISTS estados (
   `id_estado` int NOT NULL AUTO_INCREMENT PRIMARY KEY
 );
 
+
+-- Crear tabla de equipos
+CREATE TABLE IF NOT EXISTS equipos (
+    id_equipo INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre_equipo VARCHAR(50) NOT NULL,
+    deporte VARCHAR(50) NOT NULL,
+    tipo_actividad VARCHAR(50) NOT NULL
+);
+
+
+
+
+
+
 -- Relaciones
+
+CREATE TABLE IF NOT EXISTS clientes_equipos (
+    id_equipo INT NOT NULL,
+    id_cliente VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_equipo, id_cliente),
+    FOREIGN KEY (id_equipo) REFERENCES equipos(id_equipo),
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
+);
+
 
 CREATE TABLE IF NOT EXISTS planes_ejercicios (
   `id_plan` int NOT NULL,

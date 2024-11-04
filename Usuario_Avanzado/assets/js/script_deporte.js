@@ -12,14 +12,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Función para cargar deportes en la lista
     function cargarDeportes() {
-        fetch("assets/php/listar_deportes.php") // Cambia la ruta según tu archivo PHP
+        fetch("assets/php/listar_deportes.php")
             .then(response => response.json())
             .then(data => {
                 deportesList.innerHTML = "";
                 data.forEach(deporte => {
                     const li = document.createElement("li");
                     li.textContent = `${deporte.nombre} (${deporte.tipo})`;
-                    li.dataset.id = deporte.id_deporte; // Guardar el ID en el dataset
+                    li.dataset.id = deporte.id_deporte; 
                     li.addEventListener("click", () => cargarDeporteEnFormulario(deporte));
                     deportesList.appendChild(li);
                 });
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
         nombreDeporteInput.value = deporte.nombre;
         tipoDeporteInput.value = deporte.tipo;
         descripcionDeporteInput.value = deporte.descripcion;
-        editingDeporteId = deporte.id_deporte; // Guardar el ID para edición
+        editingDeporteId = deporte.id_deporte; 
         agregarDeporteBtn.textContent = "Modificar Deporte";
     }
 
@@ -40,16 +40,25 @@ document.addEventListener("DOMContentLoaded", function() {
     deporteForm.addEventListener("submit", function(event) {
         event.preventDefault();
 
-        const nombre = nombreDeporteInput.value;
-        const tipo = tipoDeporteInput.value;
-        const descripcion = descripcionDeporteInput.value;
+        const nombre = nombreDeporteInput.value.trim();
+        const tipo = tipoDeporteInput.value.trim();
+        const descripcion = descripcionDeporteInput.value.trim();
+
+        if (!nombre || !tipo || !descripcion) {
+            alert("Todos los campos son obligatorios.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("nombre", nombre);
+        formData.append("tipo", tipo);
+        formData.append("descripcion", descripcion);
 
         if (editingDeporteId) {
-            // Modificar deporte existente
+            formData.append("id", editingDeporteId);  // Incluye el ID en el caso de modificación
             fetch("assets/php/modificar_deporte.php", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: editingDeporteId, nombre, tipo, descripcion })
+                body: formData
             })
             .then(response => response.json())
             .then(data => {
@@ -59,15 +68,16 @@ document.addEventListener("DOMContentLoaded", function() {
                     deporteForm.reset();
                     agregarDeporteBtn.textContent = "Guardar Deporte";
                     editingDeporteId = null;
+                } else {
+                    alert(data.message || "Error al modificar el deporte.");
                 }
             })
             .catch(error => console.error("Error modificando deporte:", error));
         } else {
             // Añadir nuevo deporte
-            fetch("assets/php/agregar_deporte.php", {
+            fetch("assets/php/crear_deporte.php", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ nombre, tipo, descripcion })
+                body: formData
             })
             .then(response => response.json())
             .then(data => {
@@ -75,6 +85,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     alert("Deporte añadido con éxito.");
                     cargarDeportes();
                     deporteForm.reset();
+                } else {
+                    alert(data.message || "Error al añadir el deporte.");
                 }
             })
             .catch(error => console.error("Error añadiendo deporte:", error));
@@ -97,6 +109,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     deporteForm.reset();
                     agregarDeporteBtn.textContent = "Guardar Deporte";
                     editingDeporteId = null;
+                } else {
+                    alert(data.message || "Error al eliminar el deporte.");
                 }
             })
             .catch(error => console.error("Error eliminando deporte:", error));
