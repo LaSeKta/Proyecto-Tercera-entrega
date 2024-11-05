@@ -2,7 +2,6 @@
 header('Content-Type: application/json');
 include('../../../assets/database.php');
 
-// Consulta para obtener sesiones con fecha, hora de inicio y hora de fin
 $query = "SELECT id_sesion AS id, 
                  'Sesion de Entrenamiento' AS title, 
                  CONCAT(fecha, 'T', hora_inicio) AS start, 

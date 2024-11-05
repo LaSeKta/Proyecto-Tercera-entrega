@@ -1,12 +1,10 @@
 <?php
 header('Content-Type: application/json');
-include('../../../assets/database.php'); // Asegúrate de ajustar la ruta a tu archivo de conexión de base de datos
+include('../../../assets/database.php'); 
 
-// Habilitar el informe de errores de MySQLi
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
-    // Obtener los datos enviados por el cliente
     $data = json_decode(file_get_contents("php://input"), true);
     $id_deporte = $data['id'];
 
@@ -16,7 +14,6 @@ try {
         exit();
     }
 
-    // Preparar y ejecutar la consulta de eliminación
     $query = "DELETE FROM deportes WHERE id_deporte = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $id_deporte);

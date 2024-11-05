@@ -16,7 +16,6 @@ if (!isset($data['id_sesion'])) {
 
 $id_sesion = $data['id_sesion'];
 
-// Marcar asistencia en la tabla sesiones
 $query = "UPDATE sesiones SET asistencia = 1 WHERE id_sesion = ? AND asistencia = 0";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $id_sesion);

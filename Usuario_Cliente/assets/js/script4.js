@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const selectEntrenador = document.getElementById("select-entrenador");
 
-    // Llamada AJAX para obtener la lista de entrenadores
     fetch('assets/php/obtener_entrenadores.php')
         .then(response => {
             if (!response.ok) {
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function() {
     console.log("Documento listo.");
 
-    // Obtener fecha seleccionada de la URL y cargar en el formulario
     const urlParams = new URLSearchParams(window.location.search);
     const selectedDate = urlParams.get('date');
     const sessionDateInput = document.getElementById('sessionDate');
@@ -33,15 +31,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const endTimeInput = document.getElementById('endTime');
     const trainerSelect = document.getElementById('select-entrenador');
 
-    // Mostrar la fecha seleccionada
     if (selectedDate) {
         const date = new Date(selectedDate);
-        sessionDateInput.value = date.toISOString().split('T')[0]; // Formato de fecha "YYYY-MM-DD"
-        startTimeInput.value = date.toTimeString().substring(0, 5); // Formato de hora "HH:MM"
-        endTimeInput.value = calculateEndTime(startTimeInput.value); // Calcular hora de fin
+        sessionDateInput.value = date.toISOString().split('T')[0]; 
+        startTimeInput.value = date.toTimeString().substring(0, 5); 
+        endTimeInput.value = calculateEndTime(startTimeInput.value); 
     }
 
-    // Calcular una hora adicional a la hora de inicio
     function calculateEndTime(startTime) {
         const [hours, minutes] = startTime.split(':');
         const endDate = new Date();
@@ -49,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function() {
         return endDate.toTimeString().substring(0, 5);
     }
 
-    // Cambiar automáticamente la hora de fin al cambiar la de inicio
     startTimeInput.addEventListener('input', function() {
         endTimeInput.value = calculateEndTime(startTimeInput.value);
     });
@@ -75,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             if (data.success) {
                 alert("Sesión guardada correctamente.");
-                window.location.href = "index.html"; // Redirigir a index.html después de guardar
+                window.location.href = "index.html"; 
             } else {
                 alert("Error al guardar la sesión: " + data.error);
             }

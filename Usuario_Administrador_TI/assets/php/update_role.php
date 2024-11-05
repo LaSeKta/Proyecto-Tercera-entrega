@@ -10,14 +10,14 @@ if (isset($_POST['ci']) && isset($_POST['id_rol'])) {
     $ci = $_POST['ci'];
     $id_rol = $_POST['id_rol'];
 
-    // Actualizar rol en la tabla usuarios
+    
     $sql = "UPDATE usuarios SET id_rol = ? WHERE CI = ?";
     if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param('ii', $id_rol, $ci);
         if ($stmt->execute()) {
 
             if ($id_rol == 1 || $id_rol == 2) {
-                // Verificar si el CI existe en la tabla clientes
+         
                 $checkClientSql = "SELECT 1 FROM clientes WHERE id_cliente = ?";
                 if ($stmtCheck = $conn->prepare($checkClientSql)) {
                     $stmtCheck->bind_param('i', $ci);
@@ -25,10 +25,10 @@ if (isset($_POST['ci']) && isset($_POST['id_rol'])) {
                     $stmtCheck->store_result();
 
                     if ($stmtCheck->num_rows > 0) {
-                        // El usuario ya existe en clientes, solo se actualizó su rol en usuarios
+                       
                         echo json_encode(['status' => 'success', 'message' => 'Rol actualizado correctamente. Usuario ya registrado como cliente.']);
                     } else {
-                        // Insertar en clientes ya que no existe
+                   
                         $stmtCheck->close();
 
                         $insertClientSql = "INSERT INTO clientes (user_estado, id_cliente) VALUES (?, ?)";
@@ -61,7 +61,7 @@ if (isset($_POST['ci']) && isset($_POST['id_rol'])) {
                     ]);
                 }
             } elseif ($id_rol == 3) {
-                // Insertar en la tabla entrenador si el rol es de entrenador
+                
                 $insertTrainerSql = "INSERT INTO entrenador (id_entrenador) VALUES (?)";
                 if ($stmt3 = $conn->prepare($insertTrainerSql)) {
                     $stmt3->bind_param('i', $ci);

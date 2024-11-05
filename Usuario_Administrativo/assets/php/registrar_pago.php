@@ -11,13 +11,11 @@ if (!$id_cliente || !$mes_pago) {
 }
 
 try {
-    // Primero, inserta un nuevo pago en la tabla `pagos` y obtén el `id_pago` generado
     $queryPago = "INSERT INTO pagos () VALUES ()";
     if ($conn->query($queryPago) === TRUE) {
-        $id_pago = $conn->insert_id; // Obtener el ID del pago recién creado
+        $id_pago = $conn->insert_id; 
 
-        // Luego, inserta el registro en `clientes_pagos` con el `id_cliente`, `id_pago` y `fecha_pago`
-        $fecha_pago = date('Y-m-d'); // Fecha de hoy
+        $fecha_pago = date('Y-m-d'); 
         $queryClientePago = "INSERT INTO clientes_pagos (id_cliente, id_pago, fecha_pago) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($queryClientePago);
         $stmt->bind_param("sis", $id_cliente, $id_pago, $fecha_pago);

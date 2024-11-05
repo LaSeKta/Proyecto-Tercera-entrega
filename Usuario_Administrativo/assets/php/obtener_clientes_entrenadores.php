@@ -4,12 +4,10 @@ header('Content-Type: application/json');
 include '../../../assets/database.php';
 
 try {
-    // Verificar la conexión
     if ($conn->connect_error) {
         throw new Exception("Error en la conexión: " . $conn->connect_error);
     }
 
-    // Consultar clientes
     $clientesQuery = "SELECT id_cliente, CONCAT(personas.nombre, ' ', personas.apellido) AS nombre_completo 
                       FROM clientes 
                       INNER JOIN personas ON clientes.id_cliente = personas.id_persona";
@@ -24,7 +22,6 @@ try {
         $clientes[] = $row;
     }
 
-    // Consultar entrenadores
     $entrenadoresQuery = "SELECT id_entrenador, CONCAT(personas.nombre, ' ', personas.apellido) AS nombre_completo 
                           FROM entrenador 
                           INNER JOIN personas ON entrenador.id_entrenador = personas.id_persona";
@@ -39,7 +36,6 @@ try {
         $entrenadores[] = $row;
     }
 
-    // Enviar respuesta en formato JSON
     echo json_encode(['clientes' => $clientes, 'entrenadores' => $entrenadores]);
 
 } catch (Exception $e) {

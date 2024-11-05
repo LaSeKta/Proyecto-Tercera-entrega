@@ -1,7 +1,6 @@
 $(document).ready(function () {
     cargarEjercicios();
 
-    // Agregar o modificar ejercicio
     $('#agregar-ejercicio-btn').on('click', function () {
         const nombre = $('#ejercicio-nombre').val();
         const descripcion = $('#ejercicio-detalle').val();
@@ -23,7 +22,6 @@ $(document).ready(function () {
         });
     });
 
-    // Cargar datos del ejercicio en el formulario al hacer clic
     $(document).on('click', '.editar-ejercicio', function () {
         const id = $(this).data('id');
         $.ajax({
@@ -39,7 +37,6 @@ $(document).ready(function () {
         });
     });
 
-    // Eliminar ejercicio
     $('#eliminar-ejercicio-btn').on('click', function () {
         const id = $('#ejercicio-id').val();
         if (id) {
@@ -59,13 +56,13 @@ $(document).ready(function () {
     });
 });
 
-// Función para cargar ejercicios
+
 function cargarEjercicios() {
     $.ajax({
         url: 'assets/php/listar_ejercicios.php',
         type: 'GET',
         success: function (response) {
-            console.log(response); // Verifica la respuesta aquí
+            console.log(response); 
             if (Array.isArray(response)) {
                 let listado = '';
                 response.forEach(function (ejercicio) {

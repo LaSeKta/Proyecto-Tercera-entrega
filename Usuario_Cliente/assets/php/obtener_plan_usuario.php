@@ -1,10 +1,10 @@
 <?php
 
 header('Content-Type: application/json');
-require_once '../../../assets/database.php'; // Archivo con la conexión a la base de datos
+require_once '../../../assets/database.php'; 
 
 session_start();
-$ci = $_SESSION['ci']; // CI del usuario de la sesión actual
+$ci = $_SESSION['ci'];l
 
 try {
     $query = "

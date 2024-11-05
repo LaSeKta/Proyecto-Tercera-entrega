@@ -28,23 +28,21 @@ if (!$calificacion) {
 }
 
 class PDF extends FPDF {
-    // Encabezado con logo centrado y resaltado
     function Header() {
-        $this->SetFillColor(255, 255, 255); // Fondo blanco para el logo
-        $this->Rect(50, 8, 110, 45, 'F'); // Fondo blanco detrás del logo centrado
+        $this->SetFillColor(255, 255, 255); 
+        $this->Rect(50, 8, 110, 45, 'F'); 
 
-        // Centrar y agrandar el logo
-        $this->Image('../img/Logos/Logo_home.png', 90, 12, 40); // Ajusta la posición y tamaño del logo
+       
+        $this->Image('../img/Logos/Logo_home.png', 90, 12, 40); 
         
-        // Título con sombreado
+        
         $this->SetFont('Arial', 'B', 22);
-        $this->SetTextColor(0, 0, 0); // Texto negro
+        $this->SetTextColor(0, 0, 0); 
         $this->SetXY(0, 60);
         $this->Cell(210, 10, 'Reporte de Calificacion y Evolucion', 0, 1, 'C', true);
         $this->Ln(10);
     }
 
-    // Pie de página
     function Footer() {
         $this->SetY(-15);
         $this->SetFont('Arial', 'I', 8);
@@ -57,30 +55,25 @@ $pdf = new PDF();
 $pdf->AliasNbPages();
 $pdf->AddPage();
 
-// Configuración de colores para el sombreado y paleta
 $colorFondoCliente = [255, 255, 255];
 $colorTablaTitulo = [153, 204, 255];
 $colorTablaAspecto = [226, 226, 226];
 $colorFilaImpar = [226, 226, 226];
 $colorNotaFinal = [220, 255, 220];
 
-// Información del cliente
 $pdf->SetFillColor($colorFondoCliente[0], $colorFondoCliente[1], $colorFondoCliente[2]);
 $pdf->SetFont('Arial', 'B', 14);
 $pdf->Cell(0, 14, 'Cliente: ' . $calificacion['nombre_completo'] . ' (CI: ' . $calificacion['id_cliente'] . ')', 0, 1, 'C', true);
 $pdf->Ln(10);
 
-// Título de la tabla
 $pdf->SetFillColor($colorTablaTitulo[0], $colorTablaTitulo[1], $colorTablaTitulo[2]);
 $pdf->SetFont('Arial', 'B', 16);
 $pdf->Cell(0, 14, 'Detalles de la Calificacion', 1, 1, 'C', true);
 
-// Encabezados de la tabla con sombreado
 $pdf->SetFillColor($colorTablaAspecto[0], $colorTablaAspecto[1], $colorTablaAspecto[2]);
 $pdf->Cell(140, 14, 'Aspecto', 1, 0, 'C', true);
 $pdf->Cell(50, 14, 'Calificacion (%)', 1, 1, 'C', true);
 
-// Detalles de la calificación
 $pdf->SetFont('Arial', '', 12);
 $aspectos = [
     'Cumplimiento de Agenda' => $calificacion['cumplimiento_agenda'],
@@ -99,7 +92,6 @@ foreach ($aspectos as $aspecto => $valor) {
     $fill = !$fill;
 }
 
-// Nota final resaltada
 $pdf->Ln(5);
 $pdf->SetFont('Arial', 'B', 14);
 $pdf->SetFillColor($colorNotaFinal[0], $colorNotaFinal[1], $colorNotaFinal[2]);

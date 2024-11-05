@@ -1,5 +1,5 @@
 
-//NAV BOTONES
+
 const enlacesMenu = document.querySelectorAll(".op-menu a");
 
 window.addEventListener("scroll", function () {
@@ -21,7 +21,7 @@ window.addEventListener("scroll", function () {
     });
 });
 
-// Menú
+
 const menuIcon = document.getElementById("menuIcon");
 const menuHidden = document.getElementById("menuHidden");
 
@@ -40,14 +40,13 @@ function checkScreenSize() {
   }
 }
 
-// Ejecuta checkScreenSize() cuando la página se carga y cuando la ventana cambia de tamaño
+
 window.addEventListener("load", checkScreenSize);
 window.addEventListener("resize", checkScreenSize);
 
-// Escucha el evento de desplazamiento
+
 window.addEventListener('scroll', actualizarBotonActivo);
 
-// Función para actualizar el botón activo
 function actualizarBotonActivo() {
     const scrollPosition = window.scrollY;
 

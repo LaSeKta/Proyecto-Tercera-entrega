@@ -7,10 +7,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const agregarDeporteBtn = document.getElementById("agregar-deporte-btn");
     let editingDeporteId = null;
 
-    // Cargar deportes al inicio
     cargarDeportes();
 
-    // Función para cargar deportes en la lista
     function cargarDeportes() {
         fetch("assets/php/listar_deportes.php")
             .then(response => response.json())
@@ -27,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => console.error("Error cargando deportes:", error));
     }
 
-    // Función para cargar el deporte en el formulario
     function cargarDeporteEnFormulario(deporte) {
         nombreDeporteInput.value = deporte.nombre;
         tipoDeporteInput.value = deporte.tipo;
@@ -36,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function() {
         agregarDeporteBtn.textContent = "Modificar Deporte";
     }
 
-    // Enviar formulario para añadir o modificar deporte
     deporteForm.addEventListener("submit", function(event) {
         event.preventDefault();
 
@@ -55,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
         formData.append("descripcion", descripcion);
 
         if (editingDeporteId) {
-            formData.append("id", editingDeporteId);  // Incluye el ID en el caso de modificación
+            formData.append("id", editingDeporteId); 
             fetch("assets/php/modificar_deporte.php", {
                 method: "POST",
                 body: formData
@@ -74,7 +70,6 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .catch(error => console.error("Error modificando deporte:", error));
         } else {
-            // Añadir nuevo deporte
             fetch("assets/php/crear_deporte.php", {
                 method: "POST",
                 body: formData
@@ -93,7 +88,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Botón de eliminar
     document.getElementById("eliminar-deporte-btn").addEventListener("click", function() {
         if (editingDeporteId && confirm("¿Seguro que deseas eliminar este deporte?")) {
             fetch("assets/php/eliminar_deporte.php", {

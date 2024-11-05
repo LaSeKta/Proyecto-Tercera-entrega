@@ -8,12 +8,10 @@ error_reporting(E_ALL);
 include '../../../assets/database.php';
 
 try {
-    // Verifica si la conexión fue exitosa
     if ($conn->connect_error) {
         throw new Exception("Error en la conexión: " . $conn->connect_error);
     }
 
-    // Consulta para obtener clientes
     $clientesQuery = "SELECT id_cliente, CONCAT(personas.nombre, ' ', personas.apellido) AS nombre_completo 
                       FROM clientes 
                       INNER JOIN personas ON clientes.id_cliente = personas.id_persona";

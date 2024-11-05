@@ -1,11 +1,11 @@
 <?php
-// Ensure the correct headers for JSON response
+
 header('Content-Type: application/json');
 
-// Include database connection
+
 include('../../../assets/database.php');
 
-// Query for deactivated users (user_estado = 0)
+
 $sql = "SELECT p.nombre, p.id_persona, u.id_rol 
         FROM personas p
         JOIN usuarios u ON p.id_persona = u.ci

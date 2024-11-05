@@ -1,10 +1,8 @@
 $(document).ready(function () {
-    // Activar carrusel
     $("#EfectoCarrusel").carousel();
 
-    // Activar los indicadores del carrusel
     $(".item1").click(function (event) {
-        event.preventDefault(); // Evita el desplazamiento predeterminado
+        event.preventDefault(); 
         $("#EfectoCarrusel").carousel(0);
     });
     $(".item2").click(function (event) {
@@ -16,7 +14,6 @@ $(document).ready(function () {
         $("#EfectoCarrusel").carousel(2);
     });
 
-    // Activar dirección del carrusel
     $(".carousel-control-prev").click(function (event) {
         event.preventDefault();
         $("#EfectoCarrusel").carousel("prev");
@@ -26,13 +23,11 @@ $(document).ready(function () {
         $("#EfectoCarrusel").carousel("next");
     });
 
-    // Redirigir al #Acceder cuando se hace clic en una imagen del carrusel
     $("#carouselImage1, #carouselImage2, #carouselImage3").click(function () {
         window.location.href = '#Acceder';
     });
 });
 
-//NAV BOTONES
 const enlacesMenu = document.querySelectorAll(".op-menu a");
 
 window.addEventListener("scroll", function () {
@@ -54,7 +49,6 @@ window.addEventListener("scroll", function () {
     });
 });
 
-// Menú
 const menuIcon = document.getElementById("menuIcon");
 const menuHidden = document.getElementById("menuHidden");
 
@@ -73,14 +67,11 @@ function checkScreenSize() {
   }
 }
 
-// Ejecuta checkScreenSize() cuando la página se carga y cuando la ventana cambia de tamaño
 window.addEventListener("load", checkScreenSize);
 window.addEventListener("resize", checkScreenSize);
 
-// Escucha el evento de desplazamiento
 window.addEventListener('scroll', actualizarBotonActivo);
 
-// Función para actualizar el botón activo
 function actualizarBotonActivo() {
     const scrollPosition = window.scrollY;
 

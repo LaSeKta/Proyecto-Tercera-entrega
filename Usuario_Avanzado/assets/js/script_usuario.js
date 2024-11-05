@@ -1,8 +1,8 @@
 $(document).ready(function () {
-    // Función para cargar la lista de clientes
+    
     function cargarClientes() {
         $.ajax({
-            url: "assets/php/obtener_clientes.php", // Ajusta la ruta al archivo PHP
+            url: "assets/php/obtener_clientes.php", 
             type: "GET",
             success: function (response) {
                 const usersTable = $('#users');
@@ -30,10 +30,8 @@ $(document).ready(function () {
         });
     }
 
-    // Llamar a cargarClientes cuando se cargue la página
     cargarClientes();
 
-    // Manejo del formulario para añadir un nuevo cliente
     $('#userForm').on('submit', function (e) {
         e.preventDefault();
         
@@ -46,7 +44,7 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: "assets/php/agregar_cliente.php", // Ajusta la ruta al archivo PHP
+            url: "assets/php/agregar_cliente.php",
             type: "POST",
             data: clienteData,
             success: function (response) {

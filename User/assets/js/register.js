@@ -1,24 +1,24 @@
 $(document).ready(function () {
   $("#registerForm").submit(function (e) {
-    e.preventDefault(); // Evitar que el formulario se envíe de manera tradicional
+    e.preventDefault(); 
 
-    let data = $(this).serialize(); // Serializar los datos del formulario
+    let data = $(this).serialize(); 
 
     $.ajax({
-      url: "assets/php/Register.php", // Ruta a la lógica del registro
+      url: "assets/php/Register.php", 
       type: "POST",
       data: data,
-      dataType: "json", // Especificar que esperamos una respuesta JSON
+      dataType: "json", 
       success: function (response) {
-        console.log("Respuesta del servidor:", response); // Mostrar la respuesta completa en la consola
+        console.log("Respuesta del servidor:", response);
 
-        // Como la respuesta ya es un objeto JSON, no necesitamos usar JSON.parse()
+        
         if (response.status === 'success') {
-          alert(response.message); // Mostrar mensaje de éxito
-          window.location.href = 'login.html'; // Redirigir al login
+          alert(response.message); 
+          window.location.href = 'login.html'; 
         } else {
-          alert(response.message); // Mostrar mensaje de error
-        }
+          alert(response.message); 
+            }
       },
       error: function (xhr, status, error) {
         console.error("Error en la solicitud:", error);

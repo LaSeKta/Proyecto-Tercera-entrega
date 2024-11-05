@@ -1,5 +1,5 @@
 <?php
-require_once '../../../assets/database.php'; // Asegúrate de que este archivo defina correctamente la conexión $mysqli
+require_once '../../../assets/database.php'; 
 
 class User {
     private $ci;
@@ -9,7 +9,7 @@ class User {
     private $apellido;
     private $email;
 
-    // Hacer que nombre, apellido y email sean opcionales
+    
     public function __construct($ci, $password, $nombre = null, $apellido = null, $email = null) {
         $this->ci = $ci;
         $this->password = $password; 
@@ -62,16 +62,16 @@ class User {
         $this->email = $email;
     }
 
-    // Método para registrar un usuario
+   
     public function register() {
         global $mysqli;
 
-        // Verificar que los datos de registro necesarios estén disponibles
+        
         if (!$this->nombre || !$this->apellido || !$this->email) {
             return ['status' => 'error', 'message' => 'Faltan datos para registrar el usuario'];
         }
 
-        // Verificar si el usuario ya está registrado
+       
         $query = $mysqli->prepare("SELECT CI FROM usuarios WHERE CI = ?");
         $query->bind_param("s", $this->ci);
         $query->execute();
@@ -81,14 +81,13 @@ class User {
             return ['status' => 'error', 'message' => 'El usuario ya está registrado'];
         }
 
-        // Hashear la contraseña antes de almacenarla
         $hashedPassword = password_hash($this->password, PASSWORD_BCRYPT);
 
-        // Iniciar transacción
+       
         $mysqli->begin_transaction();
 
         try {
-            // Registrar el usuario en la tabla de usuarios
+           
             $stmt = $mysqli->prepare("INSERT INTO usuarios (CI, contrasena, id_rol) VALUES (?, ?, ?)");
             $id_rol = 0;
             $stmt->bind_param("ssi", $this->ci, $hashedPassword, $id_rol);
@@ -97,7 +96,7 @@ class User {
                 throw new Exception('Error al registrar el usuario');
             }
 
-            // Insertar los datos en la tabla personas
+      
             $stmt_personas = $mysqli->prepare("INSERT INTO personas (id_persona, nombre, apellido, email) VALUES (?, ?, ?, ?)");
             $stmt_personas->bind_param("ssss", $this->ci, $this->nombre, $this->apellido, $this->email);
 
@@ -105,22 +104,22 @@ class User {
                 throw new Exception('Error al registrar los datos de la persona');
             }
 
-            // Si todo va bien, commit
+         
             $mysqli->commit();
             return ['status' => 'success', 'message' => 'Usuario registrado correctamente'];
 
         } catch (Exception $e) {
-            // En caso de error, rollback
+     
             $mysqli->rollback();
             return ['status' => 'error', 'message' => $e->getMessage()];
         }
     }
 
-    // Método para autenticar un usuario
+   
     public function authenticate() {
         global $mysqli;
 
-        // Consulta para verificar el usuario por CI y obtener el rol
+      
         $query = $mysqli->prepare("SELECT contrasena, id_rol FROM usuarios WHERE CI = ?");
         $query->bind_param('s', $this->ci);
         $query->execute();
@@ -130,14 +129,14 @@ class User {
             $query->bind_result($hashedPassword, $this->id_rol);
             $query->fetch();
 
-            // Verificar la contraseña usando password_verify
+           
             if (password_verify($this->password, $hashedPassword)) {
-                return true; // Autenticación exitosa
+                return true; 
             } else {
-                return false; // Contraseña incorrecta
+                return false; 
             }
         } else {
-            return false; // Usuario no encontrado
+            return false; 
         }
     }
 }

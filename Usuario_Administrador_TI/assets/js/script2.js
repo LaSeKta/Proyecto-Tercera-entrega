@@ -44,29 +44,29 @@ document.addEventListener('DOMContentLoaded', () => {
         6: 'Usuario seleccionador',
     };
 
-    // Get references to the modal and the close button for deactivated users
+    
     const deactivatedUsersModal = document.getElementById('deactivatedUsersModal');
     const closeDeactivatedModal = document.getElementById('closeDeactivatedModal');
 
-    // Open the deactivated users modal when the button is clicked
+   
     document.getElementById('toggleDeactivatedUsers').addEventListener('click', function() {
-        fetchDeactivatedUsers();  // Fetch and display deactivated users
-        deactivatedUsersModal.style.display = 'block';  // Show the modal
+        fetchDeactivatedUsers();  
+                deactivatedUsersModal.style.display = 'block';  
     });
 
-    // Close the modal when the close button is clicked
+   
     closeDeactivatedModal.addEventListener('click', function() {
-        deactivatedUsersModal.style.display = 'none';  // Hide the modal
+        deactivatedUsersModal.style.display = 'none';  
     });
 
-    // Close the modal when clicking outside of it
+    
     window.addEventListener('click', function(event) {
         if (event.target === deactivatedUsersModal) {
-            deactivatedUsersModal.style.display = 'none';  // Hide the modal if clicked outside
+            deactivatedUsersModal.style.display = 'none';  
         }
     });
 
-    // Function to fetch and render deactivated users
+
     function fetchDeactivatedUsers() {
         fetch('assets/php/list_deactivated_users.php', {
             method: 'GET',
@@ -78,9 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Render deactivated users
+          
             const deactivatedUsersTable = document.getElementById('deactivatedUsers');
-            deactivatedUsersTable.innerHTML = '';  // Clear any existing data
+            deactivatedUsersTable.innerHTML = '';  
 
             if (Array.isArray(data)) {
                 data.forEach(user => {
@@ -103,29 +103,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Function to get the role name based on id_rol
+    
     function getRoleName(idRol) {
         return roleMap[idRol] || 'Rol Desconocido';
     }
 
-    // Function to fetch and render users from the server
+    
     function fetchUsers() {
         fetch('assets/php/list_users.php', {
             method: 'GET',
         })
-        .then(response => response.text())  // Assuming the server could return JSON or HTML
+        .then(response => response.text())  
         .then(response => {
-            console.log("Respuesta del servidor:", response); // Show the response in the console
+            console.log("Respuesta del servidor:", response); 
 
             try {
-                const data = JSON.parse(response);  // Try to parse as JSON
+                const data = JSON.parse(response);  
 
                 if (data.status === 'error') {
                     alert(data.message);
                     return;
                 }
 
-                // If it's an array, render the table
+              
                 if (Array.isArray(data)) {
                     usersList = data;
                     renderUsersTable(usersList);
@@ -133,9 +133,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('Error: La respuesta del servidor no es válida.');
                 }
             } catch (error) {
-                // If the text is not valid JSON, assume it's HTML
+                
                 console.log('Respuesta HTML del servidor, procesando como HTML...');
-                document.getElementById('errorMessage').innerHTML = response; // Display the HTML in a container
+                document.getElementById('errorMessage').innerHTML = response; 
             }
         })
         .catch(error => {
@@ -168,10 +168,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Function to edit permissions
+    
     window.editPermissions = function(userId) {
-        currentUserID = userId;  // Set currentUserID to the id_persona (or CI) of the user
-        const user = usersList.find(user => user.id_persona === userId);  // Use id_persona to find the user
+        currentUserID = userId;  
+        const user = usersList.find(user => user.id_persona === userId); 
         if (user) {
             document.getElementById('editRole').value = user.id_rol;
             editModal.style.display = 'block';
@@ -181,12 +181,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Close the edit modal when the close button is clicked
+    
     closeButton.addEventListener('click', () => {
         editModal.style.display = 'none';
     });
 
-// Save role changes when the form is submitted
+
 editForm.addEventListener('submit', (event) => {
     event.preventDefault();
     
@@ -198,17 +198,17 @@ editForm.addEventListener('submit', (event) => {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
-            ci: currentUserID,   // Pass the currentUserID (id_persona or CI)
-            id_rol: newRole      // Pass the new role value
+            ci: currentUserID,   
+            id_rol: newRole      
         })
     })
-    .then(response => response.text())  // Read the response as plain text first
+    .then(response => response.text())  
     .then(text => {
-        console.log("Respuesta completa del servidor:", text); // Log the exact response from the server
+        console.log("Respuesta completa del servidor:", text); 
 
         let data;
         try {
-            data = JSON.parse(text);  // Attempt to parse the text as JSON
+            data = JSON.parse(text);  
         } catch (error) {
             console.error('Error al parsear JSON:', error);
             alert('Error en la respuesta del servidor. Revisa la consola para más detalles.');
@@ -216,16 +216,16 @@ editForm.addEventListener('submit', (event) => {
         }
 
         if (data.status === 'success') {
-            const user = usersList.find(user => user.id_persona === currentUserID);  // Find user by id_persona
+            const user = usersList.find(user => user.id_persona === currentUserID);  
             if (user) {
                 user.id_rol = newRole;
-                renderUsersTable(usersList);  // Re-render the table with updated role
+                renderUsersTable(usersList);  
             }
             alert(data.message);
         } else {
             alert(data.message);
             console.error('Error al actualizar el rol:', data.message);
-            console.error('Detalles del error:', data.error_detail); // Mostrar detalles específicos del error, si existen
+            console.error('Detalles del error:', data.error_detail); 
         }
     })
     .catch(error => {
@@ -237,7 +237,7 @@ editForm.addEventListener('submit', (event) => {
 });
 
 
-    // Function to delete (deactivate) a user
+    
     window.deleteUser = function(userId) {
         if (confirm('¿Estás seguro de que quieres desactivar este usuario?')) {
             fetch('assets/php/deactivate_user.php', {
@@ -246,14 +246,14 @@ editForm.addEventListener('submit', (event) => {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 body: new URLSearchParams({
-                    ci: userId,  // Send the user's ID or CI to the server
+                    ci: userId,  
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
                     alert(data.message);
-                    fetchUsers();  // Reload the user list after successful deletion
+                    fetchUsers();  
                 } else {
                     alert(data.message);
                     console.error('Error al desactivar el usuario:', data.message);
@@ -266,7 +266,7 @@ editForm.addEventListener('submit', (event) => {
         }
     };
 
-    // Filter users based on search input
+    
     searchInput.addEventListener('input', () => {
         const searchTerm = searchInput.value.toLowerCase();
         const filteredList = usersList.filter(user => 
@@ -276,13 +276,13 @@ editForm.addEventListener('submit', (event) => {
         renderUsersTable(filteredList);
     });
 
-    // Close the edit modal when clicking outside of it
+    
     window.addEventListener('click', (event) => {
         if (event.target == editModal) {
             editModal.style.display = 'none';
         }
     });
 
-    // Load users on page load
+    
     fetchUsers();
 });

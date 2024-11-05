@@ -2,7 +2,7 @@
 include('../../../assets/database.php');
 session_start();
 
-$ci = $_SESSION['ci']; // Obtener el id del cliente de la sesión
+$ci = $_SESSION['ci']; 
 
 $data = json_decode(file_get_contents("php://input"), true);
 $fecha = $data['fecha'];
@@ -15,7 +15,7 @@ if (!$fecha || !$hora_inicio || !$hora_fin || !$entrenador_id || !$ci) {
     exit;
 }
 
-// Guardar la sesión
+
 $sql = "INSERT INTO sesiones (fecha, hora_inicio, hora_fin, asistencia) VALUES (?, ?, ?, 0)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("sss", $fecha, $hora_inicio, $hora_fin);
@@ -23,7 +23,6 @@ $stmt->bind_param("sss", $fecha, $hora_inicio, $hora_fin);
 if ($stmt->execute()) {
     $session_id = $stmt->insert_id;
 
-    // Insertar en cliente_sesiones y entrenador_sesiones
     $sql_cliente = "INSERT INTO clientes_sesiones (id_cliente, id_sesion) VALUES (?, ?)";
     $stmt_cliente = $conn->prepare($sql_cliente);
     $stmt_cliente->bind_param("si", $ci, $session_id);

@@ -33,25 +33,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             },
             dateClick: function (info) {
-                if (info.date.getDay() !== 0 && info.date.getDay() !== 6) { // Solo permite seleccionar días laborables
+                if (info.date.getDay() !== 0 && info.date.getDay() !== 6) { 
                     const fechaSeleccionada = info.dateStr.split("T")[0];
-                    const horaInicio = info.dateStr.split("T")[1].slice(0, 5) || "08:00"; // Hora de inicio predeterminada
+                    const horaInicio = info.dateStr.split("T")[1].slice(0, 5) || "08:00"; 
 
-                    // Calcular la hora de fin automáticamente como una hora después de la hora de inicio
                     const horaFin = incrementarHora(horaInicio);
 
                     $('#sessionDate').val(fechaSeleccionada);
                     $('#horaInicio').val(horaInicio);
                     $('#horaFin').val(horaFin);
 
-                    // Deshabilitar los campos de hora de inicio y hora de fin
                     $('#horaInicio').prop('disabled', true);
                     $('#horaFin').prop('disabled', true);
 
-                    // Llenar los selects con clientes y entrenadores
                     cargarClientesYEntrenadores();
 
-                    // Mostrar el modal para crear la sesión
                     $('#sessionModal').modal('show');
                 }
             },
@@ -87,7 +83,6 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Error: No se encontró el elemento #calendar.");
     }
 
-    // Función para cargar clientes y entrenadores en los select
     function cargarClientesYEntrenadores() {
         fetch('assets/php/obtener_clientes_entrenadores.php')
             .then(response => response.json())
@@ -118,7 +113,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("Error al cargar clientes y entrenadores:", error));
     }
 
-    // Función para crear una nueva sesión
     document.getElementById('sessionForm').addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -146,7 +140,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert('Sesión creada correctamente.');
                 $('#sessionModal').modal('hide');
                 
-                // Recargar la página para actualizar el calendario
                 location.reload();
             } else {
                 alert('Error al crear la sesión: ' + data.message);
@@ -155,7 +148,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error('Error en la solicitud:', error));
     });
 
-    // Función para incrementar la hora en una hora
     function incrementarHora(horaInicio) {
         const [horas, minutos] = horaInicio.split(':');
         const nuevaHora = parseInt(horas) + 1;
@@ -169,7 +161,6 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Documento listo para verificar pagos.");
 
-    // Función para verificar pagos al hacer clic en el botón "Verificar Pago"
     document.getElementById("verificarPagoBtn").addEventListener("click", function () {
         fetch('assets/php/verificar_pagos.php')
             .then(response => response.json())
@@ -182,7 +173,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
                     listItem.textContent = `${cliente.nombre_completo} - Último pago: ${cliente.fecha_pago}`;
 
-                    // Cambia el color según el estado
                     if (cliente.estado === 'vencido') {
                         listItem.style.backgroundColor = 'rgba(255, 0, 0, 0.2)'; // Rojo para vencidos
                     } else if (cliente.estado === 'cerca_de_vencer') {
@@ -194,7 +184,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     clientesPagoList.appendChild(listItem);
                 });
 
-                // Muestra el modal de verificación de pagos
                 $('#verificarPagosModal').modal('show');
             })
             .catch(error => console.error("Error al cargar el estado de los pagos:", error));

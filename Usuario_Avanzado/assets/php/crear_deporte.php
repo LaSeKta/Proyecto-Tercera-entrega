@@ -7,7 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tipo = $_POST['tipo'] ?? null;
     $descripcion = $_POST['descripcion'] ?? null;
 
-    // Verificar que todos los campos estén presentes y no estén vacíos
     if (!$nombre || !$tipo || !$descripcion) {
         echo json_encode(["success" => false, "message" => "Todos los campos son obligatorios."]);
         exit;

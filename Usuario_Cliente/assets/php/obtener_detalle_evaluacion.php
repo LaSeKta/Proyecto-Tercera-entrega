@@ -4,11 +4,11 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 header('Content-Type: application/json');
-include('../../../assets/database.php'); // Ajusta la ruta si es necesario
+include('../../../assets/database.php'); 
 
 session_start();
 
-// Verifica si el usuario está autenticado
+
 if (!isset($_SESSION['ci'])) {
     echo json_encode(['error' => 'Usuario no autenticado']);
     exit;
@@ -17,7 +17,7 @@ if (!isset($_SESSION['ci'])) {
 $ci = $_SESSION['ci'];
 $id_evaluacion = $_GET['id_evaluacion'] ?? null;
 
-// Si no se proporciona un id_evaluacion, obtener la última evaluación del usuario
+
 if ($id_evaluacion === null) {
     $query = "SELECT e.id_evaluacion 
               FROM evaluaciones e 
@@ -40,7 +40,6 @@ if ($id_evaluacion === null) {
     $id_evaluacion = $latest_eval['id_evaluacion'];
 }
 
-// Consulta los detalles de la evaluación específica
 $query = "SELECT cumplimiento_agenda, resistencia_anaerobica, resistencia_muscular, flexibilidad, resistencia_monotonia, resiliencia, nota AS nota_final 
           FROM evaluaciones 
           WHERE id_evaluacion = ?";

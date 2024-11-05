@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include '../../../assets/database.php'; // Asegúrate de que la ruta sea correcta para conectar con tu base de datos
+include '../../../assets/database.php';
 
 try {
     $query = "SELECT p.nombre, p.apellido, p.id_persona AS ci 
